@@ -6,6 +6,8 @@
 <p>Test firmware with SCD40 support reads CO₂ over I²C. After sensor identification, the home page displays CO₂ in ppm. A newly opened page hides the card until a valid reading arrives, including when the sensor data is already expired. If a reading expires after a valid value was displayed, the card retains the last valid value from this page session in gray with an “Outdated” label. Before the first valid reading, it shows “—”. Reloading clears this cache. Original temperature and humidity readings still come from M1's built-in sensor.</p>
 <p>Hardware has produced valid readings, but continuous sampling has also stopped during testing. Stability validation is incomplete; this experimental feature does not imply support in published firmware.</p>
 <p>Disconnect power and identify solder points on the actual board. These are SDK GPIO names, not connector pin numbers:</p>
+<p><img alt="M1 external SCD40 wiring photo" src="../assets/images/m1-scd40-wiring.png" /></p>
+<p>The handwritten <strong>7 / 8 mean GPIO7 / GPIO8</strong>, corresponding to SCL / SDA below, not module physical pin numbers. GND / VCC arrows locate the supply pads; confirm voltage and polarity on your board before connecting.</p>
 <table>
 <thead>
 <tr>
