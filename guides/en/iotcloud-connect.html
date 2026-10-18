@@ -1,0 +1,133 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Register, configure MQTT and bring devices online"><title>Connect to IotCloud · PHICOMM COMMUNITY</title><link rel="stylesheet" href="../../style.css"><script src="../../theme.js"></script></head><body><a class="skip" href="#main">Skip to content</a><header class="site-header"><div class="wrap"><a class="brand" href="../../"><span class="mark">P</span><span class="word"><b>PHICOMM COMMUNITY</b><span>Community firmware</span></span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../#devices">Devices</a><a href="../../#features">Features</a><a href="../../#iotcloud">IotCloud</a><a href="../../#demos">Demos</a><a href="../../#docs">Documentation</a><a href="../../#releases">Downloads</a></nav><div class="prefs"><label class="sr" for="themePick">Theme</label><select id="themePick"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></header><div class="guide-layout"><nav class="guide-nav" aria-label="Documentation navigation"><p class="guide-group">Getting started</p><a href="quick-start.html">Quick start</a><a href="flash-prep.html">Before flashing</a><a href="firmware-update.html">Firmware updates</a><a href="iotcloud-connect.html" aria-current="page">Connect to IotCloud</a><a href="mqtt-link.html">MQTT and automation</a><a href="faq.html">Troubleshooting</a><p class="guide-group">TC1 power strip</p><a href="tc1-guide.html">TC1 operation</a><a href="tc1-flash.html">Flash TC1</a><p class="guide-group">M1 air quality monitor</p><a href="m1-guide.html">M1 operation</a><a href="a1-m1-flash.html">Flash A1 / M1</a><p class="guide-group">A1 air purifier</p><a href="a1-guide.html">A1 operation</a><a href="a1-m1-flash.html">Flash A1 / M1</a><p class="guide-group">Development and maintenance</p><a href="iotcloud-deploy.html">Deploy IotCloud</a><a href="build-deps.html">Build dependencies</a><a href="sources.html">Asset sources</a><a href="release-log.html">Release Log</a></nav><main class="guide-main" id="main"><p class="guide-language" aria-label="Language"><a href="../iotcloud-connect.html" lang="zh-CN">简体中文</a> · English</p><article class="prose"><h1 id="connect-devices-to-iotcloud">Connect devices to IotCloud</h1>
+<p>IotCloud is a web management platform for the TC1 power strip, M1 air quality monitor and A1 air purifier. Connect devices to view online status, air readings and power usage in one place, and remotely use each device's supported controls and settings. Account mode saves the device list so you can continue from another phone or computer on the same node and account.</p>
+<p><a href="https://phicomm-io.github.io/iotcloud/">Open IotCloud</a> · <a href="https://phicomm-io.github.io/demos/platform/">Try the simulated demo</a></p>
+<h2 id="1-prepare-the-device-and-account">1. Prepare the device and account</h2>
+<p>Install this project's firmware, configure Wi-Fi and confirm that the device WebUI opens at its LAN IP. See <a href="quick-start.html">Quick start</a> for installation. During configuration, your phone or computer must be able to reach the device's LAN. Remote management requires both the device and browser to reach the selected platform node.</p>
+<p>Open IotCloud, select China or US at the top, then choose registration. Set a username and password and complete email verification if requested. If registration is closed, follow the page's administrator contact instructions.</p>
+<table>
+<thead>
+<tr>
+<th>Node</th>
+<th>Website</th>
+<th>Device Broker host</th>
+<th>Device MQTT port</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>China</td>
+<td><a href="https://mqtt.fjrcn.cn/">mqtt.fjrcn.cn</a></td>
+<td><code>mqtt.fjrcn.cn</code></td>
+<td><code>1883</code></td>
+</tr>
+<tr>
+<td>US</td>
+<td><a href="https://mqtt.fjrcn.com/">mqtt.fjrcn.com</a></td>
+<td><code>mqtt.fjrcn.com</code></td>
+<td><code>1883</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Accounts, passwords, devices and data are independent on the two nodes. Register separately.</strong> Use the same node for registration, login and device configuration. Switching nodes does not migrate devices.</p>
+<p>After login, open Settings → MQTT connection, select the platform Broker and confirm that it is connected. Connection is automatic by default; if you previously disconnected manually, click the connect button.</p>
+<blockquote>
+<p>The initial MQTT password is the registration password. Website and MQTT passwords can later be changed independently. Changing the website password does not change the MQTT password. After changing the MQTT password, update the browser connection and every device. The device's local WebUI password is separate from MQTT authentication.</p>
+</blockquote>
+<h2 id="2-connect-the-device">2. Connect the device</h2>
+<p>Choose either method below, using the same Broker and account details.</p>
+<h3 id="option-a-enter-settings-manually">Option A: Enter settings manually</h3>
+<ol>
+<li>Open the device's LAN IP in your browser and enter its WebUI password if required.</li>
+<li>Open Network → MQTT / Home Assistant and fill in the Broker form:</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Broker address / MQTT Host</td>
+<td>Selected node's hostname, for example <code>mqtt.fjrcn.cn</code></td>
+</tr>
+<tr>
+<td>Port</td>
+<td><code>1883</code></td>
+</tr>
+<tr>
+<td>Username</td>
+<td>Platform username registered on that node</td>
+</tr>
+<tr>
+<td>Password</td>
+<td>Current MQTT password; initially the registration password</td>
+</tr>
+<tr>
+<td>Topic mode</td>
+<td>On TC1, select <strong>TMCP (v2)</strong> under Advanced. M1 and A1 always use TMCP</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>Save and wait for the device's MQTT status to show connected. If it keeps reconnecting, check the host, username and password.</li>
+</ol>
+<p><strong>Enter only the hostname in the device Broker field, without <code>https://</code>, <code>wss://</code> or <code>/mqtt</code>.</strong> <code>https://phicomm-io.github.io/iotcloud/</code> is the web entry, not a device Broker. The browser addresses <code>wss://mqtt.fjrcn.cn/mqtt</code> and <code>wss://mqtt.fjrcn.com/mqtt</code> must not be used as device Hosts either.</p>
+<h3 id="option-b-prefill-from-iotcloud">Option B: Prefill from IotCloud</h3>
+<ol>
+<li>On a phone or computer that can reach the device's LAN, open IotCloud Settings → MQTT connection or Device management and choose the option to fill settings into a local device.</li>
+<li>Enter the device IP or local URL. Check the Broker hostname, TCP port <code>1883</code>, platform username and current MQTT password, confirm the destination and open the device window.</li>
+<li>In the new device window, check the sending platform's origin and accept the prefill request. The device's existing WebUI password still applies.</li>
+<li>Review the prefilled values, click Save on the device page and confirm MQTT is connected. A platform message that values were prefilled only confirms delivery to the device WebUI.</li>
+</ol>
+<p>Keep the platform window open and accept within two minutes. Send only to a verified device address on a trusted LAN. If popups are blocked, the request expires or the device WebUI does not support this feature, enter settings manually.</p>
+<h2 id="3-confirm-the-device-is-online">3. Confirm the device is online</h2>
+<p>Return to IotCloud on the same node. TMCP devices using the same MQTT account appear automatically. Wait for the list to refresh, or open Settings → Device management and click Refresh.</p>
+<p>If a device is missing, first check its local MQTT status. You can also use Device management → Add device, entering the <strong>MAC address</strong> shown in its WebUI, the correct model and protocol. MAC addresses have 12 hexadecimal characters; colon or hyphen separators are also accepted. Adding a device to the list does not configure its MQTT connection.</p>
+<ul>
+<li><strong>TC1:</strong> TMCP is recommended for this project's firmware. Legacy (v1) is for TC1 devices actually using the old protocol and requires manual addition.</li>
+<li><strong>M1 and A1:</strong> Select the correct model; the protocol is always TMCP.</li>
+</ul>
+<p>Confirm that platform MQTT is connected, the device card is online and readings keep updating. Open an M1's live readings, or adjust its screen brightness and check the physical device. Check other devices' functions as needed. Once connected, you can switch your phone to mobile data and manage online devices without forwarding ports to them.</p>
+<p>See <a href="tc1-guide.html">TC1</a>, <a href="m1-guide.html">M1</a> and <a href="a1-guide.html">A1</a> for daily operation. A1 / M1 permissions and automatic linkage must still be configured separately using <a href="mqtt-link.html">MQTT and automation</a>.</p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>What to check</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Website login works but platform MQTT is disconnected</td>
+<td>Select the platform Broker in Settings → MQTT connection, check the current MQTT password and connect. Website login does not confirm MQTT connectivity</td>
+</tr>
+<tr>
+<td>Platform MQTT is connected but the device is offline</td>
+<td>Check local Wi-Fi and MQTT status, Broker host, port <code>1883</code>, node account and current MQTT password; confirm device internet access</td>
+</tr>
+<tr>
+<td>Device is not discovered</td>
+<td>Use the same node and MQTT username on both sides; select TMCP on TC1. Legacy TC1 requires manual addition</td>
+</tr>
+<tr>
+<td>Manually added device stays offline</td>
+<td>Check MAC, model and protocol, and save MQTT settings on the device itself</td>
+</tr>
+<tr>
+<td>Connection fails after a password change</td>
+<td>Distinguish website and MQTT passwords; update the browser and all devices after changing the MQTT password</td>
+</tr>
+<tr>
+<td>Device list is empty after changing nodes</td>
+<td>Nodes have separate accounts and devices. Return to the original node, or register and reconfigure devices on the new one</td>
+</tr>
+<tr>
+<td>Using your own MQTT server</td>
+<td>Choose self-hosted Broker / guest mode and enter a WebSocket-capable address. Its device list is separate from platform account mode</td>
+</tr>
+</tbody>
+</table>
+<p>For hosting your own frontend, account service or Broker, see <a href="iotcloud-deploy.html">Deploy IotCloud</a>.</p></article><div class="guide-pager"><a href="firmware-update.html">Previous<b>Firmware updates</b></a><a class="next" href="mqtt-link.html">Next<b>MQTT and automation</b></a></div></main></div><footer class="site-footer"><div class="wrap"><div><b>PHICOMM COMMUNITY</b><p>Community-maintained, not affiliated with the manufacturer. Check the documentation for your release. The firmware repository has no single license covering all code.</p></div><div><b>Documentation</b><ul><li><a href="quick-start.html">Quick start</a></li><li><a href="faq.html">Troubleshooting</a></li><li><a href="release-log.html">Release Log</a></li></ul></div><div><b>Source</b><ul><li><a href="https://github.com/phicomm-io/phicomm-community-firmware">Firmware</a></li><li><a href="https://github.com/phicomm-io/phicomm-community-mqtt">MQTT platform</a></li></ul></div><div><b>Community</b><p>QQ group: 1021750178</p><a href="https://qm.qq.com/q/9L150V85kk?from=tim" target="_blank" rel="noopener noreferrer">Join the QQ group (Chinese)</a></div></div></footer><script src="../../site.js"></script></body></html>
