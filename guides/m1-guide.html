@@ -29,6 +29,38 @@
 </tbody>
 </table>
 <p>界面按读数等级给出颜色与文字判定（优 / 良 / 差等）。</p>
+<h2 id="外接-scd40-二氧化碳传感器实验性">外接 SCD40 二氧化碳传感器（实验性）</h2>
+<p>支持 SCD40 的测试固件可通过 I²C 读取 CO₂，识别到传感器后网页首页自动显示 CO₂ 数值（ppm）。新打开页面时，仅收到有效读数才显示卡片；若传感器读数已过期则隐藏。当前页面已取得有效读数后再过期，保留本次页面会话最后一次有效值，改为灰色并标注“已过期”。尚无有效读数时显示“—”；刷新页面会清除缓存。原有温湿度读数仍来自 M1 自带传感器。</p>
+<p>目前实机已读到有效数据，但连续采样曾停止，稳定性验证尚未通过。本功能仍在测试中，不代表正式发布版本已支持。</p>
+<p>断电后接线，并根据实板确认焊点。以下 GPIO 是 SDK 信号名，不是排针序号：</p>
+<table>
+<thead>
+<tr>
+<th>M1 信号</th>
+<th>SCD40 模组</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GPIO8（I²C1 SDA）</td>
+<td>SDA</td>
+</tr>
+<tr>
+<td>GPIO7（I²C1 SCL）</td>
+<td>SCL</td>
+</tr>
+<tr>
+<td>稳定电源（按模组额定电压）</td>
+<td>VCC / VIN</td>
+</tr>
+<tr>
+<td>GND</td>
+<td>GND</td>
+</tr>
+</tbody>
+</table>
+<p>SDA、SCL 分别上拉到 <strong>3.3 V</strong>，短线可从 4.7 kΩ 开始；模组已有接到 3.3 V 的 10 kΩ 上拉时可先使用现有上拉。确认上拉接向，不要将 M1 总线拉到 5 V。使用短线，电源须能承受测量峰值电流，不能由 GPIO 供电。GPIO9 / GPIO10 用于原机 UART，不要占用。</p>
+<p>参考：<a href="https://sensirion.com/cn/products/catalog/SCD40">Sensirion SCD40</a>、<a href="https://developer.sensirion.com/product-support/scd4x-co2-sensor">官方开发与供电说明</a>。</p>
 <h2 id="屏幕亮度">屏幕亮度</h2>
 <p>屏幕亮度可在网页中调整，设置会保存到设备并进行回执确认。也可以通过 MQTT 命令调整亮度，独立 MQTT 客户端修改后设备会回传设置值。</p>
 <h2 id="wi-fi-图标与错误图标">Wi-Fi 图标与错误图标</h2>
@@ -75,5 +107,7 @@
 <li>M1 会拒绝联动通道上的配置读写、解绑和传感器推送。</li>
 </ul>
 <p>绑定与联动规则见 <a href="mqtt-link.html#a1-与-m1-联动">MQTT 与联动</a>。</p>
+<h2 id="iotcloud-与-home-assistant">IotCloud 与 Home Assistant</h2>
+<p>IotCloud 的 M1 详情页支持同样的 CO₂ 卡片，设备列表显示有效 CO₂ 摘要。识别并取得 SCD40 有效读数后，Home Assistant 通过 MQTT 自动发现“二氧化碳”实体（ppm）；超过 20 秒未更新时，该实体变为不可用，不影响 M1 原有传感器实体。</p>
 <h2 id="mqtt">MQTT</h2>
 <p>M1 固定使用 <strong>TMCP（v2）</strong> 主题，不提供 Legacy 模式选择。Home Assistant 接入与平台配置见 <a href="mqtt-link.html">MQTT 与联动</a>。</p></article><div class="guide-pager"><a href="tc1-flash.html">上一页<b>刷机</b></a><a class="next" href="a1-m1-flash.html">下一页<b>刷机：J-Link / Bootloader</b></a></div></main></div><footer class="site-footer"><div class="wrap"><div><b>PHICOMM COMMUNITY</b><p style="margin-top:8px">社区维护项目，与原厂无隶属关系。固件、指南及发布说明以对应版本为准。本仓库没有覆盖全部代码的统一许可证。</p></div><div><b>文档</b><ul><li><a href="quick-start.html">快速开始</a></li><li><a href="faq.html">故障排查</a></li><li><a href="build-deps.html">构建依赖</a></li><li><a href="release-log.html">Release Log</a></li></ul></div><div><b>源码</b><ul><li><a href="https://github.com/phicomm-io/phicomm-community-firmware" rel="noopener noreferrer">固件仓库</a></li><li><a href="https://github.com/phicomm-io/phicomm-community-mqtt" rel="noopener noreferrer">管理平台</a></li></ul></div><div><b>交流与反馈</b><p>QQ 群：1021750178</p><a href="https://qm.qq.com/q/9L150V85kk?from=tim" target="_blank" rel="noopener noreferrer">加入 QQ 群</a></div></div></footer><script src="../site.js"></script></body></html>

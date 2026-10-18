@@ -330,6 +330,31 @@ pre{overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;bac
 @media(max-width:600px){.button-mapping{grid-template-columns:1fr auto}.button-gesture{grid-column:1/-1}.button-mapping .row{justify-content:flex-end}.button-range .button-mapping{gap:6px}}
 
 .copyright{margin-top:24px;padding:16px 0;border-top:1px solid var(--border);color:var(--muted);font-size:12px;line-height:1.8;text-align:center;overflow-wrap:anywhere}.copyright a{color:var(--accent);text-underline-offset:3px}
+
+/* Fit the optional fifth M1 reading into the existing metric area. */
+.metrics.with-co2{grid-template-columns:repeat(5,minmax(0,1fr))}
+@media(max-width:860px){
+ .metrics.with-co2{grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+ .metrics.with-co2>.metric{grid-column:span 2;min-width:0;padding:12px}
+ .metrics.with-co2>.metric:nth-child(-n+2){grid-column:span 3}
+ .metrics.with-co2 .stat{font-size:clamp(20px,5vw,32px)}
+ .metrics.with-co2 .stat small{font-size:11px}
+ .metrics.with-co2 .row.between{flex-wrap:wrap;gap:4px}
+}
+
+.co2-stale .scale i,.co2-stale .scale b{background:var(--muted)}
+.co2-empty .scale b{display:none}
+.metrics.with-co2 .label{min-width:0;overflow-wrap:anywhere}
+.metrics.with-co2 .badge{max-width:100%;white-space:normal;overflow-wrap:anywhere}
+
+/* Consistent title and badge rows regardless of label length or language. */
+.metrics .metric-head{display:grid;grid-template-rows:auto auto;justify-items:start;align-content:start;gap:6px;min-height:66px}
+.metrics .metric-head .label{line-height:20px;min-width:0;overflow-wrap:anywhere}
+.metrics .metric-head .badge{justify-self:start;max-width:100%;white-space:normal;overflow-wrap:anywhere}
+.metrics .metric{display:flex;flex-direction:column;min-width:0}
+.metrics .metric .stat{margin-top:auto;padding-top:12px}
+.metrics .metric-head{grid-template-rows:40px auto;min-height:72px}
+.metrics .metric-head .label{align-self:start}
 </style>
 <script>/* Apply the saved theme before first paint so the page does not flash light on
  * a dark display. The control itself lives in the shared header (ui.js). */
@@ -572,7 +597,7 @@ const D={
 'sys.hint_m1':['On the device: a long press of the panel key clears Wi-Fi and the web password.','设备上：长按面板按键可清除 Wi-Fi 和网页密码。'],
 'sys.hint_tc1':['On the device: hold the key 5–10 s to clear Wi-Fi and the web password, over 10 s to clear everything (all sockets default to on).','设备上：按键按住 5–10 秒清除 Wi-Fi 和网页密码，超过 10 秒清除全部配置（六路默认开启）。'],
 /* Air quality */
-'m.pm25':['PM2.5','PM2.5'],'m.formaldehyde':['Formaldehyde','甲醛'],'m.temperature':['Temperature','温度'],'m.humidity':['Humidity','湿度'],
+'air.co2.comfort':['Comfortable','舒适'],'air.co2.elevated':['Elevated','偏高'],'air.co2.ventilate':['Ventilate','建议通风'],'m.co2_range':['Ventilation reference: ≤1000 ppm comfortable; 1001–1500 elevated; >1500 ventilate.','通风参考：≤1000 ppm 舒适；1001–1500 偏高；>1500 建议通风。'],'m.co2_stale':['Outdated','已过期'],'m.co2':['Carbon dioxide (CO₂)','二氧化碳（CO₂）'],'m.pm25':['PM2.5','PM2.5'],'m.formaldehyde':['Formaldehyde','甲醛'],'m.temperature':['Temperature','温度'],'m.humidity':['Humidity','湿度'],
 'air.pm25.excellent':['Excellent','优'],'air.pm25.good':['Good','良'],'air.pm25.light':['Light pollution','轻度污染'],'air.pm25.moderate':['Moderate pollution','中度污染'],'air.pm25.heavy':['Heavy pollution','重度污染'],'air.pm25.severe':['Severe pollution','严重污染'],
 'air.formaldehyde.pass':['Within limit','达标'],'air.formaldehyde.slight':['Slightly high','略高'],'air.formaldehyde.exceed':['Over limit','超标'],
 'air.temperature.cool':['Cool','偏冷'],'air.temperature.comfort':['Comfortable','舒适'],'air.temperature.warm':['Warm','偏热'],
@@ -937,7 +962,9 @@ const clone=o=>JSON.parse(JSON.stringify(o));
 
 /* Air quality bands: PM2.5 per GB 3095, formaldehyde limit per GB/T 18883-2022,
  * temperature and humidity comfort per the A1 light-segment defaults. */
+// CO2 ventilation reference: HSE using-co2-monitors (1000 / 1500 ppm).
 const AIR={
+ co2:{unit:'ppm',max:2500,bands:[[1000,'comfort','ok'],[1500,'elevated','warn'],[Infinity,'ventilate','bad']]},
  pm25:{unit:'µg/m³',max:250,bands:[[35,'excellent','ok'],[75,'good','ok'],[115,'light','warn'],[150,'moderate','warn'],[250,'heavy','bad'],[Infinity,'severe','bad']]},
  formaldehyde:{unit:'mg/m³',max:0.2,bands:[[0.08,'pass','ok'],[0.1,'slight','warn'],[Infinity,'exceed','bad']]},
  temperature:{unit:'℃',min:0,max:40,bands:[[18,'cool','warn'],[26,'comfort','ok'],[Infinity,'warm','warn']]},
