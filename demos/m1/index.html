@@ -5,8 +5,12 @@
 const create=model=>{
  const state={name:'演示设备',model,device_id:{tc1:'aabbccddee01',m1:'aabbccddee02',a1:'aabbccddee03'}[model],version:'演示',ip:'192.0.2.10',ssid:'Demo Wi-Fi',wifi_connected:true,mqtt_connected:true,mqtt_status:'ready',mqtt_host:'demo.invalid',mqtt_user:'demo',mqtt_port:1883,mqtt_topic_mode:'tmcp',mqtt_protocol:'tmcp',brightness_requested:3,brightness:192,red:80,green:200,blue:120,speed:60,percentage:60,applied_speed:60,requested_speed:60,fan_on:true,fan_mode:'manual',fan_state:'running',auto_max_speed:100,fan_ready:true,panel_ready:true,light_on:true,sensor_received:true,sensor_valid:true,age_ms:200,temperature:25,humidity:48,formaldehyde:.025,pm25:18,time_synced:true,timezone_minutes:480,ntp_host:'pool.ntp.org',ntp_status:'synced',ntp_synced:true,ota_progress:0,ota_state:'idle',socket_names:['台灯','显示器','音箱','充电器','风扇','备用'],socket_states:[true,true,false,true,false,false],report_seconds:5,powerCoefficientX100:1710,free_memory:48000,uptime_seconds:3600,power_watts:36,energy_kwh:.28,led_enabled:true};
  const actions=['status.get','capabilities.get','config.get','config.set','logs.get','ota.start','schedules.get','schedules.put','schedules.delete','schedules.enable','night.get','night.set','time.get','time.set','ota.sources.get','ota.check','ota.check.get','ota.install','ota.notes','ota.notes.get','ota.status.get',...(model==='tc1'?['outlet.set','indicator.set','child_lock.set','buttons.get','buttons.set']:model==='m1'?['display.set','binding.get','binding.set','binding.status.get']:['light_effect.next','light_effect.select','light_always.set','filter.get','filter.set','filter.reset','fan.set','fan.panel','fan.mode.set','fan.mode.toggle','light.set','child_lock.set','buttons.get','buttons.set','binding.get','binding.set','binding.status.get','binding.probe','linkage.get','linkage.set','light_effect.get','light_effect.set'])];
- const fixtures={'night.get':{windows:[],revision:1},'buttons.get':{items:[],capacity:model==='a1'?102:68},'schedules.get':{items:[],capacity:8,count:0,next:0},'time.get':{timezone_minutes:480},'logs.get':{records:[{sequence:1,event:'demo_boot',level:'info',module:'system',uptime_ms:1000}],next:1,latest:1},'power.get':{power_watts:36,energy_kwh:.28,powers:[30,35,36]},'binding.get':{response_ids:[],peers:[],members:[],group:'',revision:1},'binding.status.get':{average:{valid:true,sample_count:1,configured_count:1,temperature:25,humidity:48,pm25:18,formaldehyde:.025},peers:[],members:[],linkage_status:'disabled',clock_valid:true,available:0,automatic_on:false,automatic_speed:0},'linkage.get':{hysteresis_enabled:0,fallback_speed:30,enabled:0,mode:1,metrics:1,on_metrics:1,off_metrics:1,statistic:0,on_enabled:0,off_enabled:0,on_all:0,off_all:1,fixed_speed:60,min_speed:20,max_speed:100,debounce_seconds:15,min_switch_seconds:60,on_pm:50,off_pm:35,on_hcho:.1,off_hcho:.08,target_pm:35,target_hcho:.08,low_pm:35,high_pm:150,low_hcho:.08,high_hcho:.3,kp:20,ki:.02,kd:0,revision:1},'light_effect.get':{effect:0,segments:1,follow_fan:0,quality_pm:35,quality_hcho:.08,segment:[{source:0,display:2,minimum:-10,maximum:50,suitable_low:18,suitable_high:26,colors:[[0,0,255],[0,255,0],[255,0,0]]}],revision:1},'wifi.scan.get':{scanning:false,networks:[{ssid:'Demo Wi-Fi',rssi:-40,security:3}]},'ota.sources.get':{sources:['github','cn','global']},'ota.check.get':{state:'idle',available:false}};
+ const fixtures={'night.get':{windows:[],revision:1},'buttons.get':{items:[],capacity:model==='a1'?102:68},'schedules.get':{items:[],capacity:8,count:0,next:0},'time.get':{timezone_minutes:480},'logs.get':{records:[{sequence:1,event:'demo_boot',level:'info',module:'system',uptime_ms:1000}],next:1,latest:1},'power.get':{power_watts:36,energy_kwh:.28,powers:[30,35,36]},'binding.get':{response_ids:[],peers:[],members:[],group:'',revision:1},'binding.status.get':{average:{valid:true,sample_count:1,configured_count:1,temperature:25,humidity:48,pm25:18,formaldehyde:.025},peers:[],members:[],linkage_status:'disabled',clock_valid:true,available:0,automatic_on:false,automatic_speed:0},'linkage.get':{hysteresis_enabled:0,fallback_speed:30,enabled:0,mode:1,metrics:1,on_metrics:1,off_metrics:1,statistic:0,on_enabled:0,off_enabled:0,on_all:0,off_all:1,fixed_speed:60,min_speed:20,max_speed:100,debounce_seconds:15,min_switch_seconds:60,on_pm:50,off_pm:35,on_hcho:.1,off_hcho:.08,target_pm:35,target_hcho:.08,low_pm:35,high_pm:150,low_hcho:.08,high_hcho:.3,kp:20,ki:.02,kd:0,revision:1},'light_effect.get':{effect:0,speed:5,segments:1,follow_fan:0,quality_pm:35,quality_hcho:.08,segment:[{source:0,display:2,minimum:-10,maximum:50,suitable_low:18,suitable_high:26,colors:[[0,0,255],[0,255,0],[255,0,0]]}],revision:1},'wifi.scan.get':{scanning:false,networks:[{ssid:'Demo Wi-Fi',rssi:-40,security:3}]},'ota.sources.get':{sources:['github','cn','global']},'ota.check.get':{state:'idle',available:false}};
+ let nextScheduleId=1;
  function command(action,p={}){
+  const schedule=fixtures['schedules.get'];
+  for(const x of schedule.items)if(x.trigger==='countdown'&&x.enabled){x.remaining_seconds=Math.max(0,x.seconds-Math.floor((performance.now()-x.started)/1000));if(!x.remaining_seconds){x.enabled=false;x.state='executed';state.fan_on=false;state.applied_speed=state.percentage=0;state.fan_state='off';}}
+
   if(model==='a1'&&!state.filter)state.filter={used_seconds:864000,lifetime_hours:4320,remaining_percent:95,replacement_due:false};
   if(model==='a1'&&action.startsWith('filter.')){
    if(action==='filter.reset')state.filter.used_seconds=0;
@@ -15,7 +19,7 @@ const create=model=>{
    return structuredClone(f);
   }
   if(action==='status.get')return structuredClone(state);
-  if(action==='capabilities.get')return {model,actions,...(model==='a1'?{button_keys:['power','wifi','combination']}:{})};
+  if(action==='capabilities.get')return {model,actions,...(model==='a1'?{button_keys:['power','wifi','combination'],schedule_countdown:true}:{})};
   if(action==='config.get')return structuredClone(state);
   if(action==='config.set'){Object.assign(state,p.values||{});if(p.values?.names)state.socket_names=p.values.names;}
   if(action==='outlet.set'){state.socket_states[p.index]=p.toggle?!state.socket_states[p.index]:!!p.on;}
@@ -40,9 +44,10 @@ const create=model=>{
   if(action==='light.set'){Object.assign(state,p);if(p.toggle)state.light_on=!state.light_on;}
   if(action==='child_lock.set')state.child_lock=p.toggle?!state.child_lock:!!p.on;
   if(action==='indicator.set')state.led_enabled=p.toggle?!state.led_enabled:!!p.on;
-  if(action==='schedules.put'){fixtures['schedules.get'].items.push({...p,id:Date.now()%100000});fixtures['schedules.get'].count=fixtures['schedules.get'].items.length;}
+  if(action==='schedules.put'){const item={...p,id:p.id||nextScheduleId++,state:'waiting',remaining_seconds:p.seconds||0,started:performance.now()},i=schedule.items.findIndex(x=>x.id===p.id);if(i>=0)schedule.items[i]=item;else schedule.items.push(item);}
   if(action==='schedules.delete')fixtures['schedules.get'].items=fixtures['schedules.get'].items.filter(x=>x.id!==p.id);
-  if(action==='schedules.enable'){const item=fixtures['schedules.get'].items.find(x=>x.id===p.id);if(item)item.enabled=p.enabled;}
+  if(action==='schedules.enable'){const item=fixtures['schedules.get'].items.find(x=>x.id===p.id);if(item){item.enabled=p.enabled;item.state='waiting';item.started=performance.now();item.remaining_seconds=item.seconds||0;}}
+  schedule.count=schedule.items.length;
   if(action==='buttons.set'){const list=fixtures['buttons.get'].items;const i=list.findIndex(x=>x.key===p.key&&x.clicks===p.clicks&&x.seconds===p.seconds);if(i>=0)list.splice(i,1);if(p.action!=='none')list.push({...p});}
   if(action.endsWith('.set')&&fixtures[action.replace(/\.set$/,'.get')])fixtures[action.replace(/\.set$/,'.get')]={...fixtures[action.replace(/\.set$/,'.get')],...p};
   if(action==='ota.notes')fixtures['ota.notes.get']={state:'ready',text:'Demo release notes',offset:0,next:18,total:18,busy:false};
@@ -355,6 +360,17 @@ pre{overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;bac
 .metrics .metric .stat{margin-top:auto;padding-top:12px}
 .metrics .metric-head{grid-template-rows:40px auto;min-height:72px}
 .metrics .metric-head .label{align-self:start}
+
+/* Schedule rows keep the duration, action and controls readable on phones. */
+.schedule-task{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto}
+.schedule-task .grow{overflow-wrap:anywhere}
+@media(max-width:600px){
+ .schedule-task{grid-template-columns:minmax(0,1fr) auto}
+ .schedule-task .time{grid-column:1;grid-row:1}
+ .schedule-task>.badge{grid-column:2;grid-row:1}
+ .schedule-task .grow{grid-column:1/-1;grid-row:2}
+ .schedule-task>.row{grid-column:1/-1;justify-content:flex-end}
+}
 </style>
 <script>/* Apply the saved theme before first paint so the page does not flash light on
  * a dark display. The control itself lives in the shared header (ui.js). */
@@ -628,11 +644,15 @@ const D={
 'link.statistic':['With several M1','多台 M1 时取'],'link.debounce':['Condition must last','条件持续'],'link.min_switch':['Minimum run/idle time','最短运行／待机时间'],
 'link.stat.0':['Average','平均值'],'link.stat.1':['Highest','最高值'],'link.stat.2':['Lowest','最低值'],'link.stat.3':['Median (more than 3)','中位数（多于 3 台）'],'link.stat.4':['Average without extremes','去掉最高最低后平均'],'link.stat.5':['First available in list','按列表顺序故障切换'],
 /* Schedules / night */
+'fx.speed':['Animation speed','变化速度'],'fx.slow':['Slow','慢'],'fx.fast':['Fast','快'],
+'sch.countdown':['Shutdown countdown','倒计时关闭'],'sch.hours':['Hours','小时'],'sch.minutes':['Minutes','分钟'],'sch.cancel':['Cancel','取消倒计时'],'sch.restart':['Restart','重新计时'],
+'sch.countdown_hint':['Turn the purifier off after 1 minute to 24 hours. Works without clock sync. A restart cancels the countdown; enabling it starts the full duration again.','在 1 分钟至 24 小时后关闭净化器，无需校时。设备重启会取消倒计时；重新启用会从完整时长重新计时。'],
+'sch.duration_invalid':['Choose a duration from 1 minute to 24 hours','请设置 1 分钟至 24 小时的时长'],'sch.state.cancelled':['Cancelled after restart','设备重启，已取消'],
 'sch.lead_a1':['Turn the purifier on or off at set times.','在设定时间开启或关闭净化器。'],'sch.lead_tc1':['Switch sockets at set times (Beijing time).','在设定时间开关插座（北京时间）。'],
 'sch.list':['Schedules','定时任务'],'sch.empty':['No schedules yet','暂无定时任务'],'sch.used':['{a} of {b} used','已使用 {a} / {b}'],'sch.off':['off','已停用'],'sch.hint':['Weekly events run in the device time zone and are not replayed after a missed window; a restart runs last.','每周任务按设备时区执行，错过的时段不补执行；重启类操作最后执行。'],'sch.add':['New schedule','新建定时'],'sch.time':['Time','时间'],'sch.date':['Date','日期'],
 'sch.repeat':['Repeat','重复'],'sch.action':['Action','动作'],'sch.target':['Target','对象'],'sch.turn_on':['Turn on','开启'],'sch.turn_off':['Turn off','关闭'],'sch.weekly':['Weekly','每周'],
 'sch.add_btn':['Add schedule','添加'],'sch.added':['Saved','已保存'],'sch.reset':['Clear form','清空表单'],'sch.when':['Date and time (device time zone)','执行日期与时间（设备时区）'],'sch.pick_day':['Pick at least one day','请至少选择一天'],'sch.future':['Pick a time in the future','请选择未来的时间'],
-'sch.fan_on':['Turn on at {p}%','开启，风速 {p}%'],'sch.fan_off':['Turn off','关闭'],'sch.no_clock':['The clock is not synced yet; schedules will not run until it is.','时钟尚未校准，校准前定时任务不会执行。'],
+'sch.fan_on':['Turn on at {p}%','开启，风速 {p}%'],'sch.fan_off':['Turn off','关闭'],'sch.no_clock':['The clock is not synced yet; weekly and dated schedules will not run until it is.','时钟尚未校准，校准前每周及指定日期的任务不会执行。'],
 'day.short.0':['Mon','一'],'day.short.1':['Tue','二'],'day.short.2':['Wed','三'],'day.short.3':['Thu','四'],'day.short.4':['Fri','五'],'day.short.5':['Sat','六'],'day.short.6':['Sun','日'],
 'day.every':['Every day','每天'],'day.weekdays':['Weekdays','工作日'],'day.weekends':['Weekends','周末'],'day.once':['Once','仅一次'],
 'night.lead':['Quieter fan and dimmer light during set hours.','在设定时段降低风速与灯光。'],'night.list':['Night periods','夜间时段'],'night.empty':['No night periods','暂无夜间时段'],
@@ -1454,33 +1474,37 @@ function schedulePage(dev){
  let offset=0,editing=0,tasks=[];
  const tz=()=>((UI.state&&UI.state.timezone_minutes)||480)*60;
  const atText=sec=>new Date((sec+tz())*1000).toISOString().slice(0,16).replace('T',' ');
- const when=x=>x.trigger==='once'?atText(x.at):hhmm(x.minute);
+ const duration=sec=>{sec=Math.max(0,Math.ceil(sec));return String(Math.floor(sec/3600)).padStart(2,'0')+':'+String(Math.floor(sec/60)%60).padStart(2,'0')+':'+String(sec%60).padStart(2,'0');};
+ const when=x=>x.trigger==='countdown'?duration(x.enabled?Math.max(0,x.remaining_seconds-(performance.now()-x.received)/1000):x.seconds):x.trigger==='once'?atText(x.at):hhmm(x.minute);
  const timeValue=()=>{const d=new Date(Date.now()+tz()*1000+86400000);return d.toISOString().slice(0,16);};
 
  const enabled=switchRow(null,'sch.enabled_row');
- const trigger=seg([['weekly','sch.weekly'],['once','day.once']],v=>syncTrigger(),{full:true});
+ const trigger=seg([['weekly','sch.weekly'],['once','day.once'],...(UI.caps.schedule_countdown?[['countdown','sch.countdown']]:[])],v=>syncTrigger(),{full:true});
  const days=daysPicker('sdays',127),time=h('input',{type:'time',value:'08:00'}),at=h('input',{type:'datetime-local',value:timeValue()});
  const weekly=h('div',{class:'field'},h('div',{class:'row between'},h('span',{class:'label',i18n:'sch.repeat'}),presetDays(days)),days);
  const once=h('label',{class:'field',hidden:true},h('span',{i18n:'sch.when'}),at);
  const minute=h('label',{class:'field'},h('span',{i18n:'sch.time'}),time);
  const editorHost=h('div',{class:'stack'});
- function syncTrigger(){const onceMode=trigger.value==='once';weekly.hidden=onceMode;once.hidden=!onceMode;minute.hidden=onceMode;}
+ const hours=h('input',{type:'number',min:0,max:24,step:1,value:0,'aria-label':t('sch.hours')}),minutes=h('input',{type:'number',min:0,max:59,step:1,value:30,'aria-label':t('sch.minutes')});
+ const countdown=h('div',{class:'stack',hidden:true},h('div',{class:'fields'},h('label',{class:'field'},h('span',{i18n:'sch.hours'}),hours),h('label',{class:'field'},h('span',{i18n:'sch.minutes'}),minutes)),info('sch.countdown_hint'));
+ function syncTrigger(){const mode=trigger.value;weekly.hidden=mode!=='weekly';once.hidden=mode!=='once';minute.hidden=mode!=='weekly';countdown.hidden=mode!=='countdown';hours.disabled=minutes.disabled=mode!=='countdown';editorHost.hidden=mode==='countdown';}
+
  const editor=actionEditor(editorHost);
  const save=h('button',{type:'submit',class:'btn primary'});
  const labelSave=()=>save.replaceChildren(icon('plus'),h('span',{},t(editing?'sch.save_btn':'sch.add_btn')));
  labelSave();
  function row(x){
-  return h('div',{class:'item'},h('b',{class:'time num'},when(x)),
-   h('div',{class:'grow'},h('b',{},t(actKey(x.action))+(x.trigger==='weekly'?' · '+daysText(x.days):' · '+t('day.once'))),
+  return h('div',{class:'item schedule-task'},h('b',{class:'time num','data-countdown-id':x.trigger==='countdown'?x.id:null},when(x)),
+   h('div',{class:'grow'},h('b',{},t(actKey(x.action))+(x.trigger==='weekly'?' · '+daysText(x.days):' · '+t(x.trigger==='countdown'?'sch.countdown':'day.once'))),
     h('span',{},t('sch.state.'+(x.state||'waiting'))+(x.enabled?'':' · '+t('sch.off')))),
    h('span',{class:'badge '+(x.enabled?'ok':'')},t(x.enabled?'sch.enabled':'sch.disabled')),
    h('div',{class:'row',style:'gap:4px'},
     h('button',{type:'button',class:'btn ghost',onclick:()=>edit(x)},h('span',{i18n:'sch.edit'})),
-    h('button',{type:'button',class:'btn ghost',onclick:ev=>run(ev.currentTarget,()=>command('schedules.enable',{id:x.id,enabled:!x.enabled}).then(load),null)},h('span',{i18n:x.enabled?'sch.disable':'sch.enable'})),
+    h('button',{type:'button',class:'btn ghost',onclick:ev=>run(ev.currentTarget,()=>command('schedules.enable',{id:x.id,enabled:!x.enabled}).then(load),null)},h('span',{i18n:x.trigger==='countdown'?(x.enabled?'sch.cancel':'sch.restart'):(x.enabled?'sch.disable':'sch.enable')})),
     h('button',{type:'button',class:'btn ghost icon','aria-label':t('common.delete'),onclick:ev=>run(ev.currentTarget,()=>command('schedules.delete',{id:x.id}).then(load),'common.deleted')},icon('trash'))));
  }
  async function load(){
-  const d=await command('schedules.get',{offset,limit:8});tasks=d.items;
+  const d=await command('schedules.get',{offset,limit:8});tasks=d.items.map(x=>({...x,received:performance.now()}));
   listBox.replaceChildren(
    tasks.length?h('div',{class:'list'},tasks.map(row)):h('div',{class:'empty'},t('sch.empty')),
    h('div',{class:'row between'},h('span',{class:'help'},t('sch.used',{a:d.count,b:d.capacity})),
@@ -1489,29 +1513,35 @@ function schedulePage(dev){
      h('button',{type:'button',class:'btn ghost',onclick:()=>run(null,()=>{offset=d.next;return load();},null),disabled:offset+8>=d.count},h('span',{i18n:'common.next'})))));
   banner.hidden=!(UI.state&&UI.state.time_synced===false);
  }
- function reset(){editing=0;enabled.querySelector('input').checked=true;trigger.set('weekly');syncTrigger();days.setMask(127);time.value='08:00';editor.set('none');labelSave();}
+ function reset(){editing=0;enabled.querySelector('input').checked=true;trigger.set('weekly');syncTrigger();days.setMask(127);time.value='08:00';editor.set('none');hours.value=0;minutes.value=30;labelSave();}
  function edit(x){
   editing=x.id;enabled.querySelector('input').checked=!!x.enabled;trigger.set(x.trigger);syncTrigger();
-  days.setMask(x.days);time.value=hhmm(x.minute);at.value=atText(x.at);editor.set(x.action,x.params);labelSave();
+  days.setMask(x.days);time.value=hhmm(x.minute);at.value=x.trigger==='countdown'?timeValue():atText(x.at);hours.value=Math.floor((x.seconds||0)/3600);minutes.value=Math.floor((x.seconds||0)%3600/60);editor.set(x.action,x.params);labelSave();
   box.scrollIntoView({block:'start'});
  }
  const banner=h('div',{class:'banner warn',hidden:true},icon('clock'),h('span',{i18n:'sch.no_clock'}));
- const form=h('form',{class:'subcard stack'},h('h3',{i18n:'sch.new'}),trigger,weekly,once,minute,editorHost,
-  h('div',{class:'form-actions'},h('button',{class:'btn primary',type:'submit'},icon('plus'),h('span',{},t('sch.add_btn'))),
+ const form=h('form',{class:'subcard stack'},h('h3',{i18n:'sch.new'}),trigger,weekly,once,minute,countdown,editorHost,enabled,
+  h('div',{class:'form-actions'},save,
    h('button',{type:'button',class:'btn ghost',onclick:reset},h('span',{i18n:'sch.reset'}))));
  form.addEventListener('submit',e=>{e.preventDefault();run(save,async()=>{
-  const a=editor.get();
+  const a=trigger.value==='countdown'?{action:'fan.set',params:{on:false}}:editor.get();
   if(a.action==='none')throw Error(t('sch.pick_action'));
-  const task={enabled:Number(enabled.querySelector('input').checked),trigger:trigger.value,...a};
+  const task={enabled:enabled.querySelector('input').checked,trigger:trigger.value,...a};
   if(editing)task.id=editing;
-  if(trigger.value==='weekly'){const d=days.mask();if(!d)throw Error(t('sch.pick_day'));task.days=d;task.minute=toMinutes(time.value);}
+  if(trigger.value==='countdown'){const h=Number(hours.value),m=Number(minutes.value);task.seconds=h*3600+m*60;if(!Number.isInteger(h)||!Number.isInteger(m)||h<0||m<0||m>59||task.seconds<60||task.seconds>86400)throw Error(t('sch.duration_invalid'));}
+  else if(trigger.value==='weekly'){const d=days.mask();if(!d)throw Error(t('sch.pick_day'));task.days=d;task.minute=toMinutes(time.value);}
   else{const parsed=Date.parse(at.value);if(!Number.isFinite(parsed))throw Error(t('sch.pick_when'));
    task.at=Math.floor(parsed/1000)-tz();if(task.at<=Math.floor(Date.now()/1000))throw Error(t('sch.future'));}
   await command('schedules.put',task);reset();await load();toast(t('sch.added'));
  },null);});
+ enabled.querySelector('input').checked=true;trigger.set('weekly');syncTrigger();
  box.append(form,info('sch.hint'));
  return {el:h('div',{class:'stack'},pageHead('nav.schedule',dev.scheduleLead),banner,card('sch.list',null,listBox,box)),
-  async show(){if(!UI.state)await UI.reload();await load();}};
+  async show(){if(!UI.state)await UI.reload();await load();},
+  status(){if(!box.isConnected||box.closest('[data-settings-page]')?.hidden)return;
+   for(const x of tasks.filter(x=>x.trigger==='countdown')){const label=listBox.querySelector('[data-countdown-id="'+x.id+'"]');if(label)label.textContent=when(x);}
+   if(tasks.some(x=>x.trigger==='countdown'&&x.enabled))run(null,load,null);
+  }};
 }
 
 /* ---------- Custom button events ---------- */

@@ -1,5 +1,13 @@
 <!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="各版本发布说明"><title>Release Log · PHICOMM COMMUNITY</title><link rel="stylesheet" href="../style.css"><script src="../theme.js"></script></head><body><a class="skip" href="#main">跳到主要内容</a><header class="site-header"><div class="wrap"><a class="brand" href=".././"><span class="mark" aria-hidden="true">斐</span><span class="word"><b>PHICOMM COMMUNITY</b><span>社区固件</span></span></a><nav class="site-nav" aria-label="主导航"><a href="../#devices">设备</a><a href="../#features">功能</a><a href="../#iotcloud">IotCloud</a><a href="../#demos">在线演示</a><a href="../#docs">文档</a><a href="../#releases">下载</a></nav><div class="prefs"><label class="sr" for="themePick">主题</label><select id="themePick"><option value="system">跟随系统</option><option value="light">浅色</option><option value="dark">深色</option></select></div></div></header><div class="guide-layout"><nav class="guide-nav" aria-label="文档导航"><p class="guide-group">开始使用</p><a href="quick-start.html">快速开始</a><a href="flash-prep.html">刷机前准备</a><a href="firmware-update.html">固件更新</a><a href="iotcloud-connect.html">接入 IotCloud</a><a href="mqtt-link.html">MQTT 与联动</a><a href="faq.html">故障排查</a><p class="guide-group">TC1 智能排插</p><a href="tc1-guide.html">功能与操作</a><a href="tc1-flash.html">刷机</a><p class="guide-group">M1 空气检测仪</p><a href="m1-guide.html">功能与操作</a><a href="a1-m1-flash.html">刷机：J-Link / Bootloader</a><p class="guide-group">A1 空气净化器</p><a href="a1-guide.html">功能与操作</a><a href="a1-m1-flash.html">刷机：J-Link / Bootloader</a><p class="guide-group">开发与维护</p><a href="iotcloud-deploy.html">IotCloud 部署</a><a href="build-deps.html">构建依赖</a><a href="sources.html">资源来源</a><a href="release-log.html" aria-current="page">Release Log</a></nav><main class="guide-main" id="main"><p class="guide-language" aria-label="Language">简体中文 · <a href="en/release-log.html" lang="en">English</a></p><article class="prose"><h1 id="release-log">Release Log</h1>
 <p>发布前在本 Wiki 编辑对应版本章节，再运行快照工具并提交到源码仓库。</p>
+<h2 id="v0913">v0.9.13</h2>
+<ul>
+<li>A1 呼吸灯和彩虹跑马灯支持 1–10 档变化速度，默认 5 档延续原有速度；网页预览同步变化，保存后重启保留。</li>
+<li>定时任务新增“倒计时关闭”，可设置 1 分钟至 24 小时，显示剩余时间并支持取消、删除及重新计时，适用于手动和自动模式。</li>
+<li>倒计时独立于网络校时，关闭网页后仍继续；编辑或重新启用会从完整时长重新计时，设备重启会取消活动倒计时。</li>
+<li>本地网页与集中管理平台共用的 A1 页面提供上述设置；同步中英文说明，保留已有 CO₂ 联动及其他配置。</li>
+<li>本次通过主机自动化回归和 Chromium/WebKit 桌面、手机浏览器测试；未进行物理 A1 灯效、风机或升级验收。</li>
+</ul>
 <h2 id="v0912">v0.9.12</h2>
 <ul>
 <li>A1 联动支持读取已绑定 M1 的 CO₂，可单独或与 PM2.5、甲醛组合用于固定、线性及 PID 自动调速；组合指标按最高需求调速，启停回差沿用任一启动、全部达标后待机的规则。</li>
