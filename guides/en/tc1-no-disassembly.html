@@ -1,38 +1,8 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Stock provisioning OTA over TFTP, no case opening"><title>Flash TC1 without disassembly · PHICOMM COMMUNITY</title><link rel="stylesheet" href="../../style.css"><script src="../../theme.js"></script></head><body><a class="skip" href="#main">Skip to content</a><header class="site-header"><div class="wrap"><a class="brand" href="../../"><span class="mark">P</span><span class="word"><b>PHICOMM COMMUNITY</b><span>Community firmware</span></span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../#devices">Devices</a><a href="../../#features">Features</a><a href="../../#iotcloud">IotCloud</a><a href="../../#demos">Demos</a><a href="../../#docs">Documentation</a><a href="../../#releases">Downloads</a></nav><div class="prefs"><label class="sr" for="themePick">Theme</label><select id="themePick"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></header><div class="guide-layout"><nav class="guide-nav" aria-label="Documentation navigation"><p class="guide-group">Getting started</p><a href="quick-start.html">Quick start</a><a href="flash-prep.html">Before flashing</a><a href="firmware-update.html">Firmware updates</a><a href="iotcloud-connect.html">Connect to IotCloud</a><a href="mqtt-link.html">MQTT and automation</a><a href="faq.html">Troubleshooting</a><p class="guide-group">TC1 power strip</p><a href="tc1-guide.html">TC1 operation</a><a href="tc1-flash.html">Flash TC1</a><a href="tc1-no-disassembly.html" aria-current="page">Flash TC1 without disassembly</a><p class="guide-group">M1 air quality monitor</p><a href="m1-guide.html">M1 operation</a><a href="a1-m1-flash.html">Flash A1 / M1</a><p class="guide-group">A1 air purifier</p><a href="a1-guide.html">A1 operation</a><a href="a1-m1-flash.html">Flash A1 / M1</a><p class="guide-group">Development and maintenance</p><a href="iotcloud-deploy.html">Deploy IotCloud</a><a href="build-deps.html">Build dependencies</a><a href="sources.html">Asset sources</a><a href="release-log.html">Release Log</a></nav><main class="guide-main" id="main"><p class="guide-language" aria-label="Language"><a href="../tc1-no-disassembly.html" lang="zh-CN">简体中文</a> · English</p><article class="prose"><h1 id="flash-tc1-without-disassembly-stock-tftp-ota">Flash TC1 without disassembly (stock TFTP OTA)</h1>
-<p><strong>Only for TC1 A1 hardware (EMW3031 / MK3031) running stock firmware 1.0.0.26.</strong> TC1 A2, the A1 air purifier and other stock versions are out of scope.</p>
-<p>This path uses the OTA branch that already exists in the stock provisioning service so the device pulls a community image over TFTP: no case opening, no serial or SWD wiring, and no vendor cloud. Read <a href="flash-prep.html">Before flashing</a> and <a href="firmware-update.html">Firmware updates</a> first.</p>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Stock provisioning OTA over TFTP, no case opening"><title>Flash TC1 without disassembly · PHICOMM COMMUNITY</title><link rel="stylesheet" href="../../style.css"><script src="../../theme.js"></script></head><body><a class="skip" href="#main">Skip to content</a><header class="site-header"><div class="wrap"><a class="brand" href="../../"><span class="mark">P</span><span class="word"><b>PHICOMM COMMUNITY</b><span>Community firmware</span></span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../#devices">Devices</a><a href="../../#features">Features</a><a href="../../#iotcloud">IotCloud</a><a href="../../#demos">Demos</a><a href="../../#docs">Documentation</a><a href="../../#releases">Downloads</a></nav><div class="prefs"><label class="sr" for="themePick">Theme</label><select id="themePick"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></header><div class="guide-layout"><nav class="guide-nav" aria-label="Documentation navigation"><p class="guide-group">Getting started</p><a href="quick-start.html">Quick start</a><a href="flash-prep.html">Before flashing</a><a href="firmware-update.html">Firmware updates</a><a href="iotcloud-connect.html">Connect to IotCloud</a><a href="mqtt-link.html">MQTT and automation</a><a href="faq.html">Troubleshooting</a><p class="guide-group">TC1 power strip</p><a href="tc1-guide.html">TC1 operation</a><a href="tc1-flash.html">Flash TC1</a><a href="tc1-no-disassembly.html" aria-current="page">Flash TC1 without disassembly</a><p class="guide-group">M1 air quality monitor</p><a href="m1-guide.html">M1 operation</a><a href="a1-m1-flash.html">Flash A1 / M1</a><p class="guide-group">A1 air purifier</p><a href="a1-guide.html">A1 operation</a><a href="a1-m1-flash.html">Flash A1 / M1</a><p class="guide-group">Development and maintenance</p><a href="iotcloud-deploy.html">Deploy IotCloud</a><a href="build-deps.html">Build dependencies</a><a href="sources.html">Asset sources</a><a href="release-log.html">Release Log</a></nav><main class="guide-main" id="main"><p class="guide-language" aria-label="Language"><a href="../tc1-no-disassembly.html" lang="zh-CN">简体中文</a> · English</p><article class="prose"><h1 id="flash-tc1-without-disassembly">Flash TC1 without disassembly</h1>
+<p><strong>For TC1 A1 hardware (EMW3031 / MK3031) running stock firmware 1.0.0.26.</strong> Other stock versions, TC1 A2 and the A1 air purifier are not supported.</p>
+<p>No case opening, no serial or SWD wiring: the device downloads a community image from a local TFTP server over Wi-Fi and switches slots by itself. No vendor cloud is involved. Read <a href="flash-prep.html">Before flashing</a> and <a href="firmware-update.html">Firmware updates</a> first.</p>
 <p>Flashing erases the inactive application slot and reboots the device. The retained stock slot is <strong>not</strong> a guaranteed automatic rollback. Keep power connected and connect no load during the transfer.</p>
-<h2 id="how-it-works">How it works</h2>
-<p>The stock provisioning service exposes <code>POST /OTA</code>, which copies the request body into a fixed-size stack buffer without a length check. On the verified build the four little-endian bytes at offset 392 overwrite the saved return address with the address of the firmware's built-in TFTP OTA routine. After the trigger, the device joins <code>PHICOMM_OTA_AP</code>, downloads <code>mico_ota.bin</code>, verifies the image MD5, writes the inactive slot, switches the active slot and reboots.</p>
-<p>The request body is exactly 397 bytes:</p>
-<table>
-<thead>
-<tr>
-<th>Offset</th>
-<th>Length</th>
-<th>Content</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>0–391</td>
-<td>392 B</td>
-<td><code>0x41</code> (ASCII <code>A</code>)</td>
-</tr>
-<tr>
-<td>392–395</td>
-<td>4 B</td>
-<td><code>9f 3d 07 1f</code>, little-endian <code>0x1F073D9F</code></td>
-</tr>
-<tr>
-<td>396</td>
-<td>1 B</td>
-<td><code>00</code> (string terminator)</td>
-</tr>
-</tbody>
-</table>
-<p>Offsets and the target address only apply to the verified stock build. Confirm the version with the read-only endpoint before triggering.</p>
-<h2 id="prepare-two-network-roles">Prepare two network roles</h2>
+<h2 id="what-you-need">What you need</h2>
 <table>
 <thead>
 <tr>
@@ -43,17 +13,18 @@
 <tbody>
 <tr>
 <td>Provisioning client</td>
-<td>Joins the TC1 provisioning AP, gets <code>10.10.10.x/24</code>, can reach <code>10.10.10.1:8000</code></td>
+<td>Joins the TC1 provisioning AP, gets <code>10.10.10.x/24</code> and can reach <code>10.10.10.1:8000</code></td>
 </tr>
 <tr>
 <td>OTA AP and file server</td>
-<td>2.4 GHz open AP <code>PHICOMM_OTA_AP</code>; device can reach TFTP at <code>10.0.0.2/8</code> and fetch <code>mico_ota.bin</code></td>
+<td>2.4 GHz open AP <code>PHICOMM_OTA_AP</code>; the device can reach TFTP at <code>10.0.0.2/8</code> and fetch <code>mico_ota.bin</code></td>
 </tr>
 </tbody>
 </table>
-<p>Any OS will do. One device can join the TC1 AP while another computer, travel router or wireless AP carries the OTA network. If one device does both, it must run a Wi-Fi client and an AP at the same time; create the OTA AP first, then join the TC1 AP. Two separate devices are easier.</p>
+<p>Any OS will do. One computer or phone can join the TC1 AP while another computer, travel router or wireless AP carries the OTA network. TFTP can run on the AP itself or on a computer behind a bridge.</p>
+<p>If one device carries both roles it must run a Wi-Fi client and an AP at the same time: create the OTA AP first, then join the TC1 AP. Not every wireless device supports that combination; two separate devices are easier.</p>
 <h2 id="build-the-image">Build the image</h2>
-<p>The OTA file is the raw <strong>MRVL application-slot image plus its 16-byte binary MD5</strong>, not a 32-character text digest. The verified image is 649328 bytes; the packaged <code>mico_ota.bin</code> is 649344 bytes with image MD5 <code>137bbe25d40f0a45b2b3129f035ea4c3</code>.</p>
+<p>The update file is the raw <strong>MRVL application-slot image plus its 16-byte binary MD5</strong>, not a 32-character text digest. The community image is 649328 bytes; the steps below produce a 649344-byte <code>mico_ota.bin</code>:</p>
 <pre><code class="language-sh">python3 - &lt;&lt;'PY'
 import hashlib
 image = open('tc1_community.image.bin', 'rb').read()
@@ -63,24 +34,24 @@ open('mico_ota.bin', 'wb').write(image + hashlib.md5(image).digest())
 print(len(image), hashlib.md5(image).hexdigest())
 PY
 </code></pre>
-<p>Do not feed a full-flash dump, a complete <code>.all.bin</code> or a <code>PHOTA001</code> web package into this step. The checks only verify the MRVL marker, size and MD5; they do not prove the image is suitable.</p>
+<p>The image MD5 should be <code>137bbe25d40f0a45b2b3129f035ea4c3</code>. Do not use a full-flash dump, a complete <code>.all.bin</code> or a <code>PHOTA001</code> web package as input; these checks only cover the MRVL marker, size and MD5, not hardware suitability.</p>
 <h2 id="enter-provisioning-mode">Enter provisioning mode</h2>
-<p>Either path works. The success state is the same: slow blinking LED, open AP <code>Phicomm_TC1_XXXX</code> (<code>XXXX</code> = last four MAC characters), address <code>10.10.10.1/24</code> and the <code>:8000</code> service.</p>
+<p>Either method works. The success state is the same: slow blinking LED, open AP <code>Phicomm_TC1_XXXX</code> (<code>XXXX</code> = last four MAC characters), address <code>10.10.10.1/24</code> and the <code>:8000</code> service.</p>
 <ul>
-<li><strong>Path A:</strong> power-cycle, then <strong>double-press the provisioning button within 3 seconds</strong> of power-up. The LED changes to ~500 ms slow blink and the AP appears.</li>
-<li><strong>Path B:</strong> long-press the provisioning button, wait for fast blink, keep holding for a while, release, then quickly short-press twice. The AP appearing confirms provisioning mode. Fast-blink timing can differ between stock versions, so trust the AP, not the light.</li>
+<li><strong>Method 1:</strong> power-cycle, then <strong>double-press the provisioning button within 3 seconds</strong> of power-up. The LED turns to ~500 ms slow blink and the AP appears.</li>
+<li><strong>Method 2:</strong> long-press the provisioning button, wait for fast blink, keep holding for a while, release, then quickly short-press twice. The AP appearing confirms provisioning mode. Fast-blink timing can differ between stock versions, so trust the AP rather than the light.</li>
 </ul>
-<p>If the AP does not appear, power-cycle and retry path A. Then re-check hardware and stock version; do not spam the button.</p>
-<p>Join <code>Phicomm_TC1_XXXX</code> and read the identity first:</p>
+<p>If the AP does not appear, power-cycle and retry method 1. Then re-check hardware and stock version; do not spam the button.</p>
+<p>Join <code>Phicomm_TC1_XXXX</code> and check the identity first:</p>
 <pre><code class="language-sh">curl -s -m 5 http://10.10.10.1:8000/read-domain
 </code></pre>
-<p><code>VERSION</code> must be <code>1.0.0.26</code> with <code>COMPILE_TIME</code> <code>Apr 13 2018 10:09:06</code>. Other builds need their own offsets and target address.</p>
+<p><code>VERSION</code> must be <code>1.0.0.26</code> with <code>COMPILE_TIME</code> <code>Apr 13 2018 10:09:06</code>. Do not continue on a different build.</p>
 <h2 id="create-the-ota-ap-and-tftp-service">Create the OTA AP and TFTP service</h2>
 <ol>
 <li>Create a <strong>2.4 GHz</strong> AP named exactly <strong><code>PHICOMM_OTA_AP</code></strong>, open, no password, no client isolation.</li>
 <li>Give the TFTP-serving interface the static address <strong><code>10.0.0.2</code></strong> with mask <strong><code>255.0.0.0</code> (/8)</strong>. When the server sits outside the AP, bridge the AP into the server's layer-2 network.</li>
 <li>Serve <strong><code>mico_ota.bin</code></strong> over TFTP: octet mode, 512-byte blocks, no option negotiation.</li>
-<li>Allow the device to reach the server for the initial UDP 69 request <strong>and</strong> the follow-up data/ACK session on the server's own port.</li>
+<li>Allow the device to reach the server for the initial UDP 69 request <strong>and</strong> the follow-up data session on the server's own port.</li>
 <li>Verify from another client that the whole file downloads and the digest matches. A loopback download only proves the file service works.</li>
 </ol>
 <p>Without an existing daemon, this read-only Python service serves exactly that file:</p>
@@ -113,25 +84,25 @@ print('done')
 PY
 </code></pre>
 <p>Port 69 needs elevated privileges on Linux and macOS; on Windows allow UDP through the firewall for the OTA adapter.</p>
-<h2 id="trigger-the-tftp-ota">Trigger the TFTP OTA</h2>
-<p>With both network roles ready, send one 397-byte request from the provisioning client:</p>
+<h2 id="trigger-the-flash">Trigger the flash</h2>
+<p>With both network roles ready, generate the community-provided trigger file and send it once from the provisioning client:</p>
 <pre><code class="language-sh">python3 - &lt;&lt;'PY'
 body = b'A' * 392 + (0x1F073D9F).to_bytes(4, 'little') + b'\0'
 open('tftp-trigger.bin', 'wb').write(body)
-print(len(body), body[392:397].hex())
+print(len(body))
 PY
 curl --max-time 30 --header 'Content-Type: application/json' \
   --data-binary @tftp-trigger.bin \
   http://10.10.10.1:8000/OTA
 </code></pre>
-<p><code>OTA AAAA...</code> only means the request was accepted — <strong>not</strong> that flashing succeeded. If the connection drops, observe the device first and do not retrigger immediately.</p>
+<p><code>OTA AAAA...</code> only means the request was accepted — <strong>not</strong> that flashing succeeded. If the connection drops, watch the device and do not retrigger immediately.</p>
 <h2 id="watch-the-transfer-and-first-boot">Watch the transfer and first boot</h2>
-<p>The device leaves provisioning mode, joins <code>PHICOMM_OTA_AP</code> and uses <code>10.&lt;last three MAC bytes as decimals&gt;</code> with mask <code>/8</code>. This sample uses <code>10.99.176.48</code>; do not copy that address.</p>
-<p>Typical order: join the OTA AP → erase the inactive slot (~6.5 s) → download <code>mico_ota.bin</code> from <code>10.0.0.2</code> → verify MD5 → switch slots and reboot. The TFTP log should show the complete transfer.</p>
-<p>After a successful first boot the open AP <strong><code>TC1_A1-AP-&lt;last six MAC chars&gt;</code></strong> appears (sample: <code>TC1_A1-AP-63B030</code>) at <strong><code>192.168.0.1</code></strong>. Join it and open the local web UI to finish setup.</p>
+<p>After leaving provisioning mode the device joins <code>PHICOMM_OTA_AP</code> with <code>10.&lt;last three MAC bytes as decimals&gt;</code> and mask <code>/8</code>. This differs per device; do not copy the example.</p>
+<p>Typical order: join the OTA AP → erase the inactive slot → download <code>mico_ota.bin</code> from <code>10.0.0.2</code> → verify MD5 → switch slots and reboot. The TFTP log should show the complete transfer.</p>
+<p>After a successful first boot the open AP <strong><code>TC1_A1-AP-&lt;last six MAC chars&gt;</code></strong> appears at <strong><code>192.168.0.1</code></strong>. Join it and open the device's local web UI to finish setup.</p>
 <h2 id="acceptance-and-cleanup">Acceptance and cleanup</h2>
 <p>Record four things separately: stock identity, complete TFTP transfer, new firmware AP, and web UI reachability. HTTP 200, a device drop-off or one TFTP transfer alone do not prove success.</p>
-<p>Then shut down the temporary OTA AP and TFTP service and restore the interface addresses and firewall rules you changed. OpenWrt / ImmortalWrt users can adapt the temporary interface and dnsmasq TFTP setup described in the community's private reference notes.</p>
+<p>Then shut down the temporary OTA AP and TFTP service and restore the interface addresses and firewall rules you changed. On OpenWrt / ImmortalWrt, adapt the temporary interface and dnsmasq TFTP setup to the goals above, then remove those settings and restore your original network.</p>
 <h2 id="common-problems">Common problems</h2>
 <table>
 <thead>
@@ -159,8 +130,8 @@ curl --max-time 30 --header 'Content-Type: application/json' \
 </tr>
 <tr>
 <td>TFTP completes but no slot switch</td>
-<td>Image MD5 mismatch or image larger than 692224 B</td>
+<td>Image MD5 mismatch, or image larger than 692224 B</td>
 </tr>
 </tbody>
 </table>
-<p>This page covers only the path verified on 2026-10-19. Other stock versions need their own analysis; these offsets and addresses do not transfer.</p></article><div class="guide-pager"><a href="tc1-flash.html">Previous<b>Flash TC1</b></a><a class="next" href="m1-guide.html">Next<b>M1 operation</b></a></div></main></div><footer class="site-footer"><div class="wrap"><div><b>PHICOMM COMMUNITY</b><p>Community-maintained, not affiliated with the manufacturer. Check the documentation for your release. The firmware repository has no single license covering all code.</p></div><div><b>Documentation</b><ul><li><a href="quick-start.html">Quick start</a></li><li><a href="faq.html">Troubleshooting</a></li><li><a href="release-log.html">Release Log</a></li></ul></div><div><b>Source</b><ul><li><a href="https://github.com/phicomm-io/phicomm-community-firmware">Firmware</a></li><li><a href="https://github.com/phicomm-io/phicomm-community-mqtt">MQTT platform</a></li></ul></div><div><b>Community</b><p>QQ group: 1021750178</p><a href="https://qm.qq.com/q/9L150V85kk?from=tim" target="_blank" rel="noopener noreferrer">Join the QQ group (Chinese)</a></div></div></footer><script src="../../site.js"></script></body></html>
+<p>This page only covers the devices and version listed above. Other stock versions are not supported.</p></article><div class="guide-pager"><a href="tc1-flash.html">Previous<b>Flash TC1</b></a><a class="next" href="m1-guide.html">Next<b>M1 operation</b></a></div></main></div><footer class="site-footer"><div class="wrap"><div><b>PHICOMM COMMUNITY</b><p>Community-maintained, not affiliated with the manufacturer. Check the documentation for your release. The firmware repository has no single license covering all code.</p></div><div><b>Documentation</b><ul><li><a href="quick-start.html">Quick start</a></li><li><a href="faq.html">Troubleshooting</a></li><li><a href="release-log.html">Release Log</a></li></ul></div><div><b>Source</b><ul><li><a href="https://github.com/phicomm-io/phicomm-community-firmware">Firmware</a></li><li><a href="https://github.com/phicomm-io/phicomm-community-mqtt">MQTT platform</a></li></ul></div><div><b>Community</b><p>QQ group: 1021750178</p><a href="https://qm.qq.com/q/9L150V85kk?from=tim" target="_blank" rel="noopener noreferrer">Join the QQ group (Chinese)</a></div></div></footer><script src="../../site.js"></script></body></html>
