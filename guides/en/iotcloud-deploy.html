@@ -27,6 +27,9 @@
 </tbody>
 </table>
 <p>Choose a node at the top of IotCloud. <strong>Accounts, passwords, devices and data are independent. Register separately on each node.</strong> Switching reloads the page and reconnects using the selected node's own session and MQTT credentials; it does not migrate data. Configure devices with that node's Broker hostname and account. The same username on two nodes does not link them.</p>
+<h2 id="local-access-without-login">Local access without login</h2>
+<p><a href="https://phicomm-io.github.io/local/">Open local device management</a> and enter the device LAN IPv4 address and web administration password. Control the device and configure Wi-Fi and MQTT without an account, backend or Broker. Compatible device firmware and browser local network permission are required. The web password stays in the current page session; enter it again after refreshing.</p>
+<p>For standalone static hosting, publish the complete <code>local/</code> directory from the frontend release. It skips login and needs no backend address. The regular login page also accepts device IPs. After login, use Settings → Device management → Details to set each LAN address and choose automatic transport or always MQTT. Automatic mode verifies device identity and authentication before using LAN; failed probes keep MQTT available.</p>
 <h2 id="deployment-options">Deployment options</h2>
 <p>Use <a href="https://phicomm-io.github.io/iotcloud/">the hosted frontend</a> and choose China / US, host the frontend on GitHub Pages or another static service, or run your own backend and Broker. The frontend repository documents static deployment; the <a href="https://github.com/phicomm-io/phicomm-community-mqtt#readme">platform repository</a> documents server initialization and cross-origin access.</p>
 <h2 id="static-frontend">Static frontend</h2>
