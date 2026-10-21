@@ -1,5 +1,22 @@
 <!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Release Log · 斐讯社区固件 · PHICOMM COMMUNITY</title><meta name="description" content="各版本发布说明"><link rel="canonical" href="https://phicomm-io.github.io/guides/release-log.html"><meta property="og:type" content="website"><meta property="og:site_name" content="PHICOMM COMMUNITY"><meta property="og:title" content="Release Log · 斐讯社区固件 · PHICOMM COMMUNITY"><meta property="og:description" content="各版本发布说明"><meta property="og:url" content="https://phicomm-io.github.io/guides/release-log.html"><meta property="og:locale" content="zh_CN"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Release Log · 斐讯社区固件 · PHICOMM COMMUNITY"><meta name="twitter:description" content="各版本发布说明"><link rel="alternate" hreflang="zh-CN" href="https://phicomm-io.github.io/guides/release-log.html"><link rel="alternate" hreflang="en" href="https://phicomm-io.github.io/guides/en/release-log.html"><link rel="alternate" hreflang="x-default" href="https://phicomm-io.github.io/guides/release-log.html"><link rel="stylesheet" href="../style.css"><script src="../theme.js"></script></head><body><a class="skip" href="#main">跳到主要内容</a><header class="site-header"><div class="wrap"><a class="brand" href=".././"><span class="mark" aria-hidden="true">斐</span><span class="word"><b>PHICOMM COMMUNITY</b><span>社区固件</span></span></a><nav class="site-nav" aria-label="主导航"><a href="../#devices">设备</a><a href="../#features">功能</a><a href="../#iotcloud">IotCloud</a><a href="../#demos">在线演示</a><a href="../#docs">文档</a><a href="../#releases">下载</a></nav><div class="prefs"><label class="sr" for="themePick">主题</label><select id="themePick"><option value="system">跟随系统</option><option value="light">浅色</option><option value="dark">深色</option></select></div></div></header><div class="guide-layout"><nav class="guide-nav" aria-label="文档导航"><p class="guide-group">开始使用</p><a href="quick-start.html">快速开始</a><a href="flash-prep.html">刷机前准备</a><a href="firmware-update.html">固件更新</a><a href="iotcloud-connect.html">接入 IotCloud</a><a href="mqtt-link.html">MQTT 与联动</a><a href="faq.html">故障排查</a><p class="guide-group">TC1 智能排插</p><a href="tc1-guide.html">功能与操作</a><a href="tc1-flash.html">刷机</a><a href="tc1-no-disassembly.html">免拆刷机</a><p class="guide-group">M1 空气检测仪</p><a href="m1-guide.html">功能与操作</a><a href="a1-m1-flash.html">刷机：J-Link / Bootloader</a><p class="guide-group">A1 空气净化器</p><a href="a1-guide.html">功能与操作</a><a href="a1-m1-flash.html">刷机：J-Link / Bootloader</a><p class="guide-group">开发与维护</p><a href="iotcloud-deploy.html">IotCloud 部署</a><a href="build-deps.html">构建依赖</a><a href="sources.html">资源来源</a><a href="release-log.html" aria-current="page">Release Log</a></nav><main class="guide-main" id="main"><p class="guide-language" aria-label="Language">简体中文 · <a href="en/release-log.html" lang="en">English</a></p><article class="prose"><h1 id="release-log">Release Log</h1>
 <p>发布前在本 Wiki 编辑对应版本章节，再运行快照工具并提交到源码仓库。</p>
+<h2 id="v0916">v0.9.16</h2>
+<ul>
+<li>优化 A1、M1、TC1 网页状态刷新：首次打开读取完整状态，日常刷新按需读取实时数据，网络与诊断信息按页面加载或降低刷新频率，减少设备负担与传输量。</li>
+<li>统一 A1、M1、TC1 的 HTTP 服务后端，共用连接管理、请求解析和异常处理逻辑，减少重复代码与机型间的行为差异。</li>
+<li>HTTP 与 MQTT 复用设备现有的权威状态结构体，通过统一的状态快照接口和 JSON 编码器生成数据，减少重复采集与编码逻辑。采集仅短时间持锁，编码和网络发送不持有状态锁，减少各环节之间的相互牵制。</li>
+<li>统一 MQTT 的连接、重连、命令队列与发送调度，改善网页与 MQTT 同时访问时的响应和资源管理，优先处理命令确认；高负载时允许返回繁忙，负载下降后恢复服务。</li>
+<li>修复 TC1 异常 HTTP 连接处理与资源回收问题，减少功率、电量读取及数字转换的内存开销，降低长时间运行时卡死、内存持续占用或异常重启的风险。</li>
+<li>优化 MQTT 命令去重与回执的内存占用，保留重复执行保护和冲突检查；修复 M1 改名后命令已执行、调用方却未收到确认的问题。</li>
+<li>M1 新增外接 BMP388／BMP390 气压传感器支持，可自动识别型号并在重新接入后恢复识别；在现有概览与设备摘要显示气压（hPa），失联或读数过期后自动隐藏，型号随探测结果更新。</li>
+<li>
+<p>修正绑定页面的 4 台设备上限，满额后禁止继续添加，并改善手机窄屏布局。</p>
+</li>
+<li>
+<p>三款设备完成至少 4 小时只读 HTTP/MQTT 混合压力与恢复检查，未观察到非预期整机重启、死锁或持续内存增长；过载时可能返回 busy 或超时，降载后恢复。测试结论限于已测设备与负载，不保证所有情况均安全。</p>
+</li>
+<li>0.9.x 为 beta 版本，后续可能调整或移除功能、变更接口；请保留重要配置备份。</li>
+</ul>
 <h2 id="v0915">v0.9.15</h2>
 <ul>
 <li>修复 TC1 打开网页、查看实时功率或电量时可能卡死、重启的问题。</li>
