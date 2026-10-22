@@ -1,7 +1,7 @@
 <!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>斐讯 TC1 免拆刷机：一个有线＋一个无线＋一个 AP · 斐讯社区固件 · PHICOMM COMMUNITY</title><meta name="description" content="图文步骤、配套文件与 Windows / Linux / macOS 命令"><link rel="canonical" href="https://phicomm-io.github.io/guides/tc1-no-disassembly-ethernet-wifi-ap.html"><meta property="og:type" content="website"><meta property="og:site_name" content="PHICOMM COMMUNITY"><meta property="og:title" content="斐讯 TC1 免拆刷机：一个有线＋一个无线＋一个 AP · 斐讯社区固件 · PHICOMM COMMUNITY"><meta property="og:description" content="图文步骤、配套文件与 Windows / Linux / macOS 命令"><meta property="og:url" content="https://phicomm-io.github.io/guides/tc1-no-disassembly-ethernet-wifi-ap.html"><meta property="og:locale" content="zh_CN"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="斐讯 TC1 免拆刷机：一个有线＋一个无线＋一个 AP · 斐讯社区固件 · PHICOMM COMMUNITY"><meta name="twitter:description" content="图文步骤、配套文件与 Windows / Linux / macOS 命令"><link rel="alternate" hreflang="zh-CN" href="https://phicomm-io.github.io/guides/tc1-no-disassembly-ethernet-wifi-ap.html"><link rel="alternate" hreflang="en" href="https://phicomm-io.github.io/guides/en/tc1-no-disassembly-ethernet-wifi-ap.html"><link rel="alternate" hreflang="x-default" href="https://phicomm-io.github.io/guides/tc1-no-disassembly-ethernet-wifi-ap.html"><link rel="stylesheet" href="../style.css"><script src="../theme.js"></script></head><body><a class="skip" href="#main">跳到主要内容</a><header class="site-header"><div class="wrap"><a class="brand" href=".././"><span class="mark" aria-hidden="true">斐</span><span class="word"><b>PHICOMM COMMUNITY</b><span>社区固件</span></span></a><nav class="site-nav" aria-label="主导航"><a href="../#devices">设备</a><a href="../#features">功能</a><a href="../#iotcloud">IotCloud</a><a href="../#demos">在线演示</a><a href="../#docs">文档</a><a href="../#releases">下载</a></nav><div class="prefs"><label class="sr" for="themePick">主题</label><select id="themePick"><option value="system">跟随系统</option><option value="light">浅色</option><option value="dark">深色</option></select></div></div></header><div class="guide-layout"><nav class="guide-nav" aria-label="文档导航"><p class="guide-group">开始使用</p><a href="quick-start.html">快速开始</a><a href="flash-prep.html">刷机前准备</a><a href="firmware-update.html">固件更新</a><a href="iotcloud-connect.html">接入 IotCloud</a><a href="mqtt-link.html">MQTT 与联动</a><a href="faq.html">故障排查</a><p class="guide-group">TC1 智能排插</p><a href="tc1-guide.html">功能与操作</a><a href="tc1-flash.html">刷机</a><a href="tc1-no-disassembly.html">免拆刷机</a><a href="tc1-no-disassembly-ethernet-wifi-ap.html" class="guide-child" aria-current="page">一个有线＋一个无线＋一个 AP</a><p class="guide-group">M1 空气检测仪</p><a href="m1-guide.html">功能与操作</a><a href="a1-m1-flash.html">刷机：J-Link / Bootloader</a><p class="guide-group">A1 空气净化器</p><a href="a1-guide.html">功能与操作</a><a href="a1-m1-flash.html">刷机：J-Link / Bootloader</a><p class="guide-group">开发与维护</p><a href="iotcloud-deploy.html">IotCloud 部署</a><a href="build-deps.html">构建依赖</a><a href="sources.html">资源来源</a><a href="release-log.html">Release Log</a></nav><main class="guide-main" id="main"><p class="guide-language" aria-label="Language">简体中文 · <a href="en/tc1-no-disassembly-ethernet-wifi-ap.html" lang="en">English</a></p><article class="prose"><h1 id="tc1-免拆刷机一个有线一个无线一个-ap">TC1 免拆刷机：一个有线＋一个无线＋一个 AP</h1>
 <p><a href="tc1-no-disassembly.html">返回 TC1 免拆刷机</a></p>
 <p>用电脑的<strong>有线网卡传固件、无线网卡发触发请求</strong>，再用一台路由器或 AP 提供刷机热点。本教程完整走一遍连接、下载、触发、首次启动和恢复网络的过程，适用于 Windows、Linux 和 macOS；可选择电脑系统，查看对应操作。</p>
-<p><strong>适用设备：TC1 智能排插 A1 硬件版（EMW3031 / MK3031），原厂固件 1.0.0.26。</strong> TC1 A2、其他原厂版本和 A1 空气净化器不适用。</p>
+<p><strong>适用设备：TC1 智能排插 A1 硬件版（EMW3031 / MK3031），原厂固件 1.0.0.26 或 1.0.0.24。</strong> TC1 A2、其他原厂版本和 A1 空气净化器不适用。</p>
 <fieldset class="guide-os-picker" hidden><legend>选择电脑系统</legend><div class="guide-os-options"><label><input type="radio" name="guide-os" value="mac"><span>macOS</span></label><label><input type="radio" name="guide-os" value="windows"><span>Windows</span></label><label><input type="radio" name="guide-os" value="linux"><span>Linux</span></label></div><p>只展示所选系统的操作，选择会自动保存。</p></fieldset>
 
 <h2 id="1-准备设备和文件">1. 准备设备和文件</h2>
@@ -20,8 +20,12 @@
 <td>已准备好的配套固件，放到 TFTP 服务目录，文件名必须保持不变</td>
 </tr>
 <tr>
-<td><a href="assets/tools/tc1-no-disassembly/tftp-trigger.bin">tftp-trigger.bin（payload）</a></td>
-<td>发送给原厂 OTA 接口的触发文件，仅适用于本页设备与版本</td>
+<td><a href="assets/tools/tc1-no-disassembly/tftp-trigger.bin">tftp-trigger.bin（payload，1.0.0.26）</a></td>
+<td>发送给原厂 OTA 接口的触发文件，用于 1.0.0.26</td>
+</tr>
+<tr>
+<td><a href="assets/tools/tc1-no-disassembly/tftp-trigger-1.0.0.24.bin">tftp-trigger-1.0.0.24.bin（payload，1.0.0.24）</a></td>
+<td>同一触发文件，目标地址按 1.0.0.24 平移</td>
 </tr>
 </tbody>
 </table>
@@ -193,13 +197,13 @@ sudo launchctl load -w /System/Library/LaunchDaemons/tftp.plist
 </code></pre>
 </div>
 
-<p>返回信息中核对 <strong><code>VERSION</code> 为 <code>1.0.0.26</code></strong>，本页截图的 <code>COMMITID</code> 为 <code>d1ecc7616f55bbf781be3bd80e23bab7c03dc047</code>。如果版本或构建标识不符，停止使用本页 payload；不要仅凭热点名称判断兼容。</p>
+<p>返回信息中核对 <strong><code>VERSION</code> 为 <code>1.0.0.26</code> 或 <code>1.0.0.24</code></strong>，本页截图的 <code>COMMITID</code> 为 <code>d1ecc7616f55bbf781be3bd80e23bab7c03dc047</code>。如果版本或构建标识不符，停止使用本页 payload；payload 必须与识别出的版本对应（1.0.0.26 用 <code>tftp-trigger.bin</code>，1.0.0.24 用 <code>tftp-trigger-1.0.0.24.bin</code>），不要仅凭热点名称判断兼容。</p>
 <div data-guide-os="windows">
 <p><img alt="read-domain 返回原厂 VERSION 和 COMMITID" src="assets/images/tc1-stock-version.png" /></p>
 </div>
 
 <h2 id="6-发送-payload等待固件下载">6. 发送 payload，等待固件下载</h2>
-<p>打开保存 <strong><code>tftp-trigger.bin</code></strong> 的 <code>tc1-flash</code> 文件夹，在这里打开终端。确认 TFTP 正在运行、有线地址仍为 <code>10.0.0.2</code>、无线仍连接 TC1，然后<strong>只发送一次</strong>：</p>
+<p>打开保存 <strong><code>tftp-trigger.bin</code></strong> 的 <code>tc1-flash</code> 文件夹，在这里打开终端。设备是 1.0.0.24 时请使用 <code>tftp-trigger-1.0.0.24.bin</code>（命令中文件名随之替换）。确认 TFTP 正在运行、有线地址仍为 <code>10.0.0.2</code>、无线仍连接 TC1，然后<strong>只发送一次</strong>：</p>
 <div data-guide-os="windows">
 <p><strong>Windows（CMD / PowerShell）：</strong></p>
 <pre><code class="language-cmd">curl.exe --noproxy &quot;*&quot; --max-time 30 --header &quot;Content-Type: application/json&quot; --data-binary &quot;@tftp-trigger.bin&quot; http://10.10.10.1:8000/OTA
@@ -260,7 +264,7 @@ sudo ifconfig en5 inet 10.0.0.2 -alias
 <tbody>
 <tr>
 <td>curl 找不到 payload</td>
-<td>在 <code>tc1-flash</code> 文件夹内打开终端，确认文件名不是 <code>tftp-trigger.bin.txt</code></td>
+<td>在 <code>tc1-flash</code> 文件夹内打开终端，确认文件名不是 <code>tftp-trigger.bin.txt</code>，且与设备版本匹配</td>
 </tr>
 <tr>
 <td>read-domain 无响应</td>
