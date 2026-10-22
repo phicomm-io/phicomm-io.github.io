@@ -1,7 +1,9 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>One Ethernet + one Wi-Fi + one AP · Phicomm community firmware</title><meta name="description" content="Illustrated steps, downloads and Windows / Linux / macOS commands"><link rel="canonical" href="https://phicomm-io.github.io/guides/en/tc1-no-disassembly-ethernet-wifi-ap.html"><meta property="og:type" content="website"><meta property="og:site_name" content="PHICOMM COMMUNITY"><meta property="og:title" content="One Ethernet + one Wi-Fi + one AP · Phicomm community firmware"><meta property="og:description" content="Illustrated steps, downloads and Windows / Linux / macOS commands"><meta property="og:url" content="https://phicomm-io.github.io/guides/en/tc1-no-disassembly-ethernet-wifi-ap.html"><meta property="og:locale" content="en_US"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="One Ethernet + one Wi-Fi + one AP · Phicomm community firmware"><meta name="twitter:description" content="Illustrated steps, downloads and Windows / Linux / macOS commands"><link rel="alternate" hreflang="zh-CN" href="https://phicomm-io.github.io/guides/tc1-no-disassembly-ethernet-wifi-ap.html"><link rel="alternate" hreflang="en" href="https://phicomm-io.github.io/guides/en/tc1-no-disassembly-ethernet-wifi-ap.html"><link rel="alternate" hreflang="x-default" href="https://phicomm-io.github.io/guides/tc1-no-disassembly-ethernet-wifi-ap.html"><link rel="stylesheet" href="../../style.css"><script src="../../theme.js"></script></head><body><a class="skip" href="#main">Skip to content</a><header class="site-header"><div class="wrap"><a class="brand" href="../../"><span class="mark">P</span><span class="word"><b>PHICOMM COMMUNITY</b><span>Community firmware</span></span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../#devices">Devices</a><a href="../../#features">Features</a><a href="../../#iotcloud">IotCloud</a><a href="../../#demos">Demos</a><a href="../../#docs">Documentation</a><a href="../../#releases">Downloads</a></nav><div class="prefs"><label class="sr" for="themePick">Theme</label><select id="themePick"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></header><div class="guide-layout"><nav class="guide-nav" aria-label="Documentation navigation"><p class="guide-group">Getting started</p><a href="quick-start.html">Quick start</a><a href="flash-prep.html">Before flashing</a><a href="firmware-update.html">Firmware updates</a><a href="iotcloud-connect.html">Connect to IotCloud</a><a href="mqtt-link.html">MQTT and automation</a><a href="faq.html">Troubleshooting</a><p class="guide-group">TC1 power strip</p><a href="tc1-guide.html">TC1 operation</a><a href="tc1-flash.html">Flash TC1</a><a href="tc1-no-disassembly.html">Flash TC1 without disassembly</a><a href="tc1-no-disassembly-ethernet-wifi-ap.html" class="guide-child" aria-current="page">One Ethernet + one Wi-Fi + one AP</a><p class="guide-group">M1 air quality monitor</p><a href="m1-guide.html">M1 operation</a><a href="a1-m1-flash.html">Flash A1 / M1</a><p class="guide-group">A1 air purifier</p><a href="a1-guide.html">A1 operation</a><a href="a1-m1-flash.html">Flash A1 / M1</a><p class="guide-group">Development and maintenance</p><a href="iotcloud-deploy.html">Deploy IotCloud</a><a href="build-deps.html">Build dependencies</a><a href="sources.html">Asset sources</a><a href="release-log.html">Release Log</a></nav><main class="guide-main" id="main"><p class="guide-language" aria-label="Language"><a href="../tc1-no-disassembly-ethernet-wifi-ap.html" lang="zh-CN">简体中文</a> · English</p><article class="prose"><h1 id="tc1-flashing-one-ethernet-adapter-one-wi-fi-adapter-one-ap">TC1 flashing: one Ethernet adapter + one Wi-Fi adapter + one AP</h1>
 <p><a href="tc1-no-disassembly.html">Back to TC1 flashing without disassembly</a></p>
-<p>The computer serves firmware over <strong>Ethernet</strong>, sends the trigger over <strong>Wi-Fi</strong>, and a router or AP supplies the OTA network. This guide covers preparation, flashing, first boot and cleanup on Windows, Linux and macOS. Screenshots show Windows examples.</p>
+<p>The computer serves firmware over <strong>Ethernet</strong>, sends the trigger over <strong>Wi-Fi</strong>, and a router or AP supplies the OTA network. This guide covers preparation, flashing, first boot and cleanup on Windows, Linux and macOS. Select your computer’s operating system to follow its instructions.</p>
 <p><strong>For TC1 A1 hardware (EMW3031 / MK3031), stock firmware 1.0.0.26.</strong> Other stock versions, TC1 A2 and the A1 air purifier are outside this procedure.</p>
+<fieldset class="guide-os-picker" hidden><legend>Your computer</legend><div class="guide-os-options"><label><input type="radio" name="guide-os" value="mac"><span>macOS</span></label><label><input type="radio" name="guide-os" value="windows"><span>Windows</span></label><label><input type="radio" name="guide-os" value="linux"><span>Linux</span></label></div><p>Only instructions for your selected system are shown. Your choice is saved.</p></fieldset>
+
 <h2 id="1-prepare-equipment-and-downloads">1. Prepare equipment and downloads</h2>
 <p>Use a computer with Ethernet and Wi-Fi, an Ethernet cable, and a router or AP supporting <strong>2.4 GHz open Wi-Fi bridged to its LAN ports</strong>. A USB Ethernet adapter works too. Keep TC1 on stable power and disconnect loads from its outlets.</p>
 <p>Create a <code>tc1-flash</code> folder and download both files into it:</p>
@@ -24,8 +26,26 @@
 </tbody>
 </table>
 <p>Their sizes are <strong>649,344 bytes</strong> and <strong>397 bytes</strong>. Use <a href="../assets/SHA256SUMS">SHA256SUMS</a> to verify downloads. These are fixed tutorial files; see <a href="firmware-update.html">Firmware updates</a> for later upgrades.</p>
-<p><strong>No Python or firmware/payload generation is needed.</strong> Prepare <code>curl</code> and a TFTP server. Windows can use <a href="https://pjo2.github.io/tftpd64/">Tftpd64</a>; Linux and macOS setup is in step 4. Download everything before switching Wi-Fi networks.</p>
-<p>Check <code>curl.exe --version</code> on Windows or <code>curl --version</code> on Linux / macOS. Windows commands use <code>curl.exe</code> to avoid the PowerShell alias.</p>
+<p><strong>No Python or firmware/payload generation is needed.</strong> Prepare <code>curl</code> and a TFTP server. Download all files and tools before switching Wi-Fi networks.</p>
+<div data-guide-os="windows">
+<p>Use <a href="https://pjo2.github.io/tftpd64/">Tftpd64</a> for TFTP. Check curl in CMD or PowerShell:</p>
+<pre><code class="language-cmd">curl.exe --version
+</code></pre>
+<p>Windows commands use <code>curl.exe</code> to avoid the PowerShell alias.</p>
+</div>
+
+<div data-guide-os="linux">
+<p>Prepare <code>dnsmasq</code> for the temporary TFTP service in step 4. On Debian / Ubuntu, install <code>dnsmasq-base</code> while still online. Check curl:</p>
+<pre><code class="language-sh">curl --version
+</code></pre>
+</div>
+
+<div data-guide-os="mac">
+<p>Use the built-in TFTP service configured in step 4. Check curl in Terminal:</p>
+<pre><code class="language-sh">curl --version
+</code></pre>
+</div>
+
 <h2 id="2-configure-the-ap-and-connect-ethernet">2. Configure the AP and connect Ethernet</h2>
 <p>After receiving the trigger, TC1 leaves its provisioning hotspot and joins <code>PHICOMM_OTA_AP</code> to download firmware. Prepare that network first.</p>
 <pre><code class="language-text">Computer Ethernet (10.0.0.2/8, TFTP) ──cable── router / AP LAN port
@@ -64,6 +84,7 @@ TC1 after receiving the trigger ──connects to── PHICOMM_OTA_AP
 <p>The computer's adapters need <strong>no bridge or Internet sharing</strong>. Keep Ethernet connected to the AP and Wi-Fi connected to TC1 during flashing.</p>
 <h2 id="3-add-10002-to-ethernet">3. Add 10.0.0.2 to Ethernet</h2>
 <p>Use <strong><code>10.0.0.2</code> with mask <code>255.0.0.0</code> (/8)</strong>, with no additional gateway or DNS. Record the original addresses, gateway, DNS and DHCP state first.</p>
+<div data-guide-os="windows">
 <h3 id="windows">Windows</h3>
 <p>Open CMD or PowerShell as administrator:</p>
 <pre><code class="language-cmd">netsh interface ipv4 show interfaces
@@ -75,6 +96,9 @@ netsh interface ipv4 show addresses name=&quot;Ethernet&quot;
 </code></pre>
 <p><img alt="Administrator terminal adding 10.0.0.2/8 to Ethernet" src="../assets/images/tc1-ota-windows-address.png" /></p>
 <p>Confirm <code>10.0.0.2</code> appears. <strong>This command disables DHCP on an adapter previously configured to obtain its address automatically.</strong> Restore DHCP afterward if that was its original mode. See <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/netsh-interface">Microsoft's netsh reference</a>.</p>
+</div>
+
+<div data-guide-os="linux">
 <h3 id="linux">Linux</h3>
 <p>Find the wired adapter; replace example <code>enp3s0</code> with its actual name:</p>
 <pre><code class="language-sh">ip -br address
@@ -82,6 +106,9 @@ ip route
 sudo ip address add 10.0.0.2/8 dev enp3s0
 ip -4 address show dev enp3s0
 </code></pre>
+</div>
+
+<div data-guide-os="mac">
 <h3 id="macos">macOS</h3>
 <p>Distinguish Wi-Fi from Ethernet first. USB Ethernet may be <code>en5</code>, rather than <code>en0</code>; substitute your actual wired interface:</p>
 <pre><code class="language-sh">networksetup -listallhardwareports
@@ -89,9 +116,12 @@ ifconfig en5
 sudo ifconfig en5 inet 10.0.0.2 netmask 255.0.0.0 alias
 ifconfig en5
 </code></pre>
-<p>On every OS, confirm <strong>Ethernet actually has <code>10.0.0.2/8</code></strong> before continuing. Resolve missing interfaces and address conflicts first.</p>
+</div>
+
+<p>Confirm <strong>Ethernet actually has <code>10.0.0.2/8</code></strong> before continuing. Resolve missing interfaces and address conflicts first.</p>
 <h2 id="4-start-tftp">4. Start TFTP</h2>
-<p>TC1 reads <code>mico_ota.bin</code> from the computer. <strong>Keep the payload in your terminal's working folder; it is not served through TFTP.</strong> Choose the server instructions for your OS.</p>
+<p>TC1 reads <code>mico_ota.bin</code> from the computer. <strong>Keep the payload in your terminal's working folder; it is not served through TFTP.</strong> Keep the server running until the firmware transfer completes.</p>
+<div data-guide-os="windows">
 <h3 id="windows-tftpd64">Windows: Tftpd64</h3>
 <ol>
 <li>Set <strong>Current Directory</strong> using <strong>Browse</strong> to the <code>tc1-flash</code> folder containing <code>mico_ota.bin</code>.</li>
@@ -100,6 +130,9 @@ ifconfig en5
 <li>Allow Tftpd64 through the firewall on the flashing network when prompted.</li>
 </ol>
 <p><img alt="Tftpd64 directory selection and Server interfaces set to 10.0.0.2" src="../assets/images/tc1-ota-tftpd64.png" /></p>
+</div>
+
+<div data-guide-os="linux">
 <h3 id="linux-temporary-dnsmasq-tftp">Linux: temporary dnsmasq TFTP</h3>
 <p>On Debian / Ubuntu, install <code>dnsmasq-base</code> before switching networks. Other distributions need the package providing <code>dnsmasq</code>. Run from the <code>tc1-flash</code> folder:</p>
 <pre><code class="language-sh">sudo apt install dnsmasq-base
@@ -111,6 +144,9 @@ sudo dnsmasq --no-daemon --conf-file=/dev/null --port=0 \
   --tftp-root=&quot;$tc1_tftp_dir&quot; --log-facility=-
 </code></pre>
 <p>Keep this terminal running and open another for curl. This temporary command provides TFTP without DNS or DHCP. If UDP 69 is already occupied, identify the existing TFTP server and use its serving directory instead of starting another instance.</p>
+</div>
+
+<div data-guide-os="mac">
 <h3 id="macos-built-in-tftp">macOS: built-in TFTP</h3>
 <p>Open a terminal in <code>tc1-flash</code>. Check <code>/private/tftpboot</code> for an existing firmware file with the same name and back it up if needed, then run:</p>
 <pre><code class="language-sh">sudo mkdir -p /private/tftpboot
@@ -119,36 +155,66 @@ sudo chmod 644 /private/tftpboot/mico_ota.bin
 sudo launchctl load -w /System/Library/LaunchDaemons/tftp.plist
 </code></pre>
 <p>The built-in service serves <code>/private/tftpboot</code> without a graphical progress window. If already loaded, verify the existing service.</p>
+</div>
+
 <h3 id="verify-file-access">Verify file access</h3>
 <p>TFTP starts on <strong>UDP 69</strong>, then transfers data through a separate session port. Allow complete TFTP transfers on the flashing network, including those session ports.</p>
-<p>Before putting TC1 in provisioning mode, download the entire file from another computer connected to <code>PHICOMM_OTA_AP</code>. If that client's <code>curl --version</code> lists <code>tftp</code>, run:</p>
+<p>Before putting TC1 in provisioning mode, download the entire file from another computer connected to <code>PHICOMM_OTA_AP</code>. If that client's curl supports <code>tftp</code>, run:</p>
+<div data-guide-os="windows">
+<pre><code class="language-cmd">curl.exe --fail --max-time 30 -o tc1-download-check.bin tftp://10.0.0.2/mico_ota.bin
+</code></pre>
+</div>
+
+<div data-guide-os="mac linux">
 <pre><code class="language-sh">curl --fail --max-time 30 -o tc1-download-check.bin tftp://10.0.0.2/mico_ota.bin
 </code></pre>
-<p>Use <code>curl.exe</code> on Windows. Otherwise use a TFTP client in <strong>binary / octet</strong> mode. Compare the downloaded size and SHA-256 with the original. A download on the server itself does not prove the AP's wireless path works.</p>
+</div>
+
+<p>If the client uses a different OS, use its curl command or a TFTP client in <strong>binary / octet</strong> mode. Compare the downloaded size and SHA-256 with the original. A download on the server itself does not prove the AP's wireless path works.</p>
 <h2 id="5-put-tc1-in-provisioning-mode">5. Put TC1 in provisioning mode</h2>
 <p>Power-cycle TC1 and <strong>double-press the provisioning button within 3 seconds</strong>. The LED should blink slowly and the open hotspot <strong><code>Phicomm_TC1_XXXX</code></strong> should appear; the last four characters vary by device.</p>
 <p>Alternatively, hold the button until fast blinking, continue holding briefly, release, then quickly press twice. Trust the hotspot appearing. If absent, power-cycle and retry before sending any payload.</p>
-<p>Connect the computer's <strong>Wi-Fi</strong> to that hotspot. Keep Ethernet and TFTP running. Stay connected when Windows reports no Internet.</p>
+<p>Connect the computer's <strong>Wi-Fi</strong> to that hotspot. Keep Ethernet and TFTP running.</p>
+<div data-guide-os="windows">
+<p>If Windows reports no Internet, stay connected to TC1.</p>
+</div>
+
 <p><img alt="Stock provisioning hotspot Phicomm_TC1_6D3D in the wireless list" src="../assets/images/tc1-stock-ap.png" /></p>
 <p>Confirm Wi-Fi has a <code>10.10.10.x/24</code> address, then query the stock firmware.</p>
+<div data-guide-os="windows">
 <p><strong>Windows:</strong></p>
 <pre><code class="language-cmd">curl.exe --noproxy &quot;*&quot; --fail --max-time 5 http://10.10.10.1:8000/read-domain
 </code></pre>
-<p><strong>Linux / macOS:</strong></p>
+</div>
+
+<div data-guide-os="mac linux">
 <pre><code class="language-sh">curl --noproxy '*' --fail --max-time 5 http://10.10.10.1:8000/read-domain
 </code></pre>
+</div>
+
 <p>Check <strong><code>VERSION</code> = <code>1.0.0.26</code></strong>. The screenshot's <code>COMMITID</code> is <code>d1ecc7616f55bbf781be3bd80e23bab7c03dc047</code>. Stop if the version or build identifier differs; a matching SSID alone does not prove compatibility.</p>
+<div data-guide-os="windows">
 <p><img alt="read-domain response containing stock VERSION and COMMITID" src="../assets/images/tc1-stock-version.png" /></p>
+</div>
+
 <h2 id="6-send-the-payload-and-wait">6. Send the payload and wait</h2>
 <p>Open a terminal in the <code>tc1-flash</code> folder containing <strong><code>tftp-trigger.bin</code></strong>. Confirm TFTP is running, Ethernet still has <code>10.0.0.2</code>, and Wi-Fi is connected to TC1. Send <strong>once</strong>:</p>
+<div data-guide-os="windows">
 <p><strong>Windows (CMD / PowerShell):</strong></p>
 <pre><code class="language-cmd">curl.exe --noproxy &quot;*&quot; --max-time 30 --header &quot;Content-Type: application/json&quot; --data-binary &quot;@tftp-trigger.bin&quot; http://10.10.10.1:8000/OTA
 </code></pre>
-<p><strong>Linux / macOS:</strong></p>
+</div>
+
+<div data-guide-os="mac linux">
 <pre><code class="language-sh">curl --noproxy '*' --max-time 30 --header 'Content-Type: application/json' --data-binary '@tftp-trigger.bin' http://10.10.10.1:8000/OTA
 </code></pre>
+</div>
+
 <p><code>--data-binary</code> preserves the payload bytes. Do not open the file and paste its contents as text, or include the prompt/backticks shown in screenshots.</p>
+<div data-guide-os="windows">
 <p><img alt="Stock endpoint returns OTA text after curl sends tftp-trigger.bin" src="../assets/images/tc1-ota-trigger.png" /></p>
+</div>
+
 <p><code>OTA</code> or repeated <code>A</code> characters indicate receipt, <strong>not successful flashing</strong>. The provisioning hotspot disappearing and Wi-Fi disconnecting are expected during the network switch. Even if curl times out, observe the device and download before considering another attempt.</p>
 <p>TC1 joins <code>PHICOMM_OTA_AP</code> and downloads <code>mico_ota.bin</code> over Ethernet through the AP. Where logs or progress are available, look for a read request and complete transfer. <strong>The computer's Wi-Fi does not need to switch to the AP.</strong></p>
 <p>Keep TC1, AP and computer powered while download, verification and reboot finish. Do not stop TFTP or disconnect Ethernet during transfer.</p>
@@ -158,22 +224,29 @@ sudo launchctl load -w /System/Library/LaunchDaemons/tftp.plist
 <p>Join it from a computer or phone, open <strong><code>http://192.168.0.1/</code></strong>, and confirm the community WebUI loads. Configure your normal Wi-Fi there. See <a href="tc1-guide.html">TC1 operation</a> for controls and pairing.</p>
 <p><strong>The new hotspot and accessible local WebUI together confirm completion.</strong> An HTTP response, loss of the old hotspot or a TFTP transfer alone does not.</p>
 <h2 id="8-stop-temporary-services-and-restore-networking">8. Stop temporary services and restore networking</h2>
-<p>After confirming the firmware works, close Tftpd64 or press <code>Ctrl+C</code> in the temporary Linux dnsmasq terminal. On macOS, if you enabled TFTP just for this procedure, stop it:</p>
-<pre><code class="language-sh">sudo launchctl unload -w /System/Library/LaunchDaemons/tftp.plist
-</code></pre>
-<p>Remove the added Ethernet address, using the same actual interface name as step 3.</p>
+<div data-guide-os="windows">
+<p>Close Tftpd64, then remove the added address using the same interface name as step 3.</p>
 <p><strong>Windows:</strong></p>
 <pre><code class="language-cmd">netsh interface ipv4 delete address name=&quot;Ethernet&quot; address=10.0.0.2
 </code></pre>
 <p>If Ethernet originally used DHCP, restore it with the following command. For an originally static configuration, restore your recorded settings instead:</p>
 <pre><code class="language-cmd">netsh interface ipv4 set address name=&quot;Ethernet&quot; source=dhcp
 </code></pre>
-<p><strong>Linux:</strong></p>
+</div>
+
+<div data-guide-os="linux">
+<p>Press <code>Ctrl+C</code> in the temporary dnsmasq terminal, then remove the added address using the actual Ethernet interface name:</p>
 <pre><code class="language-sh">sudo ip address del 10.0.0.2/8 dev enp3s0
 </code></pre>
-<p><strong>macOS:</strong></p>
-<pre><code class="language-sh">sudo ifconfig en5 inet 10.0.0.2 -alias
+</div>
+
+<div data-guide-os="mac">
+<p>If you enabled TFTP just for this procedure, stop it. Then remove the added address using the same interface name as step 3:</p>
+<pre><code class="language-sh">sudo launchctl unload -w /System/Library/LaunchDaemons/tftp.plist
+sudo ifconfig en5 inet 10.0.0.2 -alias
 </code></pre>
+</div>
+
 <p>Disable the temporary open AP or restore its original SSID and password. Remove temporary firewall exceptions and the firmware copies you added to temporary serving directories.</p>
 <h2 id="troubleshooting">Troubleshooting</h2>
 <table>
@@ -199,10 +272,6 @@ sudo launchctl load -w /System/Library/LaunchDaemons/tftp.plist
 <tr>
 <td>Transfer starts then stalls</td>
 <td>Check session ports, computer sleep and Ethernet connection</td>
-</tr>
-<tr>
-<td>No macOS progress window</td>
-<td>The built-in service has no GUI; verify a complete download from another client, then check the new hotspot and WebUI</td>
 </tr>
 <tr>
 <td>Download finishes but no new hotspot</td>
