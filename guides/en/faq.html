@@ -43,7 +43,7 @@
 <h3 id="buttons-seem-unresponsive">Buttons seem unresponsive</h3>
 <p>Disable child lock for custom actions. Actions are recognized after release; recovery never executes while a button is still held. Five seconds and above are reserved, not custom long presses. Multi-click actions wait until the click interval finishes.</p>
 <h3 id="a1-m1-automation-does-not-work">A1 / M1 automation does not work</h3>
-<p>Check the M1 pairing identifier, A1 member list and enabled rules, network / MQTT on both devices, then the averaged readings. No valid readings means <code>null</code>.</p>
+<p>Check the M1 MAC and optional IP configured on A1; no pairing identifier is needed on M1. Check the A1 member list and enabled rules. Both devices need the same MQTT service and account to establish a session, plus working LAN UDP. Finally, check the averaged readings: no valid readings means <code>null</code>.</p>
 <h3 id="update-failed">Update failed</h3>
 <p>Keep power connected during updates. If the WebUI remains available, verify the file and network and retry. Otherwise recover with a programmer: <a href="tc1-flash.html">TC1</a> or <a href="a1-m1-flash.html">A1 / M1</a>.</p>
 <h3 id="settings-were-not-saved">Settings were not saved</h3>

@@ -103,11 +103,7 @@
 <p>完整重置可以在 M1 的 WebUI 中执行。</p>
 <h2 id="作为-a1-的联动数据源">作为 A1 的联动数据源</h2>
 <p>M1 只检测、上报并应答<strong>已授权</strong>的 A1，不主动控制净化器，也不主动轮询 A1。</p>
-<ul>
-<li>在 M1 的绑定设置中添加 <code>A1_MAC:M1_MAC</code> 配对标识。</li>
-<li>许可列表最多八个并去重。</li>
-<li>M1 会拒绝联动通道上的配置读写、解绑和传感器推送。</li>
-</ul>
+<p>只需在 A1 添加本机 MAC 和可选 IP。MQTT 用于建立会话，传感器查询走局域网 UDP。M1 页面只读显示会话状态，最多同时保留四台 A1；无需维护许可列表或配对码。</p>
 <p>绑定与联动规则见 <a href="mqtt-link.html#a1-与-m1-联动">MQTT 与联动</a>。</p>
 <h2 id="iotcloud-与-home-assistant">IotCloud 与 Home Assistant</h2>
 <p>IotCloud 的 M1 详情页支持同样的 CO₂ 卡片，设备列表显示有效 CO₂ 摘要。识别并取得 SCD40 有效读数后，Home Assistant 通过 MQTT 自动发现“二氧化碳”实体（ppm）；超过 20 秒未更新时，该实体变为不可用，不影响 M1 原有传感器实体。</p>

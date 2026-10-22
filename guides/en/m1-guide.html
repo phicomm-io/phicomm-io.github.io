@@ -70,7 +70,7 @@
 <h2 id="buttons-and-recovery">Buttons and recovery</h2>
 <p>M1 uses the original panel's <code>0x18</code> long-press event, acknowledges it with fixed <code>0x16</code>, and clears Wi-Fi and the WebUI password once per boot after deduplication. It does not implement TC1 / A1's precise 5 / 10 second recovery split and has no custom button mappings. Follow <a href="a1-m1-flash.html">A1 / M1 recovery</a>. A full reset is available in the WebUI.</p>
 <h2 id="supplying-readings-to-a1">Supplying readings to A1</h2>
-<p>M1 measures, reports and answers authorized A1 requests. It does not control or poll the purifier. Add <code>A1_MAC:M1_MAC</code> in M1 binding settings; at most eight unique pairs are accepted. Configuration reads / writes, unbinding and sensor pushes are rejected on the binding channel. See <a href="mqtt-link.html#a1-and-m1-automation">A1 and M1 automation</a>.</p>
+<p>M1 measures, reports and answers authorized A1 requests. It does not control or poll the purifier. Add this M1's MAC and optional IP on A1. MQTT establishes the session; sensor queries use LAN UDP. The M1 page shows read-only session status for up to four A1 units, with no allowlist or pairing code to maintain. See <a href="mqtt-link.html#a1-and-m1-automation">A1 and M1 automation</a>.</p>
 <h2 id="iotcloud-and-home-assistant">IotCloud and Home Assistant</h2>
 <p>IotCloud reuses the M1 CO₂ detail card and shows fresh CO₂ readings in device summaries. Once SCD40 produces a valid reading, Home Assistant discovers a carbon dioxide MQTT sensor in ppm. After 20 seconds without an update, only that sensor becomes unavailable; the original M1 sensors remain independent.</p>
 <h2 id="mqtt">MQTT</h2>
