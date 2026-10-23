@@ -1,0 +1,171 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Stock Wi-Fi setup without the app · Phicomm community firmware</title><meta name="description" content="A1 EasyLink and M1 hotspot setup on Windows, macOS and Linux"><link rel="canonical" href="https://phicomm-io.github.io/guides/en/stock-provision.html"><meta property="og:type" content="website"><meta property="og:site_name" content="PHICOMM COMMUNITY"><meta property="og:title" content="Stock Wi-Fi setup without the app · Phicomm community firmware"><meta property="og:description" content="A1 EasyLink and M1 hotspot setup on Windows, macOS and Linux"><meta property="og:url" content="https://phicomm-io.github.io/guides/en/stock-provision.html"><meta property="og:locale" content="en_US"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Stock Wi-Fi setup without the app · Phicomm community firmware"><meta name="twitter:description" content="A1 EasyLink and M1 hotspot setup on Windows, macOS and Linux"><link rel="alternate" hreflang="zh-CN" href="https://phicomm-io.github.io/guides/stock-provision.html"><link rel="alternate" hreflang="en" href="https://phicomm-io.github.io/guides/en/stock-provision.html"><link rel="alternate" hreflang="x-default" href="https://phicomm-io.github.io/guides/stock-provision.html"><link rel="stylesheet" href="../../style.css"><script src="../../theme.js"></script></head><body><a class="skip" href="#main">Skip to content</a><header class="site-header"><div class="wrap"><a class="brand" href="../../"><span class="mark">P</span><span class="word"><b>PHICOMM COMMUNITY</b><span>Community firmware</span></span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../#devices">Devices</a><a href="../../#features">Features</a><a href="../../#iotcloud">IotCloud</a><a href="../../#demos">Demos</a><a href="../../#docs">Documentation</a><a href="../../#releases">Downloads</a></nav><div class="prefs"><label class="sr" for="themePick">Theme</label><select id="themePick"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></header><div class="guide-layout"><nav class="guide-nav" aria-label="Documentation navigation"><p class="guide-group">Getting started</p><a href="quick-start.html">Quick start</a><a href="flash-prep.html">Before flashing</a><a href="firmware-update.html">Firmware updates</a><a href="iotcloud-connect.html">Connect to IotCloud</a><a href="mqtt-link.html">MQTT and automation</a><a href="faq.html">Troubleshooting</a><p class="guide-group">TC1 power strip</p><a href="tc1-guide.html">TC1 operation</a><a href="tc1-flash.html">Flash TC1</a><a href="tc1-no-disassembly.html">Flash TC1 without disassembly</a><a href="tc1-no-disassembly-ethernet-wifi-ap.html" class="guide-child">One Ethernet + one Wi-Fi + one AP</a><p class="guide-group">M1 air quality monitor</p><a href="m1-guide.html">M1 operation</a><a href="stock-provision.html" aria-current="page">Stock Wi-Fi setup without the app</a><a href="m1-no-disassembly.html">M1 no-disassembly migration</a><a href="a1-m1-flash.html">Flash A1 / M1</a><p class="guide-group">A1 air purifier</p><a href="a1-guide.html">A1 operation</a><a href="stock-provision.html" aria-current="page">Stock Wi-Fi setup without the app</a><a href="a1-no-disassembly.html">A1 no-disassembly migration</a><a href="a1-m1-flash.html">Flash A1 / M1</a><p class="guide-group">Development and maintenance</p><a href="iotcloud-deploy.html">Deploy IotCloud</a><a href="build-deps.html">Build dependencies</a><a href="sources.html">Asset sources</a><a href="release-log.html">Release Log</a></nav><main class="guide-main" id="main"><p class="guide-language" aria-label="Language"><a href="../stock-provision.html" lang="zh-CN">简体中文</a> · English</p><article class="prose"><h1 id="set-up-stock-a1-m1-wi-fi-without-the-original-app">Set up stock A1 / M1 Wi-Fi without the original app</h1>
+<p>A1 can receive EasyLink packets from a computer. M1 can expose a hotspot and accept Wi-Fi settings over HTTP. These paths do not require the original app or a cloud account.</p>
+<p>The instructions come from the backed-up factory firmware. The A1 sender passed host tests and emulation of the original ARM decoder; physical A1 provisioning remains untested. M1 hotspot submission returned HTTP 200 in an earlier test. Separately, sending EasyLink V2 from a router's 2.4 GHz radio produced confirmed M1 association, DHCP and factory HTTP identity. Ordinary computer Wi-Fi driver compatibility still needs separate verification.</p>
+<p>The analyzed backups are A1 <code>v1.47</code> and M1 <code>14.2.4.1</code>; other factory versions may differ.</p>
+<fieldset class="guide-os-picker" hidden><legend>Your computer</legend><div class="guide-os-options"><label><input type="radio" name="guide-os" value="mac"><span>macOS</span></label><label><input type="radio" name="guide-os" value="windows"><span>Windows</span></label><label><input type="radio" name="guide-os" value="linux"><span>Linux</span></label></div><p>Only instructions for your selected system are shown. Your choice is saved.</p></fieldset>
+
+<h2 id="1-keep-an-existing-connection">1. Keep an existing connection</h2>
+<p>If the router already lists your device, keep its settings and obtain its IP address. There is no need to reset it first.</p>
+<p>If you changed routers but know the saved SSID, password and security mode, recreating that compatible 2.4 GHz network with DHCP may allow the device to reconnect.</p>
+<p>For initial checks, use a separate 2.4 GHz WPA2-Personal/AES network, a short ASCII SSID and an 8–63 character password. Mixed b/g/n mode is suitable; b-only is unnecessary. Avoid WPA3-only. With a shared dual-band SSID, verify the sending computer actually uses 2.4 GHz; temporarily disable 5 GHz if needed. Disable guest/client isolation so the computer can reach the device.</p>
+<h2 id="2-a1-enable-reception-then-send-from-a-computer">2. A1: enable reception, then send from a computer</h2>
+<h3 id="enter-provisioning-mode">Enter provisioning mode</h3>
+<p>The factory touch handler starts EasyLink after a particular input remains active for about one second, provided that this press has not triggered it already and no provisioning task is active. The listening window is about 60 seconds. Having saved Wi-Fi credentials does not prevent this trigger.</p>
+<p><strong>The corresponding physical touch icon has not been identified on hardware.</strong> The sampling threshold cannot yet be presented as a verified instruction to hold a named panel button. First boot, Wi-Fi loss, a DNS change or a running sender do not prove that reception has started.</p>
+<p>This A1 path listens for wireless packets. Do not expect a hotspot named after the community firmware.</p>
+<h3 id="use-the-local-web-tool">Use the local web tool</h3>
+<p>Install Python 3.9 or later. Download the <a href="../assets/tools/a1-easylink.zip">A1 EasyLink tool bundle</a>, extract it, and open the <code>a1-easylink</code> folder. Keep both Python files and the web asset directory together. No pip packages are needed. The archive is listed in the <a href="../assets/SHA256SUMS">SHA-256 checksums</a>.</p>
+<p>Connect the computer <strong>over Wi-Fi</strong> to the target 2.4 GHz network. Ethernet cannot replace this connection: A1 needs to receive the computer's wireless frames. Find the IPv4 address of this Wi-Fi adapter, rather than the router, VPN or Ethernet address.</p>
+<div data-guide-os="windows">
+<p>In PowerShell, find the WLAN IPv4 address, for example <code>192.168.1.23</code>, and start the tool:</p>
+<pre><code class="language-powershell">ipconfig
+py -3 --version
+py -3 .\a1_easylink_web.py
+</code></pre>
+</div>
+
+<div data-guide-os="mac">
+<p>In Terminal, identify the Wi-Fi hardware port and read its IPv4 address. Replace <code>en0</code> if the actual interface differs:</p>
+<pre><code class="language-sh">networksetup -listallhardwareports
+ipconfig getifaddr en0
+python3 --version
+python3 ./a1_easylink_web.py
+</code></pre>
+</div>
+
+<div data-guide-os="linux">
+<p>Find the wireless adapter, usually <code>wlan0</code> or <code>wlp…</code>, then start the tool:</p>
+<pre><code class="language-sh">ip -4 address
+python3 --version
+python3 ./a1_easylink_web.py
+</code></pre>
+</div>
+
+<p>The browser opens <code>http://127.0.0.1:8765</code>. If it does not, visit the URL printed by the terminal. Enter the same SSID, password and Wi-Fi adapter IPv4.</p>
+<p>Once the device's trigger is known, start sending and immediately put A1 into its listening window. The default transmission lasts 50 seconds. Keep the computer on the target Wi-Fi, then check the router's DHCP clients. Add <code>--port 0</code> to the launcher command if its port is occupied.</p>
+<p>Closing the browser tab does not stop a running transmission. Use the page's stop button or press Ctrl+C in the terminal. “Sending finished” reports the computer's progress, not the device's connection.</p>
+<h3 id="use-the-command-line-instead">Use the command line instead</h3>
+<div data-guide-os="windows">
+<pre><code class="language-powershell">py -3 .\a1_easylink.py --ssid &quot;RescueWiFi&quot; --interface-ip 192.168.1.23
+</code></pre>
+</div>
+
+<div data-guide-os="mac linux">
+<pre><code class="language-sh">python3 ./a1_easylink.py --ssid &quot;RescueWiFi&quot; --interface-ip 192.168.1.23
+</code></pre>
+</div>
+
+<p>The password is requested interactively without echo. Use <code>--open</code> explicitly for an open network. <code>--dry-run</code> checks parameters and encoding without sending packets.</p>
+<p>EasyLink V2 carries two data bytes in multicast destination MAC addresses and a sequence number in packet length. Addresses <code>239.126.X.Y</code> map to MAC addresses <code>01:00:5e:7e:X:Y</code>. Wi-Fi encryption does not hide that destination header, allowing reception before association. Encoded data also carries the password, so provision on a trusted wireless network. Ordinary UDP broadcast cannot replace this encoding. A normal web page cannot send these UDP packets directly; the local Python helper sends them.</p>
+<h2 id="3-m1-join-its-hotspot-and-submit-credentials">3. M1: join its hotspot and submit credentials</h2>
+<h3 id="enter-provisioning-mode_1">Enter provisioning mode</h3>
+<p>The factory thread creates an open hotspot named <code>EasyLink_XXXXXX</code>, with a MAC suffix and a 120-second window.</p>
+<p>A Wi-Fi module GPIO handler starts provisioning on release after a press longer than 50 ms and shorter than 3 seconds. A 3-second hold clears parameters and restarts. The main MCU also has a separate serial reset path.</p>
+<p><strong>The exterior button's connection to that GPIO is not confirmed.</strong> If a clearly marked pairing/reset button exists, a short press and observation of the hotspot can check the entry. Do not guess longer holds if it does not appear. The unconfigured startup branch also starts provisioning; verify that the hotspot actually appears.</p>
+<p>EasyLink V2 also works on M1. The successful 2.4 GHz test used channel 1, so channel 6 is not mandatory. V2 depends on the multicast destination MAC and frame length over the air; successful UDP sends alone do not prove device reception. Prefer the hotspot HTTP method below to avoid sender driver and multicast-forwarding differences.</p>
+<h3 id="connect-and-inspect">Connect and inspect</h3>
+<p>Join the target <code>EasyLink_XXXXXX</code> network. “No Internet” is expected. The factory configuration uses <code>10.0.0.1/24</code>, HTTP port 8000.</p>
+<div data-guide-os="windows">
+<pre><code class="language-powershell">$DeviceIp = &quot;10.0.0.1&quot;
+curl.exe --http1.0 --noproxy &quot;*&quot; --connect-timeout 3 --max-time 5 &quot;http://${DeviceIp}:8000/config-read&quot;
+</code></pre>
+</div>
+
+<div data-guide-os="mac linux">
+<pre><code class="language-sh">DeviceIp=&quot;10.0.0.1&quot;
+curl --http1.0 --noproxy '*' --connect-timeout 3 --max-time 5 &quot;http://${DeviceIp}:8000/config-read&quot;
+</code></pre>
+</div>
+
+<p>If unreachable, check the active Wi-Fi network and its <code>10.0.0.x</code> address. The hotspot window may have expired. No TC1 TFTP server or secondary Ethernet address is needed.</p>
+<h3 id="submit-wi-fi-settings">Submit Wi-Fi settings</h3>
+<p>Replace the SSID and password and run in the same terminal:</p>
+<div data-guide-os="windows">
+<pre><code class="language-powershell">$Config = [ordered]@{
+    SSID = &quot;RescueWiFi&quot;
+    PASSWORD = &quot;replace-with-your-wifi-password&quot;
+    DHCP = $true
+    IDENTIFIER = 1
+}
+$ConfigFile = Join-Path $PWD.Path &quot;m1-wifi.json&quot;
+$Json = $Config | ConvertTo-Json -Compress
+[System.IO.File]::WriteAllText($ConfigFile, $Json, [System.Text.UTF8Encoding]::new($false))
+
+curl.exe --http1.0 --noproxy &quot;*&quot; --connect-timeout 3 --max-time 10 --header &quot;Content-Type: application/json&quot; --header &quot;Expect:&quot; --data-binary &quot;@$ConfigFile&quot; &quot;http://${DeviceIp}:8000/config-write-uap&quot;
+</code></pre>
+</div>
+
+<div data-guide-os="mac linux">
+<p>Create a UTF-8 JSON file. Escape any <code>"</code> or <code>\</code> in strings according to JSON rules:</p>
+<pre><code class="language-sh">umask 077
+cat &gt; m1-wifi.json &lt;&lt;'JSON'
+{&quot;SSID&quot;:&quot;RescueWiFi&quot;,&quot;PASSWORD&quot;:&quot;replace-with-your-wifi-password&quot;,&quot;DHCP&quot;:true,&quot;IDENTIFIER&quot;:1}
+JSON
+curl --http1.0 --noproxy '*' --connect-timeout 3 --max-time 10 --header 'Content-Type: application/json' --header 'Expect:' --data-binary '@m1-wifi.json' &quot;http://${DeviceIp}:8000/config-write-uap&quot;
+</code></pre>
+</div>
+
+<p>Fields are case-sensitive and top-level. <code>DHCP</code> is a Boolean; <code>IDENTIFIER</code> is an integer used by the provisioning callback, not an account or binding token.</p>
+<p>The factory path responds, waits about one second, closes the hotspot and attempts to join the router. Reconnect the computer to the router and look for M1's new DHCP lease. The file and terminal input records contain the password; use your own computer and delete the file when finished:</p>
+<div data-guide-os="windows">
+<pre><code class="language-powershell">Remove-Item -LiteralPath $ConfigFile
+</code></pre>
+</div>
+
+<div data-guide-os="mac linux">
+<pre><code class="language-sh">rm -- m1-wifi.json
+</code></pre>
+</div>
+
+<h2 id="4-verify-connection-and-persistence">4. Verify connection and persistence</h2>
+<p>Obtain the device's new IP from the router and reconnect the computer to the same LAN. Replace this example address:</p>
+<div data-guide-os="windows">
+<pre><code class="language-powershell">$DeviceIp = &quot;192.168.1.123&quot;
+curl.exe --http1.0 --noproxy &quot;*&quot; --connect-timeout 3 --max-time 5 &quot;http://${DeviceIp}:8000/config-read&quot;
+</code></pre>
+</div>
+
+<div data-guide-os="mac linux">
+<pre><code class="language-sh">DeviceIp=&quot;192.168.1.123&quot;
+curl --http1.0 --noproxy '*' --connect-timeout 3 --max-time 5 &quot;http://${DeviceIp}:8000/config-read&quot;
+</code></pre>
+</div>
+
+<p>Check device identity and access, then perform a normal power cycle and verify automatic reconnection. HTTP 200, a disappearing hotspot or completed sending cannot independently prove success.</p>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Check</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A1 never receives</td>
+<td>Listening entry, actual 2.4 GHz Wi-Fi transmission, adapter IPv4</td>
+</tr>
+<tr>
+<td>A1 does not join</td>
+<td>SSID, password, security mode, multicast filtering, VPN and driver behavior</td>
+</tr>
+<tr>
+<td>No M1 hotspot</td>
+<td>Device entry, existing connection, expired window</td>
+</tr>
+<tr>
+<td>Blinking Wi-Fi or a changing X icon</td>
+<td>Match DHCP and HTTP identity; icons may also reflect factory cloud connectivity</td>
+</tr>
+<tr>
+<td>M1 hotspot disappears</td>
+<td>Rejoin the router and check the lease before assuming failure</td>
+</tr>
+<tr>
+<td>Lease exists but HTTP fails</td>
+<td>Device identity, current IP and client isolation</td>
+</tr>
+</tbody>
+</table>
+<p>Continue with <a href="a1-no-disassembly.html">A1 LAN / public migration</a> or <a href="m1-no-disassembly.html">M1 LAN / public migration</a>. <strong>M1 first migration must start at 0.9.21 or newer.</strong> A1 still requires a physically validated compatible image; M1 results do not establish A1 compatibility.</p>
+<h2 id="appendix-evidence-boundary">Appendix: evidence boundary</h2>
+<p>A1's touch input is <code>FF 00 nonzero</code>, with the third byte valid for at least ten samples, one trigger per press and no active task. Its physical icon mapping remains unverified. M1 registers GPIO enum 12; this is not a physical pin number. Its exterior wiring and MCU-controlled button behavior remain unverified. Button entry findings come from the factory binaries, not third-party button instructions. M1 wireless connection was verified under the conditions above; physical A1 reception, exterior button mappings and other Wi-Fi adapters still require separate checks.</p></article><div class="guide-pager"><a href="m1-guide.html">Previous<b>M1 operation</b></a><a class="next" href="m1-no-disassembly.html">Next<b>M1 no-disassembly migration</b></a></div></main></div><footer class="site-footer"><div class="wrap"><div><b>PHICOMM COMMUNITY</b><p>Community-maintained, not affiliated with the manufacturer. Check the documentation for your release. The firmware repository has no single license covering all code.</p></div><div><b>Documentation</b><ul><li><a href="quick-start.html">Quick start</a></li><li><a href="faq.html">Troubleshooting</a></li><li><a href="release-log.html">Release Log</a></li></ul></div><div><b>Source</b><ul><li><a href="https://github.com/phicomm-io/phicomm-community-firmware">Firmware</a></li><li><a href="https://github.com/phicomm-io/phicomm-community-mqtt">MQTT platform</a></li></ul></div><div><b>Community</b><p>QQ group: 1021750178</p><a href="https://qm.qq.com/q/9L150V85kk?from=tim" target="_blank" rel="noopener noreferrer">Join the QQ group (Chinese)</a></div></div></footer><script src="../../site.js"></script></body></html>

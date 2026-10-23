@@ -1,0 +1,194 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>原厂固件配网（免 App） · 斐讯社区固件 · PHICOMM COMMUNITY</title><meta name="description" content="A1 EasyLink 与 M1 热点配网，按系统显示命令"><link rel="canonical" href="https://phicomm-io.github.io/guides/stock-provision.html"><meta property="og:type" content="website"><meta property="og:site_name" content="PHICOMM COMMUNITY"><meta property="og:title" content="原厂固件配网（免 App） · 斐讯社区固件 · PHICOMM COMMUNITY"><meta property="og:description" content="A1 EasyLink 与 M1 热点配网，按系统显示命令"><meta property="og:url" content="https://phicomm-io.github.io/guides/stock-provision.html"><meta property="og:locale" content="zh_CN"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="原厂固件配网（免 App） · 斐讯社区固件 · PHICOMM COMMUNITY"><meta name="twitter:description" content="A1 EasyLink 与 M1 热点配网，按系统显示命令"><link rel="alternate" hreflang="zh-CN" href="https://phicomm-io.github.io/guides/stock-provision.html"><link rel="alternate" hreflang="en" href="https://phicomm-io.github.io/guides/en/stock-provision.html"><link rel="alternate" hreflang="x-default" href="https://phicomm-io.github.io/guides/stock-provision.html"><link rel="stylesheet" href="../style.css"><script src="../theme.js"></script></head><body><a class="skip" href="#main">跳到主要内容</a><header class="site-header"><div class="wrap"><a class="brand" href=".././"><span class="mark" aria-hidden="true">斐</span><span class="word"><b>PHICOMM COMMUNITY</b><span>社区固件</span></span></a><nav class="site-nav" aria-label="主导航"><a href="../#devices">设备</a><a href="../#features">功能</a><a href="../#iotcloud">IotCloud</a><a href="../#demos">在线演示</a><a href="../#docs">文档</a><a href="../#releases">下载</a></nav><div class="prefs"><label class="sr" for="themePick">主题</label><select id="themePick"><option value="system">跟随系统</option><option value="light">浅色</option><option value="dark">深色</option></select></div></div></header><div class="guide-layout"><nav class="guide-nav" aria-label="文档导航"><p class="guide-group">开始使用</p><a href="quick-start.html">快速开始</a><a href="flash-prep.html">刷机前准备</a><a href="firmware-update.html">固件更新</a><a href="iotcloud-connect.html">接入 IotCloud</a><a href="mqtt-link.html">MQTT 与联动</a><a href="faq.html">故障排查</a><p class="guide-group">TC1 智能排插</p><a href="tc1-guide.html">功能与操作</a><a href="tc1-flash.html">刷机</a><a href="tc1-no-disassembly.html">免拆刷机</a><a href="tc1-no-disassembly-ethernet-wifi-ap.html" class="guide-child">一个有线＋一个无线＋一个 AP</a><p class="guide-group">M1 空气检测仪</p><a href="m1-guide.html">功能与操作</a><a href="stock-provision.html" aria-current="page">原厂固件配网（免 App）</a><a href="m1-no-disassembly.html">免拆刷机：内网 / 公网</a><a href="a1-m1-flash.html">刷机：J-Link / Bootloader</a><p class="guide-group">A1 空气净化器</p><a href="a1-guide.html">功能与操作</a><a href="stock-provision.html" aria-current="page">原厂固件配网（免 App）</a><a href="a1-no-disassembly.html">免拆刷机：内网 / 公网</a><a href="a1-m1-flash.html">刷机：J-Link / Bootloader</a><p class="guide-group">开发与维护</p><a href="iotcloud-deploy.html">IotCloud 部署</a><a href="build-deps.html">构建依赖</a><a href="sources.html">资源来源</a><a href="release-log.html">Release Log</a></nav><main class="guide-main" id="main"><p class="guide-language" aria-label="Language">简体中文 · <a href="en/stock-provision.html" lang="en">English</a></p><article class="prose"><h1 id="不用原厂-app给斐讯-a1-m1-配网">不用原厂 App，给斐讯 A1 / M1 配网</h1>
+<p>原厂云端停服后，设备连接家里 Wi-Fi 的能力仍在固件里。A1 可以接收电脑发出的 EasyLink 配网数据；M1 可以开启热点，由电脑直接提交 Wi-Fi 参数。这两条路径都可以绕开原厂 App。</p>
+<p>本文针对已分析的两份原厂备份。A1 工具已通过电脑端测试及原厂 ARM 解码指令仿真，真实 A1 无线配网仍待验证。M1 热点提交曾返回 HTTP 200；另已用路由器的 2.4 GHz 无线接口发送 EasyLink V2，并核对 M1 的关联、DHCP 和原厂 HTTP 身份，确认实机联网。普通电脑驱动的发包兼容性仍须单独检查。</p>
+<p>本文结论仅对应本次备份中的 A1 <code>v1.47</code> 与 M1 <code>14.2.4.1</code>，不保证其他原厂版本具有相同入口。</p>
+<fieldset class="guide-os-picker" hidden><legend>选择电脑系统</legend><div class="guide-os-options"><label><input type="radio" name="guide-os" value="mac"><span>macOS</span></label><label><input type="radio" name="guide-os" value="windows"><span>Windows</span></label><label><input type="radio" name="guide-os" value="linux"><span>Linux</span></label></div><p>只展示所选系统的操作，选择会自动保存。</p></fieldset>
+
+<h2 id="1-已经联网的设备先保留现状">1. 已经联网的设备，先保留现状</h2>
+<p>如果路由器客户端列表能找到设备，就已具备局域网操作条件，无需再次配网，也无需先清除配置。</p>
+<p>如果换过路由器，但记得设备原来使用的 Wi-Fi 名称和密码，可以建立同名、同密码及兼容加密方式的 2.4 GHz 网络，开启 DHCP，观察设备是否自动重连。这要求设备仍保存旧配置。</p>
+<p>初次验证建议使用独立的 2.4 GHz WPA2-Personal/AES 网络、短英文名称和 8–63 字符密码；可以使用 b/g/n 混合模式，不必强制为 b。避免 WPA3-only。双频同名时，先确认发送电脑确实连在 2.4 GHz；必要时临时关闭 5 GHz。电脑需要能访问同一路由器下的设备，关闭访客网络或客户端隔离。</p>
+<h2 id="2-a1先触发设备接收再用电脑发送">2. A1：先触发设备接收，再用电脑发送</h2>
+<h3 id="怎样进入配网模式">怎样进入配网模式</h3>
+<p>A1 原厂触摸程序检测到特定触摸输入持续约 1 秒，且本次按压尚未触发过、当前没有配网任务时，才启动 EasyLink。接收窗口约为 60 秒；已经保存过 Wi-Fi 不妨碍该触发分支。</p>
+<p><strong>目前尚未确认这组输入对应面板上的哪个触摸图标。</strong> 因此，本文不能将其写成“长按某键几秒”的已验证操作；约 1 秒是固件采样阈值，不能直接替代硬件操作验证。也不能仅凭提示日志认定首次开机、断网或改 DNS 会自动进入配网。</p>
+<p>原厂 A1 的这条路径监听无线配网包，不能照搬社区固件的热点名称。电脑开始发包也不会自动唤起设备端接收，必须先确认配网入口有效。</p>
+<h3 id="推荐在本机网页里填写参数">推荐：在本机网页里填写参数</h3>
+<p>准备 Python 3.9 或更新版本，下载 <a href="assets/tools/a1-easylink.zip">A1 EasyLink 工具包</a>，解压后打开 <code>a1-easylink</code> 文件夹。工具只使用 Python 标准库，无需安装 pip 依赖；发送器、启动器和网页目录要放在一起。可用 <a href="assets/SHA256SUMS">SHA-256 清单</a>核对压缩包。</p>
+<p>电脑通过 <strong>Wi-Fi</strong> 连接希望 A1 加入的那个 2.4 GHz 网络。这一步不能用电脑接网线代替，因为 A1 要监听电脑无线发出的帧。先查询 Wi-Fi 网卡的 IPv4；它不是路由器网关，也不是 VPN 或有线网卡的地址。</p>
+<div data-guide-os="windows">
+<p>在 PowerShell 运行，找到 WLAN 网卡的 IPv4，例如 <code>192.168.1.23</code>：</p>
+<pre><code class="language-powershell">ipconfig
+py -3 --version
+py -3 .\a1_easylink_web.py
+</code></pre>
+</div>
+
+<div data-guide-os="mac">
+<p>在终端查询硬件端口，找到 Wi-Fi 对应接口，再查询其 IPv4。示例为 <code>en0</code>，以实际结果替换：</p>
+<pre><code class="language-sh">networksetup -listallhardwareports
+ipconfig getifaddr en0
+python3 --version
+python3 ./a1_easylink_web.py
+</code></pre>
+</div>
+
+<div data-guide-os="linux">
+<p>在终端运行，找到无线网卡（通常为 <code>wlan0</code> 或 <code>wlp…</code>）的 IPv4：</p>
+<pre><code class="language-sh">ip -4 address
+python3 --version
+python3 ./a1_easylink_web.py
+</code></pre>
+</div>
+
+<p>浏览器会打开 <code>http://127.0.0.1:8765</code>；未自动打开时，手动访问终端打印的地址。填写相同的 Wi-Fi 名称、密码和 WLAN IPv4。</p>
+<p>确认设备端触发入口后，点击“开始发送”，并立即让 A1 进入接收窗口。默认发送 50 秒，期间保持电脑连接目标 Wi-Fi。发送结束后，到路由器客户端列表确认 A1 是否取得 IP。端口被占用时，在启动命令末尾加 <code>--port 0</code> 自动选择。</p>
+<p>页面支持停止发送。关闭标签页后，任务仍会继续到设定时间；点击“停止”或在工具终端按 Ctrl+C 才会提前停止。页面显示“发送结束”只代表电脑发送完毕，不代表 A1 已联网。</p>
+<h3 id="也可以直接使用命令行">也可以直接使用命令行</h3>
+<div data-guide-os="windows">
+<pre><code class="language-powershell">py -3 .\a1_easylink.py --ssid &quot;RescueWiFi&quot; --interface-ip 192.168.1.23
+</code></pre>
+</div>
+
+<div data-guide-os="mac linux">
+<pre><code class="language-sh">python3 ./a1_easylink.py --ssid &quot;RescueWiFi&quot; --interface-ip 192.168.1.23
+</code></pre>
+</div>
+
+<p>密码在终端交互输入，不会显示。无密码网络需明确加 <code>--open</code>；加 <code>--dry-run</code> 只检查参数和编码，不发包。</p>
+<p>EasyLink V2 把两个数据字节编码到组播地址 <code>239.126.X.Y</code>，对应目的 MAC <code>01:00:5e:7e:X:Y</code>，把序号编码到 UDP 包长度。Wi-Fi 加密不会隐藏帧头的目的 MAC，因此设备可以在尚未加入网络时接收这些地址信息。Wi-Fi 密码也在编码数据中，配网时应使用可信的无线环境。</p>
+<p>普通 UDP 广播不能替代这套编码。浏览器需要本机 Python 服务实际发送组播，无法仅靠普通在线网页直接发包。</p>
+<h2 id="3-m1连接设备热点提交-wi-fi-参数">3. M1：连接设备热点，提交 Wi-Fi 参数</h2>
+<h3 id="怎样进入配网模式_1">怎样进入配网模式</h3>
+<p>原厂 M1 的配网线程创建开放热点 <code>EasyLink_XXXXXX</code>，后缀是设备 MAC 的最后六个十六进制字符，启动窗口参数为 120 秒。</p>
+<p>Wi-Fi 模块代码注册了一个 GPIO 按键：按下超过 50 毫秒、不到 3 秒后松开会启动配网；按住满 3 秒则清除参数并重启。主控也有独立的串口恢复默认入口。</p>
+<p><strong>这不等于已经确认外壳按键直接连接该 GPIO。</strong> 若机身有明确标注的配网或复位键，可先短按并观察是否出现 <code>EasyLink_</code> 热点；没有出现时，不能据此继续猜测长按时长。未配置的系统启动分支会启动自动配网，但实际是否进入应观察热点确认。</p>
+<p>EasyLink V2 也能为 M1 配网，本次成功在 2.4 GHz 信道 1 完成，因此不能断言必须信道 6。V2 依赖空口帧中的组播目的 MAC 和长度；操作系统显示已发出 UDP 不等于这些帧已被设备接收。优先使用以下热点 HTTP 方式，可以绕开发送驱动和组播转发差异。</p>
+<h3 id="连接热点并确认接口">连接热点并确认接口</h3>
+<p>电脑连接目标 <code>EasyLink_XXXXXX</code>，出现“无 Internet”提示不影响本地通信。固件设置的设备地址为 <code>10.0.0.1</code>，HTTP 端口为 8000。</p>
+<div data-guide-os="windows">
+<pre><code class="language-powershell">$DeviceIp = &quot;10.0.0.1&quot;
+curl.exe --http1.0 --noproxy &quot;*&quot; --connect-timeout 3 --max-time 5 &quot;http://${DeviceIp}:8000/config-read&quot;
+</code></pre>
+</div>
+
+<div data-guide-os="mac linux">
+<pre><code class="language-sh">DeviceIp=&quot;10.0.0.1&quot;
+curl --http1.0 --noproxy '*' --connect-timeout 3 --max-time 5 &quot;http://${DeviceIp}:8000/config-read&quot;
+</code></pre>
+</div>
+
+<p>若不通，检查电脑是否仍连接设备热点，以及 WLAN 是否取得 <code>10.0.0.x</code> 地址。热点窗口可能已过期，需要重新进入配网状态。这里不需要 TC1 教程里的有线附加 IP 或 TFTP 服务。</p>
+<h3 id="提交路由器信息">提交路由器信息</h3>
+<p>替换网络名称和密码，在同一个终端窗口运行：</p>
+<div data-guide-os="windows">
+<pre><code class="language-powershell">$Config = [ordered]@{
+    SSID = &quot;RescueWiFi&quot;
+    PASSWORD = &quot;replace-with-your-wifi-password&quot;
+    DHCP = $true
+    IDENTIFIER = 1
+}
+$ConfigFile = Join-Path $PWD.Path &quot;m1-wifi.json&quot;
+$Json = $Config | ConvertTo-Json -Compress
+[System.IO.File]::WriteAllText($ConfigFile, $Json, [System.Text.UTF8Encoding]::new($false))
+
+curl.exe --http1.0 --noproxy &quot;*&quot; --connect-timeout 3 --max-time 10 --header &quot;Content-Type: application/json&quot; --header &quot;Expect:&quot; --data-binary &quot;@$ConfigFile&quot; &quot;http://${DeviceIp}:8000/config-write-uap&quot;
+</code></pre>
+</div>
+
+<div data-guide-os="mac linux">
+<p>在当前目录创建 UTF-8 JSON 文件。把示例 SSID、密码替换成实际值；字符串中的 <code>"</code> 和 <code>\</code> 按 JSON 规则转义。密码会保留在文件及终端输入记录中，使用自己的电脑操作。</p>
+<pre><code class="language-sh">umask 077
+cat &gt; m1-wifi.json &lt;&lt;'JSON'
+{&quot;SSID&quot;:&quot;RescueWiFi&quot;,&quot;PASSWORD&quot;:&quot;replace-with-your-wifi-password&quot;,&quot;DHCP&quot;:true,&quot;IDENTIFIER&quot;:1}
+JSON
+curl --http1.0 --noproxy '*' --connect-timeout 3 --max-time 10 --header 'Content-Type: application/json' --header 'Expect:' --data-binary '@m1-wifi.json' &quot;http://${DeviceIp}:8000/config-write-uap&quot;
+</code></pre>
+</div>
+
+<p>字段放在 JSON 顶层，大小写与示例一致。<code>DHCP</code> 为布尔值；<code>IDENTIFIER</code> 为配网回调使用的整数，不是原厂账号或绑定令牌。</p>
+<p>原厂逻辑在响应后等待约 1 秒，关闭热点并尝试连接路由器。因此连接断开是可能的正常过程。电脑随后连回目标路由器，再查看 M1 的 DHCP 租约。</p>
+<p>正文文件包含明文密码，操作完成后删除：</p>
+<div data-guide-os="windows">
+<pre><code class="language-powershell">Remove-Item -LiteralPath $ConfigFile
+</code></pre>
+</div>
+
+<div data-guide-os="mac linux">
+<pre><code class="language-sh">rm -- m1-wifi.json
+</code></pre>
+</div>
+
+<h2 id="4-怎样确认配网完成">4. 怎样确认配网完成</h2>
+<p>从路由器客户端列表取得设备 IP，电脑连接同一路由器，再读取配置接口。以下 IP 必须换成设备的新地址：</p>
+<div data-guide-os="windows">
+<pre><code class="language-powershell">$DeviceIp = &quot;192.168.1.123&quot;
+curl.exe --http1.0 --noproxy &quot;*&quot; --connect-timeout 3 --max-time 5 &quot;http://${DeviceIp}:8000/config-read&quot;
+</code></pre>
+</div>
+
+<div data-guide-os="mac linux">
+<pre><code class="language-sh">DeviceIp=&quot;192.168.1.123&quot;
+curl --http1.0 --noproxy '*' --connect-timeout 3 --max-time 5 &quot;http://${DeviceIp}:8000/config-read&quot;
+</code></pre>
+</div>
+
+<p>确认设备身份、网络可达后，再正常断电上电，检查能否自动重连。这样才能分别确认本次联网和配置持久化。HTTP 200、热点消失或工具发送完成，都不能单独替代这个检查。</p>
+<table>
+<thead>
+<tr>
+<th>现象</th>
+<th>优先检查</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A1 一直收不到</td>
+<td>是否实际进入接收窗口；电脑是否通过目标 2.4 GHz Wi-Fi 发包；WLAN IPv4 是否正确</td>
+</tr>
+<tr>
+<td>A1 发送结束仍未联网</td>
+<td>SSID、密码、加密方式；组播过滤、VPN 或驱动行为；重新进入接收窗口后重试</td>
+</tr>
+<tr>
+<td>M1 看不到热点</td>
+<td>设备端配网入口是否有效；是否已经联网；窗口是否过期</td>
+</tr>
+<tr>
+<td>M1 图标闪烁、X 状态变化</td>
+<td>以目标 MAC 的 DHCP 租约及 HTTP 身份为准；图标还可能反映原厂云端连接</td>
+</tr>
+<tr>
+<td>M1 提交后热点消失</td>
+<td>先连接回路由器查租约，不能仅凭断开判断失败</td>
+</tr>
+<tr>
+<td>有租约但接口不通</td>
+<td>IP 是否对应目标设备；双方是否被访客网络或客户端隔离</td>
+</tr>
+</tbody>
+</table>
+<p>联网后可继续阅读 <a href="a1-no-disassembly.html">A1 内网 / 公网免拆刷机</a> 或 <a href="m1-no-disassembly.html">M1 内网 / 公网免拆刷机</a>。<strong>M1 原厂首次迁移必须从 0.9.21 或更新版本开始</strong>；A1 仍须先取得已实机验证的适配镜像，不能套用 M1 的结论。</p>
+<h2 id="附录进入配网模式的证据范围">附录：进入配网模式的证据范围</h2>
+<table>
+<thead>
+<tr>
+<th>设备</th>
+<th>原厂代码已确认</th>
+<th>仍需硬件验证</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A1</td>
+<td>触摸返回 <code>FF 00 非零</code>；第三字节连续有效至少 10 次采样；本次按压未触发且当前无配网任务；随后启动 60 秒接收</td>
+<td>寄存器与面板图标的对应、实际操作反馈</td>
+</tr>
+<tr>
+<td>M1</td>
+<td>GPIO 枚举 12 的短按启动配网、3 秒长按清参数；主控串口另有恢复默认入口；热点 HTTP 完成后保存联网配置</td>
+<td>外壳按键连接方式及实际操作时长</td>
+</tr>
+</tbody>
+</table>
+<p>按键入口依据原机二进制，未用第三方文章推定机身按键时长。M1 的无线联网已在上述条件验证；A1 的真实接收、两款设备的外壳按键映射及其他网卡仍需分别验证。不能把静态调用链或电脑发送成功视为实机完成。</p></article><div class="guide-pager"><a href="m1-guide.html">上一页<b>功能与操作</b></a><a class="next" href="m1-no-disassembly.html">下一页<b>免拆刷机：内网 / 公网</b></a></div></main></div><footer class="site-footer"><div class="wrap"><div><b>PHICOMM COMMUNITY</b><p style="margin-top:8px">社区维护项目，与原厂无隶属关系。固件、指南及发布说明以对应版本为准。本仓库没有覆盖全部代码的统一许可证。</p></div><div><b>文档</b><ul><li><a href="quick-start.html">快速开始</a></li><li><a href="faq.html">故障排查</a></li><li><a href="build-deps.html">构建依赖</a></li><li><a href="release-log.html">Release Log</a></li></ul></div><div><b>源码</b><ul><li><a href="https://github.com/phicomm-io/phicomm-community-firmware" rel="noopener noreferrer">固件仓库</a></li><li><a href="https://github.com/phicomm-io/phicomm-community-mqtt" rel="noopener noreferrer">管理平台</a></li></ul></div><div><b>交流与反馈</b><p>QQ 群：1021750178</p><a href="https://qm.qq.com/q/9L150V85kk?from=tim" target="_blank" rel="noopener noreferrer">加入 QQ 群</a></div></div></footer><script src="../site.js"></script></body></html>
