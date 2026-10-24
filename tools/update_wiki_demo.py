@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 import re
 import shutil
+from demo_navigation import add_navigation
 
 
 def update(site, bundle, tag, commit):
@@ -20,6 +21,7 @@ def update(site, bundle, tag, commit):
     if destination.exists():
         shutil.rmtree(destination)
     shutil.copytree(source, destination)
+    add_navigation(site)
     (destination / 'release.json').write_text(json.dumps({
         'repository': 'phicomm-io/phicomm-community-mqtt',
         'tag': tag, 'commit': commit,
