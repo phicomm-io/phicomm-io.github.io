@@ -9,6 +9,7 @@ import fcntl
 import hashlib
 import io
 import json
+import os
 from pathlib import Path, PurePosixPath
 import re
 import shutil
@@ -56,6 +57,13 @@ def unpack(data, lock, output):
         required = {'platform/index.html', 'demos/platform/index.html'}
         for model in ('tc1', 'm1', 'a1'):
             required.update({f'devices/{model}/index.html', f'devices/{model}/index.html.gz', f'demos/{model}/index.html'})
+        if 'daikin' in manifest.get('features', []):
+            required.update({'devices/daikin/index.html', 'devices/daikin/index.html.gz', 'demos/daikin/index.html'})
+        if 'local-console' in manifest.get('features', []):
+            required.add('local/index.html')
+        if 'bootstrap-ui' in manifest.get('features', []):
+            for model in ('tc1', 'm1', 'a1'):
+                required.update({f'devices/{model}/setup.html', f'devices/{model}/setup.html.gz'})
         if not required <= names:
             raise ValueError('Frontend release is missing required products')
         for member in members:
@@ -75,6 +83,7 @@ def fetch(lock_path, output=None, archive=None):
     with (output.parent / (output.name + '.lock')).open('a') as guard:
         fcntl.flock(guard, fcntl.LOCK_EX)
         cache = output.parent / (lock['sha256'] + '.tar.gz')
+        archive = archive or os.environ.get('PHICOMM_FRONTEND_ARCHIVE')
         if archive:
             data = Path(archive).read_bytes()
         elif cache.is_file():
