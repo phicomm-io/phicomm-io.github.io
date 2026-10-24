@@ -1,0 +1,108 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>原厂 OTA 无线刷机 · 斐讯社区固件 · PHICOMM COMMUNITY</title><meta name="description" content="BRY88AB151K：按键触发、配套发送器与实机迁移"><link rel="canonical" href="https://phicomm-io.github.io/guides/daikin-stock-ota.html"><meta property="og:type" content="website"><meta property="og:site_name" content="PHICOMM COMMUNITY"><meta property="og:title" content="原厂 OTA 无线刷机 · 斐讯社区固件 · PHICOMM COMMUNITY"><meta property="og:description" content="BRY88AB151K：按键触发、配套发送器与实机迁移"><meta property="og:url" content="https://phicomm-io.github.io/guides/daikin-stock-ota.html"><meta property="og:locale" content="zh_CN"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="原厂 OTA 无线刷机 · 斐讯社区固件 · PHICOMM COMMUNITY"><meta name="twitter:description" content="BRY88AB151K：按键触发、配套发送器与实机迁移"><link rel="alternate" hreflang="zh-CN" href="https://phicomm-io.github.io/guides/daikin-stock-ota.html"><link rel="alternate" hreflang="en" href="https://phicomm-io.github.io/guides/en/daikin-stock-ota.html"><link rel="alternate" hreflang="x-default" href="https://phicomm-io.github.io/guides/daikin-stock-ota.html"><link rel="stylesheet" href="../style.css"><script src="../theme.js"></script></head><body><a class="skip" href="#main">跳到主要内容</a><header class="site-header"><div class="wrap"><a class="brand" href=".././"><span class="mark" aria-hidden="true">斐</span><span class="word"><b>PHICOMM COMMUNITY</b><span>社区固件</span></span></a><nav class="site-nav" aria-label="主导航"><a href="../#devices">设备</a><a href="../#features">功能</a><a href="../#iotcloud">IotCloud</a><a href="../#demos">在线演示</a><a href="../#docs">文档</a><a href="../#releases">下载</a></nav><div class="prefs"><label class="sr" for="themePick">主题</label><select id="themePick"><option value="system">跟随系统</option><option value="light">浅色</option><option value="dark">深色</option></select></div></div></header><div class="guide-layout"><nav class="guide-nav" aria-label="文档导航"><p class="guide-group">开始使用</p><a href="quick-start.html">快速开始</a><a href="flash-prep.html">刷机前准备</a><a href="firmware-update.html">固件更新</a><a href="iotcloud-connect.html">接入 IotCloud</a><a href="mqtt-link.html">MQTT 与联动</a><a href="faq.html">故障排查</a><p class="guide-group">TC1 智能排插</p><a href="tc1-guide.html">功能与操作</a><a href="tc1-flash.html">刷机</a><a href="tc1-no-disassembly.html">免拆刷机</a><a href="tc1-no-disassembly-ethernet-wifi-ap.html" class="guide-child">一个有线＋一个无线＋一个 AP</a><p class="guide-group">M1 空气检测仪</p><a href="m1-guide.html">功能与操作</a><a href="stock-provision.html">原厂固件配网（免 App）</a><a href="m1-no-disassembly.html">免拆刷机：内网 / 公网</a><a href="a1-m1-flash.html">刷机：J-Link / Bootloader</a><p class="guide-group">DAIKIN 空气检测仪</p><a href="daikin-stock-ota.html" aria-current="page">原厂 OTA 无线刷机</a><a href="daikin-guide.html">功能、安装与恢复</a><p class="guide-group">A1 空气净化器</p><a href="a1-guide.html">功能与操作</a><a href="stock-provision.html">原厂固件配网（免 App）</a><a href="a1-no-disassembly.html">免拆刷机：内网 / 公网</a><a href="a1-m1-flash.html">刷机：J-Link / Bootloader</a><p class="guide-group">开发与维护</p><a href="iotcloud-deploy.html">IotCloud 部署</a><a href="build-deps.html">构建依赖</a><a href="sources.html">资源来源</a><a href="release-log.html">Release Log</a></nav><main class="guide-main" id="main"><p class="guide-language" aria-label="Language">简体中文 · <a href="en/daikin-stock-ota.html" lang="en">English</a></p><article class="prose"><h1 id="大金-bry88ab151k通过原厂-ota-刷入社区固件">大金 BRY88AB151K：通过原厂 OTA 刷入社区固件</h1>
+<p>本教程使用原厂的局域网升级服务，将标准 ESP32 应用镜像传给设备，不需要为原厂 OTA 单独构建一种镜像。2026-10-24 已在 <strong>BRY88AB151K、原厂 SV.02.00.01.15、4MB Flash</strong> 上完成按键触发、上传和社区固件启动验证。</p>
+<p><strong>适用范围仅限上述实测型号和原厂版本。BRY88AX151K、其他原厂版本不能直接套用这份镜像。</strong> 本次实测先用串口备份并恢复了原厂，再执行无线迁移；证明的是按键和 OTA 通道可用，未覆盖所有出厂配置状态。教程提供的镜像是实测的 <code>0.9.21-2cfd89-dirty</code> 测试构建，不代表当前稳定发行版。</p>
+<h2 id="1-原理与准备">1. 原理与准备</h2>
+<p>原厂在进入升级模式后开放 TCP 8555 服务。电脑连接设备热点，通过专用发送器完成握手、版本检查、分块传输和校验。成功后，设备把启动分区切换到备用槽，再重启运行社区应用。</p>
+<p>准备以下物品：</p>
+<ul>
+<li>一台型号与原厂版本匹配的大金设备，使用稳定的正常电源供电。</li>
+<li>能连接 2.4GHz Wi-Fi 的 Windows、macOS 或 Linux 电脑，以及 Python 3。发送器只使用 Python 标准库，不需要安装第三方 Python 包。</li>
+<li>配套发送器、应用镜像及其 SHA-256。先在电脑仍能上网时下载。</li>
+<li>对应设备的恢复条件。建议首次尝试前经串口保存自己的完整 4MB Flash 备份；不要下载别人的完整备份覆盖设备身份和私人配置。</li>
+</ul>
+<p>电脑可以用有线网络上网、Wi-Fi 连接大金；只有一张无线网卡也可以，文件下载完成后切换到大金热点即可。刷机期间电脑不必能访问互联网。</p>
+<p><strong>进入原厂 OTA 模式就会初始化并擦除备用应用槽，并非等开始上传才擦除。</strong> 传输和切换期间不要断电。GPIO0 接地用于串口下载，本教程操作的是配网键对应的 GPIO34，两者不要混淆。</p>
+<h2 id="2-下载配套文件">2. 下载配套文件</h2>
+<ul>
+<li><a href="assets/tools/daikin-stock-ota/daikin_stock_ota.py">下载 Python 发送器</a></li>
+<li><a href="assets/tools/daikin-stock-ota/daikin-bry88ab.application.bin">下载实测 BRY88AB151K 应用镜像</a></li>
+<li><a href="assets/tools/daikin-stock-ota/SHA256SUMS">下载 SHA256SUMS</a></li>
+</ul>
+<p>把两个文件保存在同一个文件夹。镜像大小应为 <strong>1,027,296 字节</strong>，SHA-256 为：</p>
+<pre><code class="language-text">649a7b81b35e19510f9f7edb8488157418117849361bc62c6f4e13c61a5fb19e
+</code></pre>
+<p>使用的是普通 <code>application.bin</code>，本次没有重编译或修改它。不要改用 <code>factory.bin</code>、整片 Flash 备份、带签名外壳的升级包或其他机型的镜像。原厂每个应用槽只有 <strong>1,572,864 字节（1.5MiB）</strong>，此限制在首次迁移后仍然保留。</p>
+<p>先打开文件所在目录的终端，仅校验文件，不连接设备：</p>
+<p>Windows PowerShell：</p>
+<pre><code class="language-powershell">py -3 .\daikin_stock_ota.py .\daikin-bry88ab.application.bin --sha256 649a7b81b35e19510f9f7edb8488157418117849361bc62c6f4e13c61a5fb19e --check-only
+</code></pre>
+<p>macOS / Linux：</p>
+<pre><code class="language-sh">python3 ./daikin_stock_ota.py ./daikin-bry88ab.application.bin --sha256 649a7b81b35e19510f9f7edb8488157418117849361bc62c6f4e13c61a5fb19e --check-only
+</code></pre>
+<p>如果提示找不到 Python，先安装 Python 3；如果哈希或镜像格式不匹配，停止并重新下载，不要跳过检查。</p>
+<h2 id="3-用按键进入原厂-ota">3. 用按键进入原厂 OTA</h2>
+<p>设备正常上电、运行原厂程序后，在配网键上连续执行：</p>
+<ol>
+<li>按住约 <strong>3 秒</strong>，松开约 <strong>0.5 秒</strong>。</li>
+<li>再按住约 <strong>3 秒</strong>，松开约 <strong>0.5 秒</strong>。</li>
+<li>再按住约 <strong>3 秒</strong>，松开。</li>
+</ol>
+<p>每次长按需要落在约 2～5 秒之间，每次松开到再次按下的间隔不要达到 2 秒。不要把三次合成一次长按，也不要每次按到 5 秒以上。本次这套手势已实测触发 <code>mode 0</code> OTA 任务。</p>
+<p><strong>原厂某些配网状态下，长按会恢复配置并重启，而不是累计 OTA 手势。</strong> 已知判断与原厂内部 <code>wififlag</code> 有关，不能把这套操作当作所有状态都不会清配置的手势。若设备重启或手势没有生效，先观察状态，不要反复延长按压时间。</p>
+<p>有串口观察条件时，成功日志包含：</p>
+<pre><code class="language-text">Start OTA Task Suceess, mode 0
+app_ota_server_create success
+</code></pre>
+<p>无线操作不要求连接串口；串口日志是排查手势失败的方法。</p>
+<h2 id="4-电脑连接原厂热点">4. 电脑连接原厂热点</h2>
+<p>在电脑 Wi-Fi 列表中找到 <code>daikin!</code> 开头的设备热点，输入原厂此版本的默认热点密码 <strong><code>12345678</code></strong>。</p>
+<p>本次实测热点名为 <code>daikin!f76748f9</code>。每台设备后缀可能不同，不要照抄示例名称。优先对照自己设备的 MAC；实测设备 STA MAC 为 <code>9c:9c:1f:f7:67:48</code>，对应热点 BSSID 为 <code>9c:9c:1f:f7:67:49</code>。</p>
+<p>连接后，实测电脑通过 DHCP 获得 <code>192.168.4.2/24</code>，网关与设备地址为 <strong><code>192.168.4.1</code></strong>。系统提示“无互联网”属于正常现象，请保持连接。不要继续使用刷机前设备在路由器中的旧 IP；检查电脑是否自动切回其他 Wi-Fi。</p>
+<p>Windows 推荐直接通过系统 Wi-Fi 菜单连接。若用 <code>netsh</code> 在远程 SSH 会话中连接，本次发现 current-user profile 会返回 <code>0x57</code>，改用该热点的 all-users profile 才成功；不要为此删除其他网络的配置。</p>
+<h2 id="5-上传应用镜像">5. 上传应用镜像</h2>
+<p>确认当前连接的是自己的大金热点，在文件目录中运行以下命令。默认目标是 <code>192.168.4.1:8555</code>。</p>
+<p>Windows PowerShell：</p>
+<pre><code class="language-powershell">py -3 .\daikin_stock_ota.py .\daikin-bry88ab.application.bin --sha256 649a7b81b35e19510f9f7edb8488157418117849361bc62c6f4e13c61a5fb19e
+</code></pre>
+<p>macOS / Linux：</p>
+<pre><code class="language-sh">python3 ./daikin_stock_ota.py ./daikin-bry88ab.application.bin --sha256 649a7b81b35e19510f9f7edb8488157418117849361bc62c6f4e13c61a5fb19e
+</code></pre>
+<p>发送器默认发送原厂协议版本标签 <code>SV.02.00.01.16</code>，用于通过当前原厂版本的准入检查；这不是刷入后的社区固件版本。镜像内容不受该标签改写。若未来换用另一份镜像，必须同时使用该镜像对应的 SHA-256，且重新确认机型和原厂布局适配。</p>
+<p>正常过程会看到：</p>
+<pre><code class="language-text">Kit2 Version Up -&gt; Okey
+SV.02.00.01.16 -&gt; ToDo
+ACK .../1027296 (...%)
+Final response: b'OK'
+</code></pre>
+<p>等待最终 <code>OK</code> 以及设备重启。发送器每块等待长度 ACK，并在 <code>End</code> 后留出独立校验阶段；请勿手工用 <code>curl</code> 上传、把应用当作 HTTP 正文发送，或把多个协议步骤粘在同一次 TCP 写入中。这里的原厂 OTA 不是网页上传接口。</p>
+<h2 id="6-连接社区热点并验证">6. 连接社区热点并验证</h2>
+<p>重启后，电脑连接新的开放热点 <strong><code>DAIKIN-XXXXXX</code></strong>，后缀为设备 MAC 的末六位。本次是 <code>DAIKIN-f76748</code>。旧热点可能短时间仍出现在系统缓存里，以新连接成功为准。</p>
+<p>浏览器打开 <strong>http://192.168.4.1</strong>。检查页面中的设备型号、ID 和固件版本；本次实测返回 <code>BRY88AB151K</code>、<code>9c9c1ff76748</code>、<code>0.9.21-2cfd89-dirty</code>。然后按需要配置路由器 Wi-Fi、管理密码和 MQTT。</p>
+<p>本次首次启动 PM2.5、温湿度、TVOC 有有效数据；CO2 当时仍处于预热，HCHO 没有检测到，原厂也存在 HCHO 无数据错误。不要把上传成功等同于全部传感器正常。</p>
+<p>本次确认了原厂 bootloader 和分区表保留、社区应用从原厂第二槽 <code>0x190000</code> 启动。原厂联网配置不会自动成为社区配置；小 NVS 下的配置保存、断电持久化、第二次社区 OTA 尚未在本次流程中验证。不能据此把后续镜像上限放宽到社区默认分区配置的容量。</p>
+<h2 id="7-常见问题与恢复">7. 常见问题与恢复</h2>
+<table>
+<thead>
+<tr>
+<th>现象</th>
+<th>检查与处理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>找不到热点</td>
+<td>确认原厂程序正常启动、型号与版本匹配，以及三次手势是否生效；OTA 任务本身不保证在所有配置状态下创建 AP。</td>
+</tr>
+<tr>
+<td>能连热点，但 8555 超时或拒绝连接</td>
+<td>先确认没有自动切网、设备网关确为 192.168.4.1；热点出现不等于 OTA 服务已启动，有条件时观察两条 OTA 日志。</td>
+</tr>
+<tr>
+<td>握手返回 No / 版本未通过</td>
+<td>停止，检查原厂版本和协议适用范围，不要随意换高版本标签绕过兼容性判断。</td>
+</tr>
+<tr>
+<td>传输中断、ACK 异常或最终 NG</td>
+<td>保存终端输出，保持供电并观察设备状态；不要仅凭已传字节数判断刷入成功。没有重启到社区固件的证据时，不要继续后续社区升级。</td>
+</tr>
+<tr>
+<td>返回 OK，但新热点未出现</td>
+<td>等待重启并重新扫描，再检查串口日志；确认 GPIO0 没有因此前调试而继续接地。</td>
+</tr>
+<tr>
+<td>无法启动</td>
+<td>使用自己的完整 Flash 备份，通过 ESP32 串口下载模式恢复；GPIO0 与 EN 的操作属于串口恢复，不属于无线 OTA 手势。</td>
+</tr>
+</tbody>
+</table>
+<p>实测成功范围是上述 BRY88AB151K 原厂版本到该固定社区镜像的首次迁移。其他机型、配置状态及后续升级需要分别验证。</p></article><div class="guide-pager"><a href="a1-m1-flash.html">上一页<b>刷机：J-Link / Bootloader</b></a><a class="next" href="daikin-guide.html">下一页<b>功能、安装与恢复</b></a></div></main></div><footer class="site-footer"><div class="wrap"><div><b>PHICOMM COMMUNITY</b><p style="margin-top:8px">社区维护项目，与原厂无隶属关系。固件、指南及发布说明以对应版本为准。本仓库没有覆盖全部代码的统一许可证。</p></div><div><b>文档</b><ul><li><a href="quick-start.html">快速开始</a></li><li><a href="faq.html">故障排查</a></li><li><a href="build-deps.html">构建依赖</a></li><li><a href="release-log.html">Release Log</a></li></ul></div><div><b>源码</b><ul><li><a href="https://github.com/phicomm-io/phicomm-community-firmware" rel="noopener noreferrer">固件仓库</a></li><li><a href="https://github.com/phicomm-io/phicomm-community-mqtt" rel="noopener noreferrer">管理平台</a></li></ul></div><div><b>交流与反馈</b><p>QQ 群：1021750178</p><a href="https://qm.qq.com/q/9L150V85kk?from=tim" target="_blank" rel="noopener noreferrer">加入 QQ 群</a></div></div></footer><script src="../site.js"></script></body></html>
