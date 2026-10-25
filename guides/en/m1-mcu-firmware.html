@@ -44,7 +44,7 @@
 </tr>
 </tbody>
 </table>
-<p>Two-level pollutant thresholds already existed in stock firmware. Their color and high-level buzzer behavior is retained; querying configuration is an extension. The v0.9.3 source also blinks the clock colon each second, but the corresponding stock path remains unconfirmed, so this is not claimed as a stock-exclusive difference.</p>
+<p>Fixes the stock firmware issue where two-level pollutant threshold settings did not take effect. Custom thresholds now control indicator colors and high-level buzzer alarms, with an added query for the current configuration. The v0.9.3 source also blinks the clock colon each second, but the corresponding stock path remains unconfirmed, so this is not claimed as a stock-exclusive difference.</p>
 <h2 id="downloads-and-validation">Downloads and validation</h2>
 <p>The latest published controller release is currently <strong>v0.9.2, a development preview</strong>. The dedicated download section lists public releases including prereleases, separately from Wi-Fi firmware. Source features planned for v0.9.3 are not included in v0.9.2.</p>
 <p><strong>This is not a hardware-accepted stable replacement.</strong> Early oss-0.3 was reported unable to boot. Later candidates fix the watchdog clock divider but still need hardware revalidation. Host tests, ARM builds and models do not establish actual sound, timing, power-loss recovery or compatibility with every board. Check the downloaded tag's release notes and <a href="https://github.com/phicomm-io/phicomm_m1_mcu_atsamd20/blob/main/docs/validation.md">validation record</a>.</p>
