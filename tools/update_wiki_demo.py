@@ -23,7 +23,7 @@ def update(site, bundle, tag, commit):
     shutil.copytree(source, destination)
     add_navigation(site)
     (destination / 'release.json').write_text(json.dumps({
-        'repository': 'phicomm-io/phicomm-community-mqtt',
+        'repository': 'phicomm-io/iotcloud-community-mqtt',
         'tag': tag, 'commit': commit,
         'frontend_commit': manifest['commit'],
     }, indent=2) + '\n')
