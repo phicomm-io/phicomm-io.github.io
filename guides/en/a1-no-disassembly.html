@@ -1,49 +1,13 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>A1 no-disassembly migration · Phicomm community firmware</title><meta name="description" content="LAN OTA uploads and public DNS migration prerequisites"><link rel="canonical" href="https://phicomm-io.github.io/guides/en/a1-no-disassembly.html"><meta property="og:type" content="website"><meta property="og:site_name" content="PHICOMM COMMUNITY"><meta property="og:title" content="A1 no-disassembly migration · Phicomm community firmware"><meta property="og:description" content="LAN OTA uploads and public DNS migration prerequisites"><meta property="og:url" content="https://phicomm-io.github.io/guides/en/a1-no-disassembly.html"><meta property="og:locale" content="en_US"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="A1 no-disassembly migration · Phicomm community firmware"><meta name="twitter:description" content="LAN OTA uploads and public DNS migration prerequisites"><link rel="alternate" hreflang="zh-CN" href="https://phicomm-io.github.io/guides/a1-no-disassembly.html"><link rel="alternate" hreflang="en" href="https://phicomm-io.github.io/guides/en/a1-no-disassembly.html"><link rel="alternate" hreflang="x-default" href="https://phicomm-io.github.io/guides/a1-no-disassembly.html"><link rel="stylesheet" href="../../style.css"><script src="../../theme.js"></script></head><body><a class="skip" href="#main">Skip to content</a><header class="site-header"><div class="wrap"><a class="brand" href="../../"><span class="mark">P</span><span class="word"><b>PHICOMM COMMUNITY</b><span>Community firmware</span></span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../#devices">Devices</a><a href="../../#features">Features</a><a href="../../#iotcloud">IotCloud</a><a href="../../#demos">Demos</a><a href="../../#docs">Documentation</a><a href="../../#releases">Downloads</a></nav><div class="prefs"><label class="sr" for="themePick">Theme</label><select id="themePick"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></header><div class="guide-layout"><nav class="guide-nav" aria-label="Documentation navigation"><p class="guide-group">Getting started</p><a href="quick-start.html">Quick start</a><a href="flash-prep.html">Before flashing</a><a href="firmware-update.html">Firmware updates</a><a href="iotcloud-connect.html">Connect to IotCloud</a><a href="mqtt-link.html">MQTT and automation</a><a href="faq.html">Troubleshooting</a><p class="guide-group">TC1 power strip</p><a href="tc1-guide.html">TC1 operation</a><a href="tc1-flash.html">Flash TC1</a><a href="tc1-no-disassembly.html">Flash TC1 without disassembly</a><a href="tc1-no-disassembly-ethernet-wifi-ap.html" class="guide-child">One Ethernet + one Wi-Fi + one AP</a><p class="guide-group">M1 air quality monitor</p><a href="m1-mcu-update.html">Update the M1 controller over the network</a><a href="m1-mcu-firmware.html">M1 open-source controller firmware</a><a href="m1-guide.html">M1 operation</a><a href="stock-provision.html">Stock Wi-Fi setup without the app</a><a href="m1-no-disassembly.html">M1 no-disassembly migration</a><a href="a1-m1-flash.html">Flash A1 / M1</a><p class="guide-group">DAIKIN air quality monitor</p><a href="daikin-stock-ota.html">Daikin stock OTA migration</a><a href="daikin-guide.html">DAIKIN operation and installation</a><p class="guide-group">A1 air purifier</p><a href="a1-guide.html">A1 operation</a><a href="stock-provision.html">Stock Wi-Fi setup without the app</a><a href="a1-no-disassembly.html" aria-current="page">A1 no-disassembly migration</a><a href="a1-m1-flash.html">Flash A1 / M1</a><p class="guide-group">Development and maintenance</p><a href="iotcloud-deploy.html">Deploy IotCloud</a><a href="build-deps.html">Build dependencies</a><a href="sources.html">Asset sources</a><a href="release-log.html">Release Log</a></nav><main class="guide-main" id="main"><p class="guide-language" aria-label="Language"><a href="../a1-no-disassembly.html" lang="zh-CN">简体中文</a> · English</p><article class="prose"><h1 id="a1-no-disassembly-flashing-lan-upload-and-public-dns-migration">A1 no-disassembly flashing: LAN upload and public DNS migration</h1>
-<p>The factory firmware has a LAN OTA upload interface and a cloud update path. Once connected, the device can use these paths for a compatible community migration image.</p>
-<p><strong>This is a guide awaiting physical verification. The interface paths are confirmed from a backup, but no image verified through factory installation and boot is supplied here, and there is no ready-to-use public migration DNS. Complete provisioning and read-only checks first; stop before uploading until a verified compatible image is available.</strong></p>
-<p>This A1 is the air purifier, not the TC1 A1 hardware revision. Select Windows PowerShell, macOS or Linux to view the matching commands.</p>
-<p>The analyzed factory version is A1 <code>v1.47</code>; other versions require separate interface and image checks.</p>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>A1 no-disassembly compatibility · Phicomm community firmware</title><meta name="description" content="Stock-version limits, connection checks and wired installation"><link rel="canonical" href="https://phicomm-io.github.io/guides/en/a1-no-disassembly.html"><meta property="og:type" content="website"><meta property="og:site_name" content="PHICOMM COMMUNITY"><meta property="og:title" content="A1 no-disassembly compatibility · Phicomm community firmware"><meta property="og:description" content="Stock-version limits, connection checks and wired installation"><meta property="og:url" content="https://phicomm-io.github.io/guides/en/a1-no-disassembly.html"><meta property="og:locale" content="en_US"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="A1 no-disassembly compatibility · Phicomm community firmware"><meta name="twitter:description" content="Stock-version limits, connection checks and wired installation"><link rel="alternate" hreflang="zh-CN" href="https://phicomm-io.github.io/guides/a1-no-disassembly.html"><link rel="alternate" hreflang="en" href="https://phicomm-io.github.io/guides/en/a1-no-disassembly.html"><link rel="alternate" hreflang="x-default" href="https://phicomm-io.github.io/guides/a1-no-disassembly.html"><link rel="stylesheet" href="../../style.css"><script src="../../theme.js"></script></head><body><a class="skip" href="#main">Skip to content</a><header class="site-header"><div class="wrap"><a class="brand" href="../../en/"><span class="mark" aria-hidden="true">P</span><span class="word"><b>IoTCloud COMMUNITY</b><span>Community firmware</span></span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../en/#devices">Devices and features</a><a href="../../en/#install">Install and update</a><a href="../../en/#faq">Common questions</a><a href="../../en/#develop">Contribute</a></nav><div class="prefs"><label class="sr" for="themePick">Theme</label><select id="themePick"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></header><div class="guide-layout"><nav class="guide-nav" aria-label="Documentation navigation"><details class="guide-nav-group"><summary>Devices and features</summary><a href="tc1-guide.html">TC1 operation</a><a href="m1-guide.html">M1 operation</a><a href="a1-guide.html">A1 operation</a><a href="daikin-guide.html">DAIKIN operation and installation</a><a href="m1-mcu-firmware.html">M1 open-source controller firmware</a><a href="mqtt-link.html">MQTT and automation</a><a href="iotcloud-connect.html">Connect to IoTCloud</a></details><details class="guide-nav-group" open><summary>Install and update</summary><a href="quick-start.html">Quick start</a><a href="flash-prep.html">Before flashing</a><a href="firmware-update.html">Firmware updates</a><a href="stock-provision.html">Stock Wi-Fi setup without the app</a><a href="tc1-no-disassembly.html">Flash TC1 without disassembly</a><a href="tc1-no-disassembly-ethernet-wifi-ap.html" class="guide-child">One Ethernet + one Wi-Fi + one AP</a><a href="tc1-flash.html">Flash TC1</a><a href="m1-no-disassembly.html">M1 installation without disassembly</a><a href="a1-no-disassembly.html" aria-current="page">A1 no-disassembly compatibility</a><a href="a1-m1-flash.html">Flash A1 / M1</a><a href="daikin-stock-ota.html">Daikin stock OTA migration</a><a href="m1-mcu-update.html">Update the M1 controller over the network</a></details><details class="guide-nav-group"><summary>Common questions</summary><a href="faq.html">Troubleshooting</a></details><details class="guide-nav-group"><summary>Contribute</summary><a href="iotcloud-deploy.html">Deploy IoTCloud</a><a href="build-deps.html">Build dependencies</a><a href="sources.html">Asset sources</a><a href="release-log.html">Release Log</a></details></nav><main class="guide-main" id="main"><p class="guide-language" aria-label="Language"><a href="../a1-no-disassembly.html" lang="zh-CN">简体中文</a> · English</p><article class="prose"><h1 id="a1-installation-compatibility-without-disassembly">A1 installation compatibility without disassembly</h1>
+<p>A1 here means the air purifier, not the TC1 A1 hardware revision.</p>
+<p><strong>There is no verified migration package for stock A1 <code>v1.47</code>, and no ready-to-use public migration DNS. For first installation, use <a href="a1-m1-flash.html">A1 / M1 wired installation and recovery</a>. Do not upload an ordinary <code>.raw</code>, <code>.signed</code> or full Flash image to the factory OTA interface.</strong> Other stock versions also need separate compatibility checks.</p>
+<p>Devices already running community firmware should follow <a href="firmware-update.html">Firmware updates</a>, without the factory migration procedure.</p>
+<h2 id="connect-the-stock-device">Connect the stock device</h2>
+<p>If the router already lists A1, preserve its Wi-Fi configuration and record its IP and MAC. Otherwise use EasyLink as described in <a href="stock-provision.html">Stock Wi-Fi setup</a>. Connect the computer to the target 2.4 GHz Wi-Fi network. The original app is not required.</p>
+<h2 id="read-only-connection-check">Read-only connection check</h2>
+<p>These commands only read the factory configuration service. Replace the example IP, then compare the device label and router MAC. Do not publish the full configuration response.</p>
 <fieldset class="guide-os-picker" hidden><legend>Your computer</legend><div class="guide-os-options"><label><input type="radio" name="guide-os" value="mac"><span>macOS</span></label><label><input type="radio" name="guide-os" value="windows"><span>Windows</span></label><label><input type="radio" name="guide-os" value="linux"><span>Linux</span></label></div><p>Only instructions for your selected system are shown. Your choice is saved.</p></fieldset>
 
-<h2 id="1-choose-a-path">1. Choose a path</h2>
-<table>
-<thead>
-<tr>
-<th>Path</th>
-<th>User action</th>
-<th>Prerequisites</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>LAN</td>
-<td>Upload a native OTA image from a computer on the same LAN</td>
-<td>Compatible image and device IP</td>
-</tr>
-<tr>
-<td>Public service</td>
-<td>Use router DNS to direct the device to a compatible update service</td>
-<td>Validated service, controlled DNS, compatible image and factory update conditions</td>
-</tr>
-</tbody>
-</table>
-<p>LAN upload avoids cloud protocol reproduction and update scheduling. A DNS change only changes name resolution; a working migration service must exist first. The device initiates public-service connections; do not expose port 8000 to the Internet.</p>
-<h2 id="2-connect-a1">2. Connect A1</h2>
-<p>If A1 already appears in the router client list, preserve its settings. A compatible network with its saved SSID and password may also allow reconnection.</p>
-<p>Otherwise, connect the computer over the target 2.4 GHz Wi-Fi, download and extract the <a href="../assets/tools/a1-easylink.zip">EasyLink tool bundle</a>, enter its <code>a1-easylink</code> folder and start the local tool:</p>
-<div data-guide-os="windows">
-<pre><code class="language-powershell">py -3 .\a1_easylink_web.py
-</code></pre>
-</div>
-
-<div data-guide-os="mac linux">
-<pre><code class="language-sh">python3 ./a1_easylink_web.py
-</code></pre>
-</div>
-
-<p>Enter the credentials and Wi-Fi adapter IPv4 in the local page. Sending requires A1 to be listening. Its touch input has an approximately one-second threshold, but the matching physical icon remains unverified. Follow the <a href="stock-provision.html">factory Wi-Fi setup guide</a> for the full procedure and limitations.</p>
-<h2 id="3-identify-the-lan-target">3. Identify the LAN target</h2>
-<p>Connect the computer by Wi-Fi or Ethernet to the same router. Obtain the device IP from its client list and replace this example:</p>
 <div data-guide-os="windows">
 <pre><code class="language-powershell">$DeviceIp = &quot;192.168.1.123&quot;
 curl.exe --noproxy &quot;*&quot; --connect-timeout 3 --max-time 5 &quot;http://${DeviceIp}:8000/config-read&quot;
@@ -56,134 +20,6 @@ curl --noproxy '*' --connect-timeout 3 --max-time 5 &quot;http://${DeviceIp}:800
 </code></pre>
 </div>
 
-<p>Match the response with the target device and router MAC record. Resolve IP changes or network isolation before proceeding. This path receives firmware bytes directly; TC1's TFTP trigger, extra Ethernet address and JSON <code>FILENAME</code> do not apply.</p>
-<h2 id="4-check-the-image-and-upload-once">4. Check the image and upload once</h2>
-<p>Obtain an image specifically validated for A1's factory native OTA path, targeting community version <strong>0.9.21 or newer</strong>. Meeting the version minimum still requires factory-install compatibility validation. Its publisher must identify supported factory versions, SHA-256, first-install procedure and post-boot access.</p>
-<p>A full Flash backup, <code>.all.bin</code> or community <code>.signed</code> wrapper cannot be used directly as the request body. A <code>.raw</code> suffix alone is not proof of compatibility. The name <code>a1-migration-native.bin</code> is an example, not a supplied download.</p>
-<p>Compare the image's SHA-256 with its publisher's value:</p>
-<div data-guide-os="windows">
-<pre><code class="language-powershell">Get-FileHash -Algorithm SHA256 .\a1-migration-native.bin
-</code></pre>
-</div>
-
-<div data-guide-os="mac">
-<pre><code class="language-sh">shasum -a 256 ./a1-migration-native.bin
-</code></pre>
-</div>
-
-<div data-guide-os="linux">
-<pre><code class="language-sh">sha256sum ./a1-migration-native.bin
-</code></pre>
-</div>
-
-<p>Keep power and connectivity stable and upload once:</p>
-<div data-guide-os="windows">
-<pre><code class="language-powershell">curl.exe --noproxy &quot;*&quot; --connect-timeout 5 --max-time 300 --header &quot;Content-Type: application/ota-stream&quot; --header &quot;Expect:&quot; --data-binary &quot;@a1-migration-native.bin&quot; &quot;http://${DeviceIp}:8000/OTA&quot;
-</code></pre>
-</div>
-
-<div data-guide-os="mac linux">
-<pre><code class="language-sh">curl --noproxy '*' --connect-timeout 5 --max-time 300 --header 'Content-Type: application/ota-stream' --header 'Expect:' --data-binary '@a1-migration-native.bin' &quot;http://${DeviceIp}:8000/OTA&quot;
-</code></pre>
-</div>
-
-<p>The factory handler writes the OTA staging partition, accumulates CRC16, saves update information and requests a restart. No automatic retry is configured. If the connection closes or times out, inspect the device and router before sending again.</p>
-<h2 id="5-public-migration-through-a-compatible-service">5. Public migration through a compatible service</h2>
-<pre><code class="language-text">Connected device → controlled DNS → compatible activation / state handling
-→ factory update check → image URL and MD5 → download and install → verified new runtime
-</code></pre>
-<p>The backup references these endpoints. Their current availability has not been checked.</p>
-<table>
-<thead>
-<tr>
-<th>Purpose</th>
-<th>Factory endpoint</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Activation</td>
-<td><code>https://phicloudsym.phicomm.com/device/active?mac=…&amp;productId=30</code></td>
-</tr>
-<tr>
-<td>Update check</td>
-<td><code>https://aircleaner.phicomm.com/aircleanerfirmware/checkUpdate</code></td>
-</tr>
-<tr>
-<td>Business / OTA connection</td>
-<td><code>aircleanerconnecter.phicomm.com:9000</code>, with a separate legacy-address branch</td>
-</tr>
-</tbody>
-</table>
-<h3 id="configure-and-check-dns">Configure and check DNS</h3>
-<p>Proceed only after a maintainer supplies a DNS address and migration image validated on the target hardware. No such address is supplied by this guide.</p>
-<ol>
-<li>Record the router's current DNS and device network settings.</li>
-<li>Configure the supplied DNS in the router's DHCP / LAN settings. If the router proxies DNS, follow the service instructions for forwarding too. Changing only the computer's DNS does not change the device's resolver.</li>
-<li>Follow router instructions to renew the device lease and resolution; never restart during firmware transfer or writing. A device using static DNS needs separate confirmation.</li>
-<li>Query the update hostname from a computer on that LAN. Compare with the maintainer's expected result, then confirm the target device's own requests in service logs.</li>
-</ol>
-<div data-guide-os="windows">
-<pre><code class="language-powershell">Resolve-DnsName aircleaner.phicomm.com -Type A
-</code></pre>
-</div>
-
-<div data-guide-os="mac linux">
-<pre><code class="language-sh">dig +short A aircleaner.phicomm.com
-</code></pre>
-</div>
-
-<p>The computer's result does not establish the device's resolver or migration success. Restore the user's original DNS after migration.</p>
-<h3 id="response-format-for-service-maintainers">Response format for service maintainers</h3>
-<p>These values illustrate the parser structure. They are not a deployable update manifest:</p>
-<pre><code class="language-json">{
-  &quot;url&quot;: &quot;http://migration.example/a1-native.bin&quot;,
-  &quot;md5&quot;: &quot;&lt;32 hexadecimal MD5 characters of the actual response body&gt;&quot;,
-  &quot;ver&quot;: &quot;v1.48&quot;,
-  &quot;enforce&quot;: true
-}
-</code></pre>
-<p>The factory parser removes the version's first character and compares its numeric value with local <code>1.47</code>. The remote value must be greater, enforcement enabled and no OTA already active. This metadata version is not the community image's version. Do not add <code>device_id</code>, which can select the activation-response branch.</p>
-<p>The hourly timer also checks activation/business state, clock synchronization and an hour field equal to <code>18</code>. That does not guarantee an immediate update at the user's local 18:00. The separate TCP OTA command path has not been reproduced with its complete session and framing; an isolated JSON command is not a verified shortcut.</p>
-<p>The server must implement required activation/state exchanges, HTTPS update responses and actual image delivery. Compute MD5 from the bytes served. MD5 is a content checksum, not a factory private-key signature. The traced application path does not establish that arbitrary images will boot, nor replace a full bootloader audit.</p>
-<p>The update-check TLS call disables CA verification, but legacy TLS versions, cipher suites, certificate algorithms and SNI behavior still require device testing. The downloader recognizes HTTP and HTTPS URLs; browser download success does not prove device compatibility.</p>
-<p>Before public use, demonstrate activation, update triggering, TLS, complete download, installation, reboot and functional checks on the target factory device. A static file host plus changed DNS is insufficient. Until this is done, there is no verified “change DNS and reboot” procedure.</p>
-<h2 id="6-verify-the-migration">6. Verify the migration</h2>
-<ol>
-<li>Confirm the expected model and community firmware version after restart, using the image publisher's access instructions.</li>
-<li>Verify Wi-Fi, local access and purifier controls; check whether configuration retention matches the migration contract.</li>
-<li>Power cycle after installation has completed and confirm boot, network and operation again.</li>
-</ol>
-<p>HTTP success, complete file delivery or a disconnected session are intermediate observations. Keep update-check, download and confirmed runtime states separate in service logs.</p>
-<h2 id="7-troubleshooting">7. Troubleshooting</h2>
-<table>
-<thead>
-<tr>
-<th>Symptom</th>
-<th>Check</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Configuration endpoint unreachable</td>
-<td>Current IP, successful provisioning, device identity and client isolation</td>
-</tr>
-<tr>
-<td>No requests after a DNS change</td>
-<td>Actual device resolver, cache, activation and update-trigger conditions</td>
-</tr>
-<tr>
-<td>Check succeeds but download does not</td>
-<td>Model-specific manifest, version comparison and enforcement</td>
-</tr>
-<tr>
-<td>Browser downloads but device fails</td>
-<td>Legacy TLS, exact query/Range requests and response-body MD5</td>
-</tr>
-<tr>
-<td>Download completes but device does not boot</td>
-<td>Preserve file hashes and service evidence; do not treat download as installation</td>
-</tr>
-</tbody>
-</table>
-<p>No device was connected or flashed while preparing this guide.</p></article><div class="guide-pager"><a href="a1-guide.html">Previous<b>A1 operation</b></a><a class="next" href="iotcloud-deploy.html">Next<b>Deploy IotCloud</b></a></div></main></div><footer class="site-footer"><div class="wrap"><div><b>PHICOMM COMMUNITY</b><p>Community-maintained, not affiliated with the manufacturer. Check the documentation for your release. The firmware repository has no single license covering all code.</p></div><div><b>Documentation</b><ul><li><a href="quick-start.html">Quick start</a></li><li><a href="faq.html">Troubleshooting</a></li><li><a href="release-log.html">Release Log</a></li></ul></div><div><b>Source</b><ul><li><a href="https://github.com/phicomm-io/phicomm-community-firmware">Firmware</a></li><li><a href="https://github.com/phicomm-io/phicomm-community-mqtt">MQTT platform</a></li></ul></div><div><b>Community</b><p>QQ group: 1021750178</p><a href="https://qm.qq.com/q/9L150V85kk?from=tim" target="_blank" rel="noopener noreferrer">Join the QQ group (Chinese)</a></div></div></footer><script src="../../site.js"></script></body></html>
+<p>If there is no response, check the IP, Wi-Fi and router client isolation. An accessible interface establishes network connectivity, not first-migration image compatibility.</p>
+<h2 id="after-installation">After installation</h2>
+<p>After wired installation, use <a href="quick-start.html">Quick start</a> for Wi-Fi setup. Confirm the model, version, fan and touch controls, then check automatic reconnection and retained settings after a normal power cycle. See <a href="faq.html">Troubleshooting</a> if needed.</p></article><div class="guide-pager"><a href="m1-no-disassembly.html">Previous<b>M1 installation without disassembly</b></a><a class="next" href="a1-m1-flash.html">Next<b>Flash A1 / M1</b></a></div></main></div><footer class="site-footer"><div class="wrap"><div><b>IoTCloud COMMUNITY</b><p>Community maintained and independent of the manufacturers. See each source repository for component and third-party licenses.</p></div><div><b>Guides</b><ul><li><a href="quick-start.html">Quick start</a></li><li><a href="faq.html">Troubleshooting</a></li><li><a href="release-log.html">Release notes</a></li></ul></div><div><b>Source and protocols</b><ul><li><a href="https://phicomm-io.github.io/iotcloud-community-protocols/en/">Developer documentation</a></li><li><a href="https://github.com/phicomm-io/iotcloud-community-frontend">Shared frontend</a></li><li><a href="https://github.com/phicomm-io/iotcloud-community-mqtt">IoTCloud platform</a></li><li><a href="https://github.com/phicomm-io/phicomm_m1_mcu_atsamd20">M1 sensor controller</a></li></ul></div></div></footer><script src="../../site.js"></script></body></html>

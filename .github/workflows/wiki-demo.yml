@@ -12,6 +12,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   publish:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-22.04
     permissions:
       contents: write
@@ -31,8 +32,9 @@ jobs:
         if: steps.release.outputs.tag != ''
         env:
           GH_TOKEN: ${{ github.token }}
+          RELEASE_REPOSITORY: ${{ steps.release.outputs.repository }}
           RELEASE_TAG: ${{ steps.release.outputs.tag }}
-        run: gh release download "$RELEASE_TAG" --repo phicomm-io/phicomm-community-mqtt --pattern frontend.lock.json --dir "$RUNNER_TEMP/mqtt-release"
+        run: gh release download "$RELEASE_TAG" --repo "$RELEASE_REPOSITORY" --pattern frontend.lock.json --dir "$RUNNER_TEMP/mqtt-release"
       - name: Verify frontend and update platform demo
         if: steps.release.outputs.tag != ''
         env:
@@ -54,7 +56,7 @@ jobs:
         if: github.event_name != 'schedule' || steps.release.outputs.tag != ''
         run: |
           mkdir "$RUNNER_TEMP/public-site"
-          cp -a index.html robots.txt sitemap.xml style.css site.js theme.js releases.js demo-nav.css demo-nav.js .nojekyll demos guides releases ota local "$RUNNER_TEMP/public-site/"
+          cp -a index.html en robots.txt sitemap.xml style.css site.js theme.js releases.js demo-nav.css demo-nav.js .nojekyll demos guides releases ota local "$RUNNER_TEMP/public-site/"
           python3 tools/frontend_release.py --lock tools/iotcloud.lock.json --output "$RUNNER_TEMP/iotcloud-release"
           cp -a "$RUNNER_TEMP/iotcloud-release/platform" "$RUNNER_TEMP/public-site/iotcloud"
           printf '%s\n' '{"apiOrigin":"https://mqtt.fjrcn.cn","mqttWS":"wss://mqtt.fjrcn.cn/mqtt"}' > "$RUNNER_TEMP/public-site/iotcloud/config.json"

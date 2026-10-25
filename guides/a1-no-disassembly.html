@@ -1,49 +1,13 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>斐讯 A1 免拆刷机：内网 / 公网 · 斐讯社区固件 · PHICOMM COMMUNITY</title><meta name="description" content="原厂 OTA 上传、镜像要求与 DNS 迁移边界"><link rel="canonical" href="https://phicomm-io.github.io/guides/a1-no-disassembly.html"><meta property="og:type" content="website"><meta property="og:site_name" content="PHICOMM COMMUNITY"><meta property="og:title" content="斐讯 A1 免拆刷机：内网 / 公网 · 斐讯社区固件 · PHICOMM COMMUNITY"><meta property="og:description" content="原厂 OTA 上传、镜像要求与 DNS 迁移边界"><meta property="og:url" content="https://phicomm-io.github.io/guides/a1-no-disassembly.html"><meta property="og:locale" content="zh_CN"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="斐讯 A1 免拆刷机：内网 / 公网 · 斐讯社区固件 · PHICOMM COMMUNITY"><meta name="twitter:description" content="原厂 OTA 上传、镜像要求与 DNS 迁移边界"><link rel="alternate" hreflang="zh-CN" href="https://phicomm-io.github.io/guides/a1-no-disassembly.html"><link rel="alternate" hreflang="en" href="https://phicomm-io.github.io/guides/en/a1-no-disassembly.html"><link rel="alternate" hreflang="x-default" href="https://phicomm-io.github.io/guides/a1-no-disassembly.html"><link rel="stylesheet" href="../style.css"><script src="../theme.js"></script></head><body><a class="skip" href="#main">跳到主要内容</a><header class="site-header"><div class="wrap"><a class="brand" href=".././"><span class="mark" aria-hidden="true">斐</span><span class="word"><b>PHICOMM COMMUNITY</b><span>社区固件</span></span></a><nav class="site-nav" aria-label="主导航"><a href="../#devices">设备</a><a href="../#features">功能</a><a href="../#iotcloud">IotCloud</a><a href="../#demos">在线演示</a><a href="../#docs">文档</a><a href="../#releases">下载</a></nav><div class="prefs"><label class="sr" for="themePick">主题</label><select id="themePick"><option value="system">跟随系统</option><option value="light">浅色</option><option value="dark">深色</option></select></div></div></header><div class="guide-layout"><nav class="guide-nav" aria-label="文档导航"><p class="guide-group">开始使用</p><a href="quick-start.html">快速开始</a><a href="flash-prep.html">刷机前准备</a><a href="firmware-update.html">固件更新</a><a href="iotcloud-connect.html">接入 IotCloud</a><a href="mqtt-link.html">MQTT 与联动</a><a href="faq.html">故障排查</a><p class="guide-group">TC1 智能排插</p><a href="tc1-guide.html">功能与操作</a><a href="tc1-flash.html">刷机</a><a href="tc1-no-disassembly.html">免拆刷机</a><a href="tc1-no-disassembly-ethernet-wifi-ap.html" class="guide-child">一个有线＋一个无线＋一个 AP</a><p class="guide-group">M1 空气检测仪</p><a href="m1-mcu-update.html">主控网络升级</a><a href="m1-mcu-firmware.html">主控开源固件</a><a href="m1-guide.html">功能与操作</a><a href="stock-provision.html">原厂固件配网（免 App）</a><a href="m1-no-disassembly.html">免拆刷机：内网 / 公网</a><a href="a1-m1-flash.html">刷机：J-Link / Bootloader</a><p class="guide-group">DAIKIN 空气检测仪</p><a href="daikin-stock-ota.html">原厂 OTA 无线刷机</a><a href="daikin-guide.html">功能、安装与恢复</a><p class="guide-group">A1 空气净化器</p><a href="a1-guide.html">功能与操作</a><a href="stock-provision.html">原厂固件配网（免 App）</a><a href="a1-no-disassembly.html" aria-current="page">免拆刷机：内网 / 公网</a><a href="a1-m1-flash.html">刷机：J-Link / Bootloader</a><p class="guide-group">开发与维护</p><a href="iotcloud-deploy.html">IotCloud 部署</a><a href="build-deps.html">构建依赖</a><a href="sources.html">资源来源</a><a href="release-log.html">Release Log</a></nav><main class="guide-main" id="main"><p class="guide-language" aria-label="Language">简体中文 · <a href="en/a1-no-disassembly.html" lang="en">English</a></p><article class="prose"><h1 id="斐讯-a1-免拆刷机内网上传与公网-dns-迁移">斐讯 A1 免拆刷机：内网上传与公网 DNS 迁移</h1>
-<p>A1 原厂固件保留了局域网固件上传接口，也能向服务器检查并下载更新。设备联网后，可以研究通过这两条原厂 OTA 路径迁移到社区固件。</p>
-<p><strong>本文是基于原机备份的待实机验证指南：接口调用链已确认，但目前没有随文提供经过这份原厂固件安装、启动验证的迁移镜像，也没有可直接填写的公共迁移 DNS。取得适配镜像前，先完成联网和只读接口检查，停在上传之前。</strong></p>
-<p>本文的 A1 指空气净化器，不是 TC1 插排的 A1 硬件版本。支持 Windows PowerShell、macOS 和 Linux；选择电脑系统后查看相应命令。</p>
-<p>本文分析范围为原厂 A1 <code>v1.47</code>；其他版本需另行核对接口和镜像兼容性。</p>
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>斐讯 A1 免拆刷机：内网 / 公网 · 斐讯社区固件 · PHICOMM COMMUNITY</title><meta name="description" content="原厂版本限制、联网检查与有线安装入口"><link rel="canonical" href="https://phicomm-io.github.io/guides/a1-no-disassembly.html"><meta property="og:type" content="website"><meta property="og:site_name" content="PHICOMM COMMUNITY"><meta property="og:title" content="斐讯 A1 免拆刷机：内网 / 公网 · 斐讯社区固件 · PHICOMM COMMUNITY"><meta property="og:description" content="原厂版本限制、联网检查与有线安装入口"><meta property="og:url" content="https://phicomm-io.github.io/guides/a1-no-disassembly.html"><meta property="og:locale" content="zh_CN"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="斐讯 A1 免拆刷机：内网 / 公网 · 斐讯社区固件 · PHICOMM COMMUNITY"><meta name="twitter:description" content="原厂版本限制、联网检查与有线安装入口"><link rel="alternate" hreflang="zh-CN" href="https://phicomm-io.github.io/guides/a1-no-disassembly.html"><link rel="alternate" hreflang="en" href="https://phicomm-io.github.io/guides/en/a1-no-disassembly.html"><link rel="alternate" hreflang="x-default" href="https://phicomm-io.github.io/guides/a1-no-disassembly.html"><link rel="stylesheet" href="../style.css"><script src="../theme.js"></script></head><body><a class="skip" href="#main">跳到主要内容</a><header class="site-header"><div class="wrap"><a class="brand" href="../"><span class="mark" aria-hidden="true">斐</span><span class="word"><b>IoTCloud COMMUNITY</b><span>社区固件</span></span></a><nav class="site-nav" aria-label="主导航"><a href="../#devices">设备与功能</a><a href="../#install">安装升级</a><a href="../#faq">常见问题</a><a href="../#develop">参与开发</a></nav><div class="prefs"><label class="sr" for="themePick">主题</label><select id="themePick"><option value="system">跟随系统</option><option value="light">浅色</option><option value="dark">深色</option></select></div></div></header><div class="guide-layout"><nav class="guide-nav" aria-label="文档导航"><details class="guide-nav-group"><summary>设备与功能</summary><a href="tc1-guide.html">TC1 功能与操作</a><a href="m1-guide.html">M1 功能与操作</a><a href="a1-guide.html">A1 功能与操作</a><a href="daikin-guide.html">DAIKIN 功能、安装与恢复</a><a href="m1-mcu-firmware.html">M1 开源传感器主控</a><a href="mqtt-link.html">MQTT 与联动</a><a href="iotcloud-connect.html">接入 IoTCloud</a></details><details class="guide-nav-group" open><summary>安装升级</summary><a href="quick-start.html">快速开始</a><a href="flash-prep.html">刷机前准备</a><a href="firmware-update.html">固件更新</a><a href="stock-provision.html">原厂固件配网（免 App）</a><a href="tc1-no-disassembly.html">TC1 免拆安装</a><a href="tc1-no-disassembly-ethernet-wifi-ap.html" class="guide-child">一个有线＋一个无线＋一个 AP</a><a href="tc1-flash.html">TC1 有线安装与恢复</a><a href="m1-no-disassembly.html">M1 免拆安装</a><a href="a1-no-disassembly.html" aria-current="page">A1 免拆安装兼容性</a><a href="a1-m1-flash.html">A1 / M1 有线安装与恢复</a><a href="daikin-stock-ota.html">DAIKIN 原厂 OTA 安装</a><a href="m1-mcu-update.html">M1 传感器主控升级</a></details><details class="guide-nav-group"><summary>常见问题</summary><a href="faq.html">故障排查</a></details><details class="guide-nav-group"><summary>参与开发</summary><a href="iotcloud-deploy.html">自行部署 IoTCloud</a><a href="build-deps.html">构建依赖</a><a href="sources.html">资源来源</a><a href="release-log.html">Release Log</a></details></nav><main class="guide-main" id="main"><p class="guide-language" aria-label="Language">简体中文 · <a href="en/a1-no-disassembly.html" lang="en">English</a></p><article class="prose"><h1 id="a1-免拆安装兼容性">A1 免拆安装兼容性</h1>
+<p>本页的 A1 指空气净化器，不是 TC1 排插的 A1 硬件版本。</p>
+<p><strong>原厂 A1 <code>v1.47</code> 尚无已验证的免拆迁移包，也没有可直接使用的公共迁移 DNS。首次安装请使用 <a href="a1-m1-flash.html">A1 / M1 有线安装与恢复</a>。不要把普通 <code>.raw</code>、<code>.signed</code> 或整片镜像直接上传到原厂 OTA 接口。</strong> 其他原厂版本同样需要单独确认兼容性。</p>
+<p>已经运行社区固件时，按<a href="firmware-update.html">固件更新</a>操作，无需走原厂迁移流程。</p>
+<h2 id="原厂设备联网">原厂设备联网</h2>
+<p>若路由器已列出设备，保留现有 Wi-Fi 配置，记下 IP 与 MAC。尚未联网时，按<a href="stock-provision.html">原厂配网指南</a>使用 EasyLink 工具。电脑需连接目标 2.4 GHz Wi-Fi；无需原厂 App。</p>
+<h2 id="只读检查连接">只读检查连接</h2>
+<p>以下命令只读取原厂配置服务。替换示例 IP，并与机身标签、路由器中的 MAC 核对；不要公开完整配置响应。</p>
 <fieldset class="guide-os-picker" hidden><legend>选择电脑系统</legend><div class="guide-os-options"><label><input type="radio" name="guide-os" value="mac"><span>macOS</span></label><label><input type="radio" name="guide-os" value="windows"><span>Windows</span></label><label><input type="radio" name="guide-os" value="linux"><span>Linux</span></label></div><p>只展示所选系统的操作，选择会自动保存。</p></fieldset>
 
-<h2 id="1-选择适合自己的路径">1. 选择适合自己的路径</h2>
-<table>
-<thead>
-<tr>
-<th>路径</th>
-<th>用户如何操作</th>
-<th>还需要什么</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>内网免拆</td>
-<td>电脑在同一局域网上传迁移镜像</td>
-<td>适配的 A1 原生 OTA 镜像、设备 IP</td>
-</tr>
-<tr>
-<td>公网免拆</td>
-<td>设备通过路由器 DNS 访问兼容升级服务，再主动下载镜像</td>
-<td>兼容服务、可控 DNS、适配镜像，以及满足原厂检查条件</td>
-</tr>
-</tbody>
-</table>
-<p>内网上传不依赖原厂云端和定时检查，适合先验证。公网方案适合后续向用户交付统一迁移服务；“修改 DNS”只改变访问目的地，不会自动生成升级服务。</p>
-<h2 id="2-先让-a1-联网">2. 先让 A1 联网</h2>
-<p>已经在路由器客户端列表中的 A1 无需重新配网。如果保留着旧 Wi-Fi 配置，可以继续使用；更换路由器后也可复建旧名称、密码及兼容的加密方式，让设备尝试自动重连。</p>
-<p>全新或无有效网络配置的设备可尝试电脑 EasyLink 工具。电脑先无线连接目标 2.4 GHz 网络，下载并解压 <a href="assets/tools/a1-easylink.zip">EasyLink 工具包</a>，进入 <code>a1-easylink</code> 文件夹后启动：</p>
-<div data-guide-os="windows">
-<pre><code class="language-powershell">py -3 .\a1_easylink_web.py
-</code></pre>
-</div>
-
-<div data-guide-os="mac linux">
-<pre><code class="language-sh">python3 ./a1_easylink_web.py
-</code></pre>
-</div>
-
-<p>在本机页面填写参数并发送；同时需要触发 A1 进入配网监听。已确认固件中的触摸输入约 1 秒阈值，但对应面板图标尚未实机核对。完整流程与限制见 <a href="stock-provision.html">A1 / M1 配网指南</a>。</p>
-<h2 id="3-内网确认连接目标设备">3. 内网：确认连接目标设备</h2>
-<p>电脑通过 Wi-Fi 或网线连接 A1 所在路由器，确保双方可以直接通信。从路由器客户端列表取得 A1 的 IP，替换示例地址：</p>
 <div data-guide-os="windows">
 <pre><code class="language-powershell">$DeviceIp = &quot;192.168.1.123&quot;
 curl.exe --noproxy &quot;*&quot; --connect-timeout 3 --max-time 5 &quot;http://${DeviceIp}:8000/config-read&quot;
@@ -56,147 +20,6 @@ curl --noproxy '*' --connect-timeout 3 --max-time 5 &quot;http://${DeviceIp}:800
 </code></pre>
 </div>
 
-<p>响应后核对可识别的设备信息与路由器中的 MAC；不通时先查 IP、客户端隔离和网络互通，不进入上传步骤。</p>
-<p>这里不需要 TFTP、TC1 的附加网卡地址或 JSON <code>FILENAME</code> 触发文件。A1 的接口直接接收固件正文。</p>
-<h2 id="4-内网准备迁移镜像并上传">4. 内网：准备迁移镜像并上传</h2>
-<p>需要专门适配 A1 原厂 OTA 加载路径的原生迁移镜像，目标社区版本至少为 <strong>0.9.21</strong>。版本达到要求仍须验证原厂安装兼容性；发布方应明确适用的原厂范围、文件哈希、首次迁移方式及启动后的访问方法。文件改名不能改变兼容性。</p>
-<p>完整 Flash 备份、<code>.all.bin</code> 和社区 OTA 的 <code>.signed</code> 封装均不能直接当作该接口的正文；带 <code>.raw</code> 后缀也不自动代表已适配。这些文件服务于不同安装路径。</p>
-<p>取得<strong>已经验证兼容</strong>的迁移包后，按其说明放到当前目录。以下 <code>a1-migration-native.bin</code> 是示例文件名，不是文章已提供的下载文件。</p>
-<p>先核对 SHA-256 与发布方公布值一致：</p>
-<div data-guide-os="windows">
-<pre><code class="language-powershell">Get-FileHash -Algorithm SHA256 .\a1-migration-native.bin
-</code></pre>
-</div>
-
-<div data-guide-os="mac">
-<pre><code class="language-sh">shasum -a 256 ./a1-migration-native.bin
-</code></pre>
-</div>
-
-<div data-guide-os="linux">
-<pre><code class="language-sh">sha256sum ./a1-migration-native.bin
-</code></pre>
-</div>
-
-<p>保持供电及网络稳定，上传一次：</p>
-<div data-guide-os="windows">
-<pre><code class="language-powershell">curl.exe --noproxy &quot;*&quot; --connect-timeout 5 --max-time 300 --header &quot;Content-Type: application/ota-stream&quot; --header &quot;Expect:&quot; --data-binary &quot;@a1-migration-native.bin&quot; &quot;http://${DeviceIp}:8000/OTA&quot;
-</code></pre>
-</div>
-
-<div data-guide-os="mac linux">
-<pre><code class="language-sh">curl --noproxy '*' --connect-timeout 5 --max-time 300 --header 'Content-Type: application/ota-stream' --header 'Expect:' --data-binary '@a1-migration-native.bin' &quot;http://${DeviceIp}:8000/OTA&quot;
-</code></pre>
-</div>
-
-<p>原厂接收逻辑将数据写入 OTA 临时分区，累计 CRC16，保存升级信息并请求重启。命令没有设置自动重试；若超时或连接断开，先观察设备及路由器状态，不立即重复上传。</p>
-<h2 id="5-公网dns-迁移如何工作">5. 公网：DNS 迁移如何工作</h2>
-<p>公网方案由 A1 主动发起连接，不要求把设备的 8000 端口映射到互联网。兼容服务可以部署在公网，DNS 配置由用户自己的路由器或受控 DNS 完成。</p>
-<pre><code class="language-text">A1 已联网
-  → DNS 将相关原厂域名解析到兼容服务
-  → 完成设备所需的激活 / 状态交互
-  → 原厂固件检查更新
-  → 获得镜像 URL、MD5 和升级标志
-  → 下载、校验、写入并重启
-</code></pre>
-<p>这份备份引用的主要接口为：</p>
-<table>
-<thead>
-<tr>
-<th>用途</th>
-<th>原厂地址</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>激活</td>
-<td><code>https://phicloudsym.phicomm.com/device/active?mac=…&amp;productId=30</code></td>
-</tr>
-<tr>
-<td>检查更新</td>
-<td><code>https://aircleaner.phicomm.com/aircleanerfirmware/checkUpdate</code></td>
-</tr>
-<tr>
-<td>长连接业务 / OTA 指令</td>
-<td><code>aircleanerconnecter.phicomm.com:9000</code>，另有旧地址兼容分支</td>
-</tr>
-</tbody>
-</table>
-<p>这些地址来自固件，并不表示已核验它们当前在线。首次迁移应仅针对自己的目标设备，保留原有 DNS 配置以便结束后恢复。</p>
-<h3 id="用户侧-dns-设置与检查">用户侧 DNS 设置与检查</h3>
-<p>这一流程以服务维护者已公布<strong>完成目标设备验证的 DNS 地址和迁移镜像</strong>为前提。目前尚无随文可用的地址，不能把示例主机名当成现成服务。</p>
-<ol>
-<li>记录路由器原来的 DNS 设置和设备网络信息。</li>
-<li>在设备所在网络的路由器 DHCP / LAN DNS 设置中，填入维护者提供的地址；部分路由器由自身代理 DNS，需同时按维护者说明设置转发。只改电脑 DNS 不会让设备自动使用它。</li>
-<li>按路由器说明让设备重新取得租约、刷新解析；不要在传输或写入固件时重启设备。若设备使用静态 DNS，需另行确认其实际解析去向。</li>
-<li>用同网电脑查询更新域名，确认解析结果符合维护者公布值；再由兼容服务日志确认<strong>目标设备自身</strong>的激活、更新检查和下载请求。</li>
-</ol>
-<div data-guide-os="windows">
-<pre><code class="language-powershell">Resolve-DnsName aircleaner.phicomm.com -Type A
-</code></pre>
-</div>
-
-<div data-guide-os="mac linux">
-<pre><code class="language-sh">dig +short A aircleaner.phicomm.com
-</code></pre>
-</div>
-
-<p>电脑查到新地址只证明电脑的解析结果，不能证明设备也已使用该 DNS，更不能证明已刷写成功。迁移完成后恢复用户原有 DNS，避免继续依赖临时服务。</p>
-<h3 id="给服务维护者的响应结构">给服务维护者的响应结构</h3>
-<p>检查更新的候选 JSON 如下。URL、MD5 和版本仅用于说明格式，不能直接部署为真实升级清单：</p>
-<pre><code class="language-json">{
-  &quot;url&quot;: &quot;http://migration.example/a1-native.bin&quot;,
-  &quot;md5&quot;: &quot;&lt;实际下载正文的32位MD5十六进制&gt;&quot;,
-  &quot;ver&quot;: &quot;v1.48&quot;,
-  &quot;enforce&quot;: true
-}
-</code></pre>
-<p>原厂去掉版本首字符后做数值比较，需要远端值更大、强制标志为真且没有进行中的升级。示例版本属于原厂更新判定字段，不表示镜像内社区固件的版本。升级清单不要混入 <code>device_id</code>，否则可能进入激活响应分支。</p>
-<p>MD5 必须根据实际提供下载的文件计算；它用于内容校验，不是原厂私钥签名。原厂检查更新走 HTTPS，镜像 URL 的解析路径同时支持 HTTP 和 HTTPS，实际下载兼容性仍需测试。</p>
-<h3 id="为什么修改-dns-后未必立即升级">为什么修改 DNS 后未必立即升级</h3>
-<p>A1 的自动检查涉及激活状态、时间同步和检查时段。已追踪的定时器间隔为一小时，并要求设备时间字符串中的小时为 <code>18</code>。这不等于用户本地晚上六点一定立即更新，具体时区和调度还需实测。</p>
-<p>长连接另有 OTA 指令路径，但完整会话、分帧和状态交互尚未复现。它目前不能写成向设备发送一个 JSON 就可强制触发的操作。</p>
-<h3 id="兼容服务上线前需要具备的能力">兼容服务上线前需要具备的能力</h3>
-<ol>
-<li>实现设备需要的激活与升级响应，按目标设备选择适配镜像。</li>
-<li>在 HTTPS 443 上兼容原厂旧 TLS 客户端，包括证书算法、密码套件及可能缺少 SNI 的情况。</li>
-<li>提供可下载的完整镜像，并记录实际请求、传输和内容校验结果。</li>
-<li>由目标原厂设备证明 TLS 握手、更新触发、下载、安装、重启及功能均通过。</li>
-</ol>
-<p>静态调用显示检查更新时未启用 CA 证书验证，但这不能代替旧 TLS 兼容测试。目前缺少完成上述验证的公共服务，因此没有可供用户直接照填的 DNS 地址。</p>
-<h2 id="6-怎样判断刷机成功">6. 怎样判断刷机成功</h2>
-<p>无论走内网还是公网，都需要确认：</p>
-<ol>
-<li>设备重启后可按迁移包说明访问，能读到预期的型号与社区版本。</li>
-<li>Wi-Fi、页面和净化器基本控制正常，原有配置是否保留符合迁移包说明。</li>
-<li>再次断电上电后仍能启动、联网及正常使用。</li>
-</ol>
-<p>HTTP 成功、文件下载结束或设备断开连接都只是中间结果。公网服务日志应区分“检查到更新”“下载完成”和“设备已运行新固件”，不能合并成一个成功状态。</p>
-<h2 id="7-常见问题">7. 常见问题</h2>
-<table>
-<thead>
-<tr>
-<th>问题</th>
-<th>处理</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>/config-read</code> 不通</td>
-<td>先确认设备已联网、IP 正确且双方未被隔离</td>
-</tr>
-<tr>
-<td>修改 DNS 后没有请求</td>
-<td>检查设备实际使用的 DNS、缓存、激活和时间状态，再判断是否到了检查时机</td>
-</tr>
-<tr>
-<td>已有 <code>.raw</code> 或 <code>.signed</code> 文件，能否直接上传</td>
-<td>依据发布方对首次迁移路径的说明确认；后缀不能代替兼容性验证</td>
-</tr>
-<tr>
-<td>设备下载完成但没有正常启动</td>
-<td>保留服务日志和文件哈希，不把下载成功当作安装成功</td>
-</tr>
-</tbody>
-</table>
-<p>本文仅完成原机备份的静态分析与操作说明，未连接或刷写设备。</p></article><div class="guide-pager"><a href="a1-guide.html">上一页<b>功能与操作</b></a><a class="next" href="iotcloud-deploy.html">下一页<b>IotCloud 部署</b></a></div></main></div><footer class="site-footer"><div class="wrap"><div><b>PHICOMM COMMUNITY</b><p style="margin-top:8px">社区维护项目，与原厂无隶属关系。固件、指南及发布说明以对应版本为准。本仓库没有覆盖全部代码的统一许可证。</p></div><div><b>文档</b><ul><li><a href="quick-start.html">快速开始</a></li><li><a href="faq.html">故障排查</a></li><li><a href="build-deps.html">构建依赖</a></li><li><a href="release-log.html">Release Log</a></li></ul></div><div><b>源码</b><ul><li><a href="https://github.com/phicomm-io/phicomm-community-firmware" rel="noopener noreferrer">固件仓库</a></li><li><a href="https://github.com/phicomm-io/phicomm-community-mqtt" rel="noopener noreferrer">管理平台</a></li></ul></div><div><b>交流与反馈</b><p>QQ 群：1021750178</p><a href="https://qm.qq.com/q/9L150V85kk?from=tim" target="_blank" rel="noopener noreferrer">加入 QQ 群</a></div></div></footer><script src="../site.js"></script></body></html>
+<p>没有响应时，先检查 IP、Wi-Fi 和路由器客户端隔离。接口可访问仅说明设备联网，不代表某个固件适合首次迁移。</p>
+<h2 id="安装后检查">安装后检查</h2>
+<p>完成有线安装后，按<a href="quick-start.html">快速开始</a>配网，确认型号、版本、风机与触摸控制，再检查断电重启后能否自动联网及保留配置。遇到问题见<a href="faq.html">故障排查</a>。</p></article><div class="guide-pager"><a href="m1-no-disassembly.html">上一页<b>M1 免拆安装</b></a><a class="next" href="a1-m1-flash.html">下一页<b>A1 / M1 有线安装与恢复</b></a></div></main></div><footer class="site-footer"><div class="wrap"><div><b>IoTCloud COMMUNITY</b><p>社区维护，与原厂无隶属关系。各组件许可及第三方说明见对应源码仓库。</p></div><div><b>使用指南</b><ul><li><a href="quick-start.html">快速开始</a></li><li><a href="faq.html">故障排查</a></li><li><a href="release-log.html">发布说明</a></li></ul></div><div><b>源码与协议</b><ul><li><a href="https://phicomm-io.github.io/iotcloud-community-protocols/">开发文档</a></li><li><a href="https://github.com/phicomm-io/iotcloud-community-frontend">统一前端</a></li><li><a href="https://github.com/phicomm-io/iotcloud-community-mqtt">IoTCloud 平台</a></li><li><a href="https://github.com/phicomm-io/phicomm_m1_mcu_atsamd20">M1 传感器主控</a></li></ul></div></div></footer><script src="../site.js"></script></body></html>

@@ -7,7 +7,8 @@ from urllib.error import HTTPError
 from urllib.parse import quote
 from urllib.request import Request, urlopen
 
-BASE = 'https://api.github.com/repos/phicomm-io/phicomm-community-mqtt'
+REPOSITORY = 'phicomm-io/iotcloud-community-mqtt'
+BASE = 'https://api.github.com/repos/' + REPOSITORY
 
 
 def api(path):
@@ -35,4 +36,4 @@ if release and not release['draft'] and not release['prerelease']:
         current = json.loads(marker.read_text()) if marker.exists() else {}
         if current.get('tag') != tag or current.get('commit') != commit:
             with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
-                output.write(f'tag={tag}\ncommit={commit}\n')
+                output.write(f'repository={REPOSITORY}\ntag={tag}\ncommit={commit}\n')
