@@ -1,0 +1,62 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>斐讯 M1 ATSAMD20G18A 主控开源固件、下载与原厂备份 · 斐讯社区固件 · PHICOMM COMMUNITY</title><meta name="description" content="新增功能、主控 Release 与原厂备份"><link rel="canonical" href="https://phicomm-io.github.io/guides/m1-mcu-firmware.html"><meta property="og:type" content="website"><meta property="og:site_name" content="PHICOMM COMMUNITY"><meta property="og:title" content="斐讯 M1 ATSAMD20G18A 主控开源固件、下载与原厂备份 · 斐讯社区固件 · PHICOMM COMMUNITY"><meta property="og:description" content="新增功能、主控 Release 与原厂备份"><meta property="og:url" content="https://phicomm-io.github.io/guides/m1-mcu-firmware.html"><meta property="og:locale" content="zh_CN"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="斐讯 M1 ATSAMD20G18A 主控开源固件、下载与原厂备份 · 斐讯社区固件 · PHICOMM COMMUNITY"><meta name="twitter:description" content="新增功能、主控 Release 与原厂备份"><link rel="alternate" hreflang="zh-CN" href="https://phicomm-io.github.io/guides/m1-mcu-firmware.html"><link rel="alternate" hreflang="en" href="https://phicomm-io.github.io/guides/en/m1-mcu-firmware.html"><link rel="alternate" hreflang="x-default" href="https://phicomm-io.github.io/guides/m1-mcu-firmware.html"><link rel="stylesheet" href="../style.css"><script src="../theme.js"></script></head><body><a class="skip" href="#main">跳到主要内容</a><header class="site-header"><div class="wrap"><a class="brand" href=".././"><span class="mark" aria-hidden="true">斐</span><span class="word"><b>PHICOMM COMMUNITY</b><span>社区固件</span></span></a><nav class="site-nav" aria-label="主导航"><a href="../#devices">设备</a><a href="../#features">功能</a><a href="../#iotcloud">IotCloud</a><a href="../#demos">在线演示</a><a href="../#docs">文档</a><a href="../#releases">下载</a></nav><div class="prefs"><label class="sr" for="themePick">主题</label><select id="themePick"><option value="system">跟随系统</option><option value="light">浅色</option><option value="dark">深色</option></select></div></div></header><div class="guide-layout"><nav class="guide-nav" aria-label="文档导航"><p class="guide-group">开始使用</p><a href="quick-start.html">快速开始</a><a href="flash-prep.html">刷机前准备</a><a href="firmware-update.html">固件更新</a><a href="iotcloud-connect.html">接入 IotCloud</a><a href="mqtt-link.html">MQTT 与联动</a><a href="faq.html">故障排查</a><p class="guide-group">TC1 智能排插</p><a href="tc1-guide.html">功能与操作</a><a href="tc1-flash.html">刷机</a><a href="tc1-no-disassembly.html">免拆刷机</a><a href="tc1-no-disassembly-ethernet-wifi-ap.html" class="guide-child">一个有线＋一个无线＋一个 AP</a><p class="guide-group">M1 空气检测仪</p><a href="m1-mcu-firmware.html" aria-current="page">主控开源固件</a><a href="m1-guide.html">功能与操作</a><a href="stock-provision.html">原厂固件配网（免 App）</a><a href="m1-no-disassembly.html">免拆刷机：内网 / 公网</a><a href="a1-m1-flash.html">刷机：J-Link / Bootloader</a><p class="guide-group">DAIKIN 空气检测仪</p><a href="daikin-stock-ota.html">原厂 OTA 无线刷机</a><a href="daikin-guide.html">功能、安装与恢复</a><p class="guide-group">A1 空气净化器</p><a href="a1-guide.html">功能与操作</a><a href="stock-provision.html">原厂固件配网（免 App）</a><a href="a1-no-disassembly.html">免拆刷机：内网 / 公网</a><a href="a1-m1-flash.html">刷机：J-Link / Bootloader</a><p class="guide-group">开发与维护</p><a href="iotcloud-deploy.html">IotCloud 部署</a><a href="build-deps.html">构建依赖</a><a href="sources.html">资源来源</a><a href="release-log.html">Release Log</a></nav><main class="guide-main" id="main"><p class="guide-language" aria-label="Language">简体中文 · <a href="en/m1-mcu-firmware.html" lang="en">English</a></p><article class="prose"><h1 id="m1-主控开源固件让屏幕与蜂鸣器有更多玩法">M1 主控开源固件：让屏幕与蜂鸣器有更多玩法</h1>
+<p>M1 内部有两个分别升级的处理器：<strong>EMW3080 联网模块</strong>负责 Wi-Fi、网页和云端；<strong>ATSAMD20G18A 主控</strong>负责传感器、屏幕、RTC、按键与蜂鸣器。本项目开源的是后者，源码采用 MIT 许可。仅安装联网固件不会自动替换主控。</p>
+<p><a href="https://github.com/phicomm-io/phicomm_m1_mcu_atsamd20">开源仓库</a> · <a href="https://phicomm-io.github.io/#m1-mcu-releases">主控 Release 与下载</a> · <a href="m1-guide.html">联网固件使用说明</a></p>
+<h2 id="相比原厂增加了什么">相比原厂增加了什么</h2>
+<p>原有 PM2.5、甲醛、温湿度、时钟与亮度控制仍是基础。下面是开源主控增加的扩展；网页入口还需要配套联网固件按主控真实版本与能力开放。</p>
+<table>
+<thead>
+<tr>
+<th>能力</th>
+<th>开源主控带来的变化</th>
+<th>版本与条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>在实体屏幕显示 CO₂</td>
+<td>可替换甲醛或 PM 数字位置，或按秒交替显示；过期后恢复原读数，支持 CO₂ 灯色阈值</td>
+<td>v0.9.2；需要外接传感器及联网模块提供有效 CO₂ 数据，原机不会凭空测出 CO₂</td>
+</tr>
+<tr>
+<td>屏幕与蜂鸣器调试</td>
+<td>数值覆盖、29 字节段 RAM 查询/写入、全段点亮、PWM 频率与时长控制，到期恢复正常显示</td>
+<td>v0.9.2；通过新增 0x70 扩展协议</td>
+</tr>
+<tr>
+<td>查询能力与运行状态</td>
+<td>查询传感器健康、显示缓存、PM 模式和当前阈值，便于排查数据与屏幕差异</td>
+<td>v0.9.2；配套工具或联网固件</td>
+</tr>
+<tr>
+<td>四种提示音</td>
+<td>轻触、确认、提示、错误四种单次音，由主控负责到期停止</td>
+<td>v0.9.3 源码已实现，尚未发布 Release</td>
+</tr>
+<tr>
+<td>自定义 RTTTL 音乐</td>
+<td>写入、读取、播放、停止一首单音曲目；主控 Flash 双槽保存，重启和正常应用 OTA 后保留；配套 WebUI 可作闹钟曲目</td>
+<td>v0.9.3 源码已实现，尚未发布 Release；最多 1024 字节、256 音符、180 秒</td>
+</tr>
+<tr>
+<td>可审阅的升级与恢复实现</td>
+<td>开源接收/暂存/校验流程；独立新 Boot 增加 CRC32 日志与中断后重新搬运</td>
+<td>仅替换独立 Boot 后才有新 Boot 的校验与恢复行为；CRC 不是签名，也不是旧版回滚</td>
+</tr>
+</tbody>
+</table>
+<p>原厂已有的两档污染物阈值设置不是新增能力；本项目保留其控制灯色和高档蜂鸣告警的行为，并增加配置查询。时间冒号每秒闪烁已在 v0.9.3 源码实现，但尚未确认原厂是否有同样路径，因此不把它列作原厂没有的功能。</p>
+<h2 id="下载与验证状态">下载与验证状态</h2>
+<p>目前已发布的最新主控版本是 <strong>v0.9.2 开发预览</strong>。下载区单独列出本仓库全部公开 Release（含 Pre-release），与 TC1 / M1 / A1 的联网固件归档分开。v0.9.3 的音乐等源码功能不能视为 v0.9.2 已包含。</p>
+<p><strong>当前不是已完成实机验收的稳定替代固件。</strong> 早期 oss-0.3 曾被报告无法启动；后续候选已修复看门狗时钟分频，仍需独立实机复验。主机测试、ARM 构建与模型验证不能代替外设声音、时序、真实掉电和恢复验证。请以所下载 tag 的发布说明和<a href="https://github.com/phicomm-io/phicomm_m1_mcu_atsamd20/blob/main/docs/validation.md">验证记录</a>为准。</p>
+<ul>
+<li><code>m1-mcu-ota.bin</code>：主控应用，链接地址 <strong>0x4000</strong>，配套 JSON 与 SHA256SUMS 一起核对。</li>
+<li><code>m1-mcu-debug-recovery.zip</code>：应用/Boot 调试与恢复产物，各镜像地址见包内说明。</li>
+<li>主控应用升级不替换原厂 Boot。保留原厂 Boot 时不能获得新 Boot 的 CRC 与中断恢复保证。</li>
+<li>主控镜像不能填入 EMW3080 联网模块的固件更新地址。配套升级路径见<a href="https://github.com/phicomm-io/phicomm_m1_mcu_atsamd20/blob/main/docs/network-ota.md">主控网络升级</a>。</li>
+</ul>
+<h2 id="原厂主控备份">原厂主控备份</h2>
+<p>提供本次分析使用的 <strong>ATSAMD20G18A 原厂 11.1.2.1 主 Flash 备份</strong>，仅适用于核对过硬件与备份范围的开发/恢复。文件为 256 KiB（262144 字节），读取时两份结果逐字节一致。它包含原厂 Boot 与应用，<strong>不包含 NVM User Row、熔丝和校准辅助区，也不是联网模块固件</strong>。</p>
+<p><a href="assets/firmware/m1-mcu/m1-atsamd20g18a-stock-11.1.2.1.bin">下载原厂主控备份</a> · <a href="assets/firmware/m1-mcu/SHA256SUMS">SHA256SUMS</a></p>
+<pre><code class="language-text">SHA-256 6a8a9f72741e01d5ebc73467819079146553ec73339029eaf4cc49e8cbd1a7f9
+</code></pre>
+<p>整份备份对应主 Flash 起始地址 <strong>0x00000000</strong>，不能作为应用 OTA 负载。恢复前先保存自己设备的备份，核对芯片与板卡、供电和 SWD 恢复条件；其他硬件修订未据此验收。原厂二进制作为原厂备份单独提供，不属于本项目 MIT 开源代码。</p></article><div class="guide-pager"><a href="tc1-no-disassembly-ethernet-wifi-ap.html">上一页<b>一个有线＋一个无线＋一个 AP</b></a><a class="next" href="m1-guide.html">下一页<b>功能与操作</b></a></div></main></div><footer class="site-footer"><div class="wrap"><div><b>PHICOMM COMMUNITY</b><p style="margin-top:8px">社区维护项目，与原厂无隶属关系。固件、指南及发布说明以对应版本为准。本仓库没有覆盖全部代码的统一许可证。</p></div><div><b>文档</b><ul><li><a href="quick-start.html">快速开始</a></li><li><a href="faq.html">故障排查</a></li><li><a href="build-deps.html">构建依赖</a></li><li><a href="release-log.html">Release Log</a></li></ul></div><div><b>源码</b><ul><li><a href="https://github.com/phicomm-io/phicomm-community-firmware" rel="noopener noreferrer">固件仓库</a></li><li><a href="https://github.com/phicomm-io/phicomm-community-mqtt" rel="noopener noreferrer">管理平台</a></li></ul></div><div><b>交流与反馈</b><p>QQ 群：1021750178</p><a href="https://qm.qq.com/q/9L150V85kk?from=tim" target="_blank" rel="noopener noreferrer">加入 QQ 群</a></div></div></footer><script src="../site.js"></script></body></html>
