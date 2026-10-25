@@ -1,5 +1,30 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>M1 open-source controller firmware · Phicomm community firmware</title><meta name="description" content="Added capabilities, controller releases and stock backup"><link rel="canonical" href="https://phicomm-io.github.io/guides/en/m1-mcu-firmware.html"><meta property="og:type" content="website"><meta property="og:site_name" content="PHICOMM COMMUNITY"><meta property="og:title" content="M1 open-source controller firmware · Phicomm community firmware"><meta property="og:description" content="Added capabilities, controller releases and stock backup"><meta property="og:url" content="https://phicomm-io.github.io/guides/en/m1-mcu-firmware.html"><meta property="og:locale" content="en_US"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="M1 open-source controller firmware · Phicomm community firmware"><meta name="twitter:description" content="Added capabilities, controller releases and stock backup"><link rel="alternate" hreflang="zh-CN" href="https://phicomm-io.github.io/guides/m1-mcu-firmware.html"><link rel="alternate" hreflang="en" href="https://phicomm-io.github.io/guides/en/m1-mcu-firmware.html"><link rel="alternate" hreflang="x-default" href="https://phicomm-io.github.io/guides/m1-mcu-firmware.html"><link rel="stylesheet" href="../../style.css"><script src="../../theme.js"></script></head><body><a class="skip" href="#main">Skip to content</a><header class="site-header"><div class="wrap"><a class="brand" href="../../"><span class="mark">P</span><span class="word"><b>PHICOMM COMMUNITY</b><span>Community firmware</span></span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../#devices">Devices</a><a href="../../#features">Features</a><a href="../../#iotcloud">IotCloud</a><a href="../../#demos">Demos</a><a href="../../#docs">Documentation</a><a href="../../#releases">Downloads</a></nav><div class="prefs"><label class="sr" for="themePick">Theme</label><select id="themePick"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></header><div class="guide-layout"><nav class="guide-nav" aria-label="Documentation navigation"><p class="guide-group">Getting started</p><a href="quick-start.html">Quick start</a><a href="flash-prep.html">Before flashing</a><a href="firmware-update.html">Firmware updates</a><a href="iotcloud-connect.html">Connect to IotCloud</a><a href="mqtt-link.html">MQTT and automation</a><a href="faq.html">Troubleshooting</a><p class="guide-group">TC1 power strip</p><a href="tc1-guide.html">TC1 operation</a><a href="tc1-flash.html">Flash TC1</a><a href="tc1-no-disassembly.html">Flash TC1 without disassembly</a><a href="tc1-no-disassembly-ethernet-wifi-ap.html" class="guide-child">One Ethernet + one Wi-Fi + one AP</a><p class="guide-group">M1 air quality monitor</p><a href="m1-mcu-update.html">Update the M1 controller over the network</a><a href="m1-mcu-firmware.html" aria-current="page">M1 open-source controller firmware</a><a href="m1-guide.html">M1 operation</a><a href="stock-provision.html">Stock Wi-Fi setup without the app</a><a href="m1-no-disassembly.html">M1 no-disassembly migration</a><a href="a1-m1-flash.html">Flash A1 / M1</a><p class="guide-group">DAIKIN air quality monitor</p><a href="daikin-stock-ota.html">Daikin stock OTA migration</a><a href="daikin-guide.html">DAIKIN operation and installation</a><p class="guide-group">A1 air purifier</p><a href="a1-guide.html">A1 operation</a><a href="stock-provision.html">Stock Wi-Fi setup without the app</a><a href="a1-no-disassembly.html">A1 no-disassembly migration</a><a href="a1-m1-flash.html">Flash A1 / M1</a><p class="guide-group">Development and maintenance</p><a href="iotcloud-deploy.html">Deploy IotCloud</a><a href="build-deps.html">Build dependencies</a><a href="sources.html">Asset sources</a><a href="release-log.html">Release Log</a></nav><main class="guide-main" id="main"><p class="guide-language" aria-label="Language"><a href="../m1-mcu-firmware.html" lang="zh-CN">简体中文</a> · English</p><article class="prose"><h1 id="m1-open-source-controller-firmware">M1 open-source controller firmware</h1>
-<p>M1 has two independently updated processors. The <strong>EMW3080 Wi-Fi module</strong> runs networking, the web interface and cloud communication. The <strong>ATSAMD20G18A controller</strong> drives sensors, the display, RTC, button and buzzer. This MIT-licensed project implements the controller firmware. Installing Wi-Fi firmware does not automatically replace it.</p>
+<p>This MIT-licensed open-source firmware runs on the M1 sensor controller. Check which processor a firmware package targets before updating.</p>
+<h2 id="which-mcu-does-this-guide-mean">Which MCU does this guide mean?</h2>
+<p>MCU means microcontroller. M1 contains two; their firmware and version numbers are separate:</p>
+<table>
+<thead>
+<tr>
+<th>Name used in these guides</th>
+<th>Chip and role</th>
+<th>How to update</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Wi-Fi MCU / Wi-Fi module</td>
+<td>EMW3080: Wi-Fi, local web interface and MQTT</td>
+<td>Ordinary web firmware update; M1 Wi-Fi package</td>
+</tr>
+<tr>
+<td>Sensor controller / controller MCU</td>
+<td>ATSAMD20G18A: communicates with built-in sensors and drives the screen, button and buzzer</td>
+<td>Computer script through the API; <code>m1-mcu-ota.bin</code> with its matching JSON</td>
+</tr>
+</tbody>
+</table>
+<p><strong>“Controller” on this page means the sensor controller.</strong> Updating Wi-Fi to v0.9.27 does not update this controller. To reduce the risk of beginners flashing the wrong image and making the device unusable, controller flashing has no WebUI upload button. Use the <a href="m1-mcu-update.html">API-based network update guide</a>; the script handles the API exchange and verification.</p>
+<p>Wi-Fi v0.9.27 adds web controls that need a separately updated open-source sensor controller: four tones and custom RTTTL music require controller v0.9.3 or newer; particle details and raw sensor frames require the capabilities published in controller v0.9.4. CO₂ on the physical screen requires controller v0.9.2 or newer and valid CO₂ data. Basic PM2.5, formaldehyde, temperature and humidity readings do not require this additional flash.</p>
 <p><a href="https://github.com/phicomm-io/phicomm_m1_mcu_atsamd20">Source</a> · <a href="https://phicomm-io.github.io/#m1-mcu-releases">Controller releases and downloads</a> · <a href="m1-guide.html">M1 operation</a>
 <a href="m1-mcu-update.html">Network update guide</a></p>
 <h2 id="added-capabilities">Added capabilities</h2>
@@ -41,7 +66,7 @@
 <tr>
 <td>Complete sensor frames</td>
 <td>Two sets of PM1.0/PM2.5/PM10, six cumulative particle counts, raw formaldehyde, raw temperature/humidity and status; includes age, health and checksum information</td>
-<td>v0.9.4; computer tool over the Wi-Fi bridge</td>
+<td>Controller v0.9.4; Wi-Fi v0.9.27 provides WebUI readings; computer queries also supported</td>
 </tr>
 <tr>
 <td>Auditable update and recovery</td>
@@ -52,7 +77,7 @@
 </table>
 <p>Fixes the stock firmware issue where two-level pollutant threshold settings did not take effect. Custom thresholds now control indicator colors and high-level buzzer alarms, with an added query for the current configuration. v0.9.3 also blinks the clock colon each second, but the corresponding stock path remains unconfirmed, so this is not claimed as a stock-exclusive difference.</p>
 <h2 id="downloads-and-validation">Downloads and validation</h2>
-<p>The latest published controller release is <strong>v0.9.4, a development preview</strong>. Network flashing and sensor-frame queries require Wi-Fi v0.9.26 or newer; web music and tone controls require Wi-Fi v0.9.27 or newer. The dedicated download section lists public releases including prereleases, separately from Wi-Fi firmware. Update the controller and Wi-Fi module separately.</p>
+<p>The latest published controller release is <strong>v0.9.4, a development preview</strong>. Network flashing and sensor-frame queries require Wi-Fi v0.9.26 or newer; web music, tone controls and particle details require Wi-Fi v0.9.27 or newer and matching controller capabilities. The dedicated download section lists public releases including prereleases, separately from Wi-Fi firmware. Update the controller and Wi-Fi module separately.</p>
 <p><strong>This remains a development preview.</strong> The watchdog clock divider causing the early oss-0.3 boot failure has been fixed. This candidate passed network OTA, preset tones, WebUI music upload/readback/play/stop and song retention across application OTA on one M1; the user confirmed audible sound. Candidate validation is recorded separately from acceptance of the official Release binary. Other board revisions, full electrical timing and real interrupted-write recovery remain unverified. Quiet music remains a known limitation; this release does not add volume amplification. Check the downloaded tag's release notes and <a href="https://github.com/phicomm-io/phicomm_m1_mcu_atsamd20/blob/main/docs/validation.md">validation record</a>.</p>
 <ul>
 <li><code>m1-mcu-ota.bin</code> is the controller application linked at <strong>0x4000</strong>. Check its JSON manifest and SHA256SUMS.</li>
@@ -61,13 +86,27 @@
 <li>Do not submit controller images to the EMW3080 Wi-Fi firmware updater. See <a href="https://github.com/phicomm-io/phicomm_m1_mcu_atsamd20/blob/main/docs/network-ota.md">controller network OTA</a>.</li>
 </ul>
 <h2 id="read-additional-sensor-data">Read additional sensor data</h2>
-<p>v0.9.4 provides read-only complete-frame queries. Use the tool from this version's source with your own device IP and ID:</p>
+<p>With <strong>Wi-Fi v0.9.27 or newer + sensor controller v0.9.4 capabilities</strong>, open the local M1 home page and find <strong>Particle details</strong>. It shows PM1.0, PM10 and six cumulative particle counts; PM2.5 remains in the main reading card. Expand the details for CF=1 concentrations and raw sensor diagnostics. “Two sets” means two concentration conventions (atmospheric and CF=1), not two physical particle sensors. Six counts mean particles larger than each size threshold per 0.1 L of air, not six separate concentrations.</p>
+<p>No computer commands are needed for web readings. Missing support, warming up, unhealthy or expired data is not a zero reading; unavailable measurements show “—”. These readings also have MQTT reporting and Home Assistant discovery; see <a href="m1-guide.html">M1 operation</a>.</p>
+<p>For computer queries, controller v0.9.4 and Wi-Fi v0.9.26 or newer are sufficient. Obtain the <a href="m1-mcu-update.html">matching source tools</a>, then enter your own IP and device ID:</p>
+<fieldset class="guide-os-picker" hidden><legend>Your computer</legend><div class="guide-os-options"><label><input type="radio" name="guide-os" value="mac"><span>macOS</span></label><label><input type="radio" name="guide-os" value="windows"><span>Windows</span></label><label><input type="radio" name="guide-os" value="linux"><span>Linux</span></label></div><p>Only instructions for your selected system are shown. Your choice is saved.</p></fieldset>
+
+<div data-guide-os="windows">
+<pre><code class="language-powershell">py -3 tools/m1_sensors.py --host DEVICE_IP --device-id DEVICE_ID
+# Read only the complete particle frame
+py -3 tools/m1_sensors.py --host DEVICE_IP --device-id DEVICE_ID --sensor pm
+</code></pre>
+</div>
+
+<div data-guide-os="mac linux">
 <pre><code class="language-sh">python3 tools/m1_sensors.py --host DEVICE_IP --device-id DEVICE_ID
 # Read only the complete particle frame
 python3 tools/m1_sensors.py --host DEVICE_IP --device-id DEVICE_ID --sensor pm
 </code></pre>
+</div>
+
 <p>If a web password is configured, set <code>M1_WEB_PASSWORD</code> as described in the <a href="m1-mcu-update.html">network update guide</a>. The tool checks controller capabilities first and also supports offline frame decoding. PM1.0/PM2.5/PM10 use μg/m³, cumulative particle counts use particles per 0.1 L, and temperature/humidity conversions exclude M1 display compensation. Unknown bytes remain raw data.</p>
-<p>A development candidate on one M1 returned PM1.0/PM2.5/PM10 of 13/19/19 μg/m³ and nonzero particle counts, with valid measurement, status and auxiliary checksums. Additional data currently requires on-demand computer queries; automatic Wi-Fi collection, web display and extra MQTT reporting are not included. Ordinary PM2.5 reporting is unchanged. Module identity and measurement accuracy need independent verification. See <a href="https://github.com/phicomm-io/phicomm_m1_mcu_atsamd20/blob/v0.9.4/docs/sensor-frames.md">fields and hardware observations</a>.</p>
+<p>A development candidate on one M1 returned PM1.0/PM2.5/PM10 of 13/19/19 μg/m³ and nonzero particle counts, with valid measurement, status and auxiliary checksums. With matching Wi-Fi v0.9.27 firmware, automatic collection, web display and additional MQTT reporting are supported. Ordinary PM2.5 reporting is unchanged. Module identity and measurement accuracy need independent verification. See <a href="https://github.com/phicomm-io/phicomm_m1_mcu_atsamd20/blob/v0.9.4/docs/sensor-frames.md">fields and hardware observations</a>.</p>
 <h2 id="stock-controller-backup">Stock controller backup</h2>
 <p>The analyzed <strong>ATSAMD20G18A stock 11.1.2.1 main Flash backup</strong> is available for development/recovery after checking the hardware and backup scope. It contains 256 KiB (262144 bytes); two original reads matched byte for byte. It includes stock Boot and application, but <strong>excludes NVM User Row, fuses and auxiliary calibration regions</strong>. It is not Wi-Fi module firmware.</p>
 <p><a href="../assets/firmware/m1-mcu/m1-atsamd20g18a-stock-11.1.2.1.bin">Download stock controller backup</a> · <a href="../assets/firmware/m1-mcu/SHA256SUMS">SHA256SUMS</a></p>

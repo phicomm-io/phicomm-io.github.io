@@ -1,10 +1,12 @@
 <!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>斐讯 M1 主控 MCU 网络升级教程（免拆机） · 斐讯社区固件 · PHICOMM COMMUNITY</title><meta name="description" content="Wi-Fi 最低版本、脚本升级与版本确认"><link rel="canonical" href="https://phicomm-io.github.io/guides/m1-mcu-update.html"><meta property="og:type" content="website"><meta property="og:site_name" content="PHICOMM COMMUNITY"><meta property="og:title" content="斐讯 M1 主控 MCU 网络升级教程（免拆机） · 斐讯社区固件 · PHICOMM COMMUNITY"><meta property="og:description" content="Wi-Fi 最低版本、脚本升级与版本确认"><meta property="og:url" content="https://phicomm-io.github.io/guides/m1-mcu-update.html"><meta property="og:locale" content="zh_CN"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="斐讯 M1 主控 MCU 网络升级教程（免拆机） · 斐讯社区固件 · PHICOMM COMMUNITY"><meta name="twitter:description" content="Wi-Fi 最低版本、脚本升级与版本确认"><link rel="alternate" hreflang="zh-CN" href="https://phicomm-io.github.io/guides/m1-mcu-update.html"><link rel="alternate" hreflang="en" href="https://phicomm-io.github.io/guides/en/m1-mcu-update.html"><link rel="alternate" hreflang="x-default" href="https://phicomm-io.github.io/guides/m1-mcu-update.html"><link rel="stylesheet" href="../style.css"><script src="../theme.js"></script></head><body><a class="skip" href="#main">跳到主要内容</a><header class="site-header"><div class="wrap"><a class="brand" href=".././"><span class="mark" aria-hidden="true">斐</span><span class="word"><b>PHICOMM COMMUNITY</b><span>社区固件</span></span></a><nav class="site-nav" aria-label="主导航"><a href="../#devices">设备</a><a href="../#features">功能</a><a href="../#iotcloud">IotCloud</a><a href="../#demos">在线演示</a><a href="../#docs">文档</a><a href="../#releases">下载</a></nav><div class="prefs"><label class="sr" for="themePick">主题</label><select id="themePick"><option value="system">跟随系统</option><option value="light">浅色</option><option value="dark">深色</option></select></div></div></header><div class="guide-layout"><nav class="guide-nav" aria-label="文档导航"><p class="guide-group">开始使用</p><a href="quick-start.html">快速开始</a><a href="flash-prep.html">刷机前准备</a><a href="firmware-update.html">固件更新</a><a href="iotcloud-connect.html">接入 IotCloud</a><a href="mqtt-link.html">MQTT 与联动</a><a href="faq.html">故障排查</a><p class="guide-group">TC1 智能排插</p><a href="tc1-guide.html">功能与操作</a><a href="tc1-flash.html">刷机</a><a href="tc1-no-disassembly.html">免拆刷机</a><a href="tc1-no-disassembly-ethernet-wifi-ap.html" class="guide-child">一个有线＋一个无线＋一个 AP</a><p class="guide-group">M1 空气检测仪</p><a href="m1-mcu-update.html" aria-current="page">主控网络升级</a><a href="m1-mcu-firmware.html">主控开源固件</a><a href="m1-guide.html">功能与操作</a><a href="stock-provision.html">原厂固件配网（免 App）</a><a href="m1-no-disassembly.html">免拆刷机：内网 / 公网</a><a href="a1-m1-flash.html">刷机：J-Link / Bootloader</a><p class="guide-group">DAIKIN 空气检测仪</p><a href="daikin-stock-ota.html">原厂 OTA 无线刷机</a><a href="daikin-guide.html">功能、安装与恢复</a><p class="guide-group">A1 空气净化器</p><a href="a1-guide.html">功能与操作</a><a href="stock-provision.html">原厂固件配网（免 App）</a><a href="a1-no-disassembly.html">免拆刷机：内网 / 公网</a><a href="a1-m1-flash.html">刷机：J-Link / Bootloader</a><p class="guide-group">开发与维护</p><a href="iotcloud-deploy.html">IotCloud 部署</a><a href="build-deps.html">构建依赖</a><a href="sources.html">资源来源</a><a href="release-log.html">Release Log</a></nav><main class="guide-main" id="main"><p class="guide-language" aria-label="Language">简体中文 · <a href="en/m1-mcu-update.html" lang="en">English</a></p><article class="prose"><h1 id="m1-主控-mcu-网络升级">M1 主控 MCU 网络升级</h1>
 <p>M1 主控固件可以通过网络更新，<strong>不需要 J-Link，也不需要拆机</strong>。当前使用电脑上的 Python 脚本升级，电脑需能通过局域网访问 M1。</p>
-<p>M1 的 Wi-Fi 模块与 ATSAMD20G18A 主控分别升级。<strong>主控镜像不要填进普通 Wi-Fi 固件更新框。</strong> 本文只更新主控应用，保留原厂 Bootloader。</p>
+<p><strong>本文刷的是“传感器主控”，不是“Wi-Fi MCU”。</strong> EMW3080 联网模块负责 Wi-Fi 和网页；ATSAMD20G18A 传感器主控负责与机内传感器通信，以及屏幕、按键和蜂鸣器。为降低新手误刷导致设备无法使用的风险，传感器主控没有 WebUI 上传入口。请使用下文电脑脚本，通过 <code>POST /api/v1/mcu/exchange</code> API 烧录并校验；普通网页“固件更新”只更新 Wi-Fi MCU。</p>
+<fieldset class="guide-os-picker" hidden><legend>选择电脑系统</legend><div class="guide-os-options"><label><input type="radio" name="guide-os" value="mac"><span>macOS</span></label><label><input type="radio" name="guide-os" value="windows"><span>Windows</span></label><label><input type="radio" name="guide-os" value="linux"><span>Linux</span></label></div><p>只展示所选系统的操作，选择会自动保存。</p></fieldset>
+
 <h2 id="1-确认-wi-fi-固件版本">1. 确认 Wi-Fi 固件版本</h2>
 <p>M1 必须先安装支持主控网络升级的配套社区 Wi-Fi 固件：<strong>公开发布版本最低为 v0.9.26</strong>，该版本加入 <code>POST /api/v1/mcu/exchange</code> 主控升级桥接接口。原厂 Wi-Fi 固件及 v0.9.24 或更早的社区固件不能直接使用本文方法；v0.9.25 只有源码 tag，没有公开 Release，因此不作为下载起点。</p>
 <p>在 M1 网页查看当前 Wi-Fi 固件版本。低于 v0.9.26 时，先通过正常的 Wi-Fi 固件更新入口安装 <a href="https://phicomm-io.github.io/#releases">M1 Wi-Fi v0.9.26 或更新版本</a>，确认设备恢复上线，再升级主控。两者版本号相互独立：这里的 v0.9.26 是 <strong>Wi-Fi 版本</strong>，下文 v0.9.4 是 <strong>主控版本</strong>。</p>
-<p>如需在网页中使用主控的 RTTTL 音乐、四种提示音和闹钟曲目，配套 Wi-Fi 固件需要 <strong>v0.9.27 或更新版本</strong>，并通过主控能力检测；这与能否使用脚本刷写主控是两个条件。</p>
+<p>如需在网页中使用主控的 RTTTL 音乐、四种提示音和闹钟曲目，配套 Wi-Fi 固件需要 <strong>v0.9.27 或更新版本</strong>，还需另外刷入主控 v0.9.3 或更新版本并通过能力检测；网页颗粒物详情需要主控 v0.9.4 的完整帧能力。只升级 Wi-Fi 不会自动获得这些功能，详见<a href="m1-mcu-firmware.html">主控功能与版本条件</a>。</p>
 <h2 id="2-下载主控文件与脚本">2. 下载主控文件与脚本</h2>
 <p>从 <a href="https://github.com/phicomm-io/phicomm_m1_mcu_atsamd20/releases/tag/v0.9.4">MCU v0.9.4 Release</a> 下载以下两个文件，放在同一目录，保留文件名：</p>
 <ul>
@@ -20,21 +22,43 @@ cd phicomm_m1_mcu_atsamd20
 <h2 id="3-填写自己的设备信息">3. 填写自己的设备信息</h2>
 <p>从路由器或 M1 网页获取当前 IP，并在设备信息中查看设备 ID。设备 ID 用于核对目标身份，不是随意填写的名称。IP 改变后需使用新地址。</p>
 <p>下面的 <code>DEVICE_IP</code>、<code>DEVICE_ID</code>、<code>/下载目录/</code> 都是占位符，请替换成自己的值；命令应在主控源码目录执行。</p>
-<p>如果设置了 M1 网页密码，先设置密码环境变量；没有设置则跳过。以下为 Linux / macOS 终端写法：</p>
+<p>如果设置了 M1 网页密码，先设置密码环境变量；没有设置则跳过。请选择自己的系统查看命令：</p>
+<div data-guide-os="windows">
+<pre><code class="language-powershell">$env:M1_WEB_PASSWORD='你的网页密码'
+</code></pre>
+</div>
+
+<div data-guide-os="mac linux">
 <pre><code class="language-sh">export M1_WEB_PASSWORD='你的网页密码'
 </code></pre>
-<p>Windows PowerShell 对应写法为 <code>$env:M1_WEB_PASSWORD='你的网页密码'</code>，并可将下面的 <code>python3</code> 换成 <code>python</code>，将文件路径换成 Windows 的实际路径。</p>
+</div>
+
+<p>Windows 命令使用单行写法，示例下载目录为 <code>C:/Downloads/</code>，请换成自己保存镜像和 JSON 的目录；路径含空格时保留两侧引号。</p>
 <h2 id="4-先检查不刷写">4. 先检查，不刷写</h2>
+<div data-guide-os="windows">
+<pre><code class="language-powershell">py -3 tools/m1_network.py --host DEVICE_IP --device-id DEVICE_ID --image &quot;C:/Downloads/m1-mcu-ota.bin&quot; --manifest &quot;C:/Downloads/m1-mcu-ota.json&quot;
+</code></pre>
+</div>
+
+<div data-guide-os="mac linux">
 <pre><code class="language-sh">python3 tools/m1_network.py \
   --host DEVICE_IP \
   --device-id DEVICE_ID \
   --image /下载目录/m1-mcu-ota.bin \
   --manifest /下载目录/m1-mcu-ota.json
 </code></pre>
-<p>以上多行命令的 <code>\</code> 续行适用于 Linux / macOS；Windows PowerShell 可将各行合为一行执行。</p>
+</div>
+
+<p>macOS / Linux 的多行命令请整体复制，行末 <code>\</code> 表示命令还没结束；Windows 命令已经合为一行。</p>
 <p>默认不刷写。检查输出中的 <code>device_id</code>、<code>before_mcu</code>、<code>candidate</code>、<code>sha256</code> 和 <code>bytes</code>，确认目标设备和候选主控版本正确。此步骤核对本地镜像并读取设备身份与主控版本，<strong>不会实际发送升级帧，也不能代替前面的 Wi-Fi 最低版本检查</strong>。</p>
 <h2 id="5-加上-flash-正式更新">5. 加上 --flash 正式更新</h2>
 <p>确认检查结果正确后，使用相同参数加上 <code>--flash</code>：</p>
+<div data-guide-os="windows">
+<pre><code class="language-powershell">py -3 tools/m1_network.py --host DEVICE_IP --device-id DEVICE_ID --image &quot;C:/Downloads/m1-mcu-ota.bin&quot; --manifest &quot;C:/Downloads/m1-mcu-ota.json&quot; --flash
+</code></pre>
+</div>
+
+<div data-guide-os="mac linux">
 <pre><code class="language-sh">python3 tools/m1_network.py \
   --host DEVICE_IP \
   --device-id DEVICE_ID \
@@ -42,6 +66,8 @@ cd phicomm_m1_mcu_atsamd20
   --manifest /下载目录/m1-mcu-ota.json \
   --flash
 </code></pre>
+</div>
+
 <p>升级期间保持供电，不要同时升级 Wi-Fi、重启设备或修改配置。脚本逐块等待应答并显示进度；主控重启会让 Wi-Fi 暂时断开，工具随后等待网络恢复，并核对同一设备新的主控版本回报，最多等待约 120 秒。</p>
 <p>本次 <strong>MCU v0.9.4</strong> 发布包应回报 <strong><code>0.9.4-1ce539</code></strong>。只有看到 <code>Verified MCU runtime</code> 且版本匹配，才表示工具已确认升级后运行版本。<code>Commit transmitted</code> 仅表示已发送提交，不能单独作为成功依据。</p>
 <p>如果提示版本未确认或超时，先等设备重新上线，核对供电、IP、设备身份和实际主控版本；不要盲目重复刷写。<code>HTTP 401</code> 通常需要检查网页密码；升级接口 <code>404</code> 时检查 Wi-Fi 固件是否已达到支持版本；设备忙时等待其他升级或配置操作结束。</p>

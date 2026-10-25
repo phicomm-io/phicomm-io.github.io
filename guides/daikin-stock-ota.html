@@ -1,4 +1,7 @@
 <!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>原厂 OTA 无线刷机 · 斐讯社区固件 · PHICOMM COMMUNITY</title><meta name="description" content="BRY88AB151K：按键触发、配套发送器与实机迁移"><link rel="canonical" href="https://phicomm-io.github.io/guides/daikin-stock-ota.html"><meta property="og:type" content="website"><meta property="og:site_name" content="PHICOMM COMMUNITY"><meta property="og:title" content="原厂 OTA 无线刷机 · 斐讯社区固件 · PHICOMM COMMUNITY"><meta property="og:description" content="BRY88AB151K：按键触发、配套发送器与实机迁移"><meta property="og:url" content="https://phicomm-io.github.io/guides/daikin-stock-ota.html"><meta property="og:locale" content="zh_CN"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="原厂 OTA 无线刷机 · 斐讯社区固件 · PHICOMM COMMUNITY"><meta name="twitter:description" content="BRY88AB151K：按键触发、配套发送器与实机迁移"><link rel="alternate" hreflang="zh-CN" href="https://phicomm-io.github.io/guides/daikin-stock-ota.html"><link rel="alternate" hreflang="en" href="https://phicomm-io.github.io/guides/en/daikin-stock-ota.html"><link rel="alternate" hreflang="x-default" href="https://phicomm-io.github.io/guides/daikin-stock-ota.html"><link rel="stylesheet" href="../style.css"><script src="../theme.js"></script></head><body><a class="skip" href="#main">跳到主要内容</a><header class="site-header"><div class="wrap"><a class="brand" href=".././"><span class="mark" aria-hidden="true">斐</span><span class="word"><b>PHICOMM COMMUNITY</b><span>社区固件</span></span></a><nav class="site-nav" aria-label="主导航"><a href="../#devices">设备</a><a href="../#features">功能</a><a href="../#iotcloud">IotCloud</a><a href="../#demos">在线演示</a><a href="../#docs">文档</a><a href="../#releases">下载</a></nav><div class="prefs"><label class="sr" for="themePick">主题</label><select id="themePick"><option value="system">跟随系统</option><option value="light">浅色</option><option value="dark">深色</option></select></div></div></header><div class="guide-layout"><nav class="guide-nav" aria-label="文档导航"><p class="guide-group">开始使用</p><a href="quick-start.html">快速开始</a><a href="flash-prep.html">刷机前准备</a><a href="firmware-update.html">固件更新</a><a href="iotcloud-connect.html">接入 IotCloud</a><a href="mqtt-link.html">MQTT 与联动</a><a href="faq.html">故障排查</a><p class="guide-group">TC1 智能排插</p><a href="tc1-guide.html">功能与操作</a><a href="tc1-flash.html">刷机</a><a href="tc1-no-disassembly.html">免拆刷机</a><a href="tc1-no-disassembly-ethernet-wifi-ap.html" class="guide-child">一个有线＋一个无线＋一个 AP</a><p class="guide-group">M1 空气检测仪</p><a href="m1-mcu-update.html">主控网络升级</a><a href="m1-mcu-firmware.html">主控开源固件</a><a href="m1-guide.html">功能与操作</a><a href="stock-provision.html">原厂固件配网（免 App）</a><a href="m1-no-disassembly.html">免拆刷机：内网 / 公网</a><a href="a1-m1-flash.html">刷机：J-Link / Bootloader</a><p class="guide-group">DAIKIN 空气检测仪</p><a href="daikin-stock-ota.html" aria-current="page">原厂 OTA 无线刷机</a><a href="daikin-guide.html">功能、安装与恢复</a><p class="guide-group">A1 空气净化器</p><a href="a1-guide.html">功能与操作</a><a href="stock-provision.html">原厂固件配网（免 App）</a><a href="a1-no-disassembly.html">免拆刷机：内网 / 公网</a><a href="a1-m1-flash.html">刷机：J-Link / Bootloader</a><p class="guide-group">开发与维护</p><a href="iotcloud-deploy.html">IotCloud 部署</a><a href="build-deps.html">构建依赖</a><a href="sources.html">资源来源</a><a href="release-log.html">Release Log</a></nav><main class="guide-main" id="main"><p class="guide-language" aria-label="Language">简体中文 · <a href="en/daikin-stock-ota.html" lang="en">English</a></p><article class="prose"><h1 id="大金-bry88ab151k通过原厂-ota-刷入社区固件">大金 BRY88AB151K：通过原厂 OTA 刷入社区固件</h1>
+<p>先选择电脑的操作系统，后面的文件检查和上传步骤会一起切换命令。Windows 使用 PowerShell，macOS / Linux 使用终端；浏览器未启用 JavaScript 时会显示全部系统的命令。</p>
+<fieldset class="guide-os-picker" hidden><legend>选择电脑系统</legend><div class="guide-os-options"><label><input type="radio" name="guide-os" value="mac"><span>macOS</span></label><label><input type="radio" name="guide-os" value="windows"><span>Windows</span></label><label><input type="radio" name="guide-os" value="linux"><span>Linux</span></label></div><p>只展示所选系统的操作，选择会自动保存。</p></fieldset>
+
 <h2 id="1-原理与准备">1. 原理与准备</h2>
 <p>原厂在进入升级模式后开放 TCP 8555 服务。电脑连接设备热点，通过专用发送器完成握手、版本检查、分块传输和校验。成功后，设备把启动分区切换到备用槽，再重启运行社区应用。</p>
 <p>准备以下物品：</p>
@@ -21,12 +24,18 @@
 </code></pre>
 <p>使用的是普通 <code>application.bin</code>，本次没有重编译或修改它。不要改用 <code>factory.bin</code>、整片 Flash 备份、带签名外壳的升级包或其他机型的镜像。原厂每个应用槽只有 <strong>1,572,864 字节（1.5MiB）</strong>，此限制在首次迁移后仍然保留。</p>
 <p>先打开文件所在目录的终端，仅校验文件，不连接设备：</p>
+<div data-guide-os="windows">
 <p>Windows PowerShell：</p>
 <pre><code class="language-powershell">py -3 .\daikin_stock_ota.py .\daikin-bry88ab.application.bin --sha256 649a7b81b35e19510f9f7edb8488157418117849361bc62c6f4e13c61a5fb19e --check-only
 </code></pre>
+</div>
+
+<div data-guide-os="mac linux">
 <p>macOS / Linux：</p>
 <pre><code class="language-sh">python3 ./daikin_stock_ota.py ./daikin-bry88ab.application.bin --sha256 649a7b81b35e19510f9f7edb8488157418117849361bc62c6f4e13c61a5fb19e --check-only
 </code></pre>
+</div>
+
 <p>如果提示找不到 Python，先安装 Python 3；如果哈希或镜像格式不匹配，停止并重新下载，不要跳过检查。</p>
 <h2 id="3-用按键进入原厂-ota">3. 用按键进入原厂 OTA</h2>
 <p>设备正常上电、运行原厂程序后，找到<strong>设备背面的 RESET 按钮孔</strong>，用合适的细杆轻按孔内按钮，连续执行：</p>
@@ -49,12 +58,18 @@ app_ota_server_create success
 <p>Windows 推荐直接通过系统 Wi-Fi 菜单连接。若用 <code>netsh</code> 在远程 SSH 会话中连接，本次发现 current-user profile 会返回 <code>0x57</code>，改用该热点的 all-users profile 才成功；不要为此删除其他网络的配置。</p>
 <h2 id="5-上传应用镜像">5. 上传应用镜像</h2>
 <p>确认当前连接的是自己的大金热点，在文件目录中运行以下命令。默认目标是 <code>192.168.4.1:8555</code>。</p>
+<div data-guide-os="windows">
 <p>Windows PowerShell：</p>
 <pre><code class="language-powershell">py -3 .\daikin_stock_ota.py .\daikin-bry88ab.application.bin --sha256 649a7b81b35e19510f9f7edb8488157418117849361bc62c6f4e13c61a5fb19e
 </code></pre>
+</div>
+
+<div data-guide-os="mac linux">
 <p>macOS / Linux：</p>
 <pre><code class="language-sh">python3 ./daikin_stock_ota.py ./daikin-bry88ab.application.bin --sha256 649a7b81b35e19510f9f7edb8488157418117849361bc62c6f4e13c61a5fb19e
 </code></pre>
+</div>
+
 <p>发送器默认发送原厂协议版本标签 <code>SV.02.00.01.16</code>，用于通过当前原厂版本的准入检查；这不是刷入后的社区固件版本。镜像内容不受该标签改写。若未来换用另一份镜像，必须同时使用该镜像对应的 SHA-256，且重新确认机型和原厂布局适配。</p>
 <p>正常过程会看到：</p>
 <pre><code class="language-text">Kit2 Version Up -&gt; Okey
