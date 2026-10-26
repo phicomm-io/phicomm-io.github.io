@@ -123,6 +123,153 @@
 <p>M1 固定使用 <strong>TMCP（v2）</strong> 主题，不提供 Legacy 模式选择。Home Assistant 接入与平台配置见 <a href="mqtt-link.html">MQTT 与联动</a>。</p>
 <h2 id="v10-开发中">v1.0 开发中</h2>
 <p>双路屏幕读数与 PM2.5 稳定处理仍在开发中，需配套开源主控、联网固件与前端，尚未正式发布。</p>
-<p>在设备设置的“设备屏幕用户读数”中，甲醛位置和 PM2.5 位置可分别选择本机传感器、同一 MQTT 账户和代理下的其他设备（TC1 功率、A1 主风机生效输出、大金 CO₂ 等），或 API / 手动写入读数。A1 取当前生效输出百分比（0–100%，新风版相同）。每个位置只有三位数字，请按预览设置小数位和倍率；仅原位置显示原读数且倍率为 ÷1 时保留原名称与单位，其他单位不会显示。</p>
-<p>将“双击操作”设为“整体切换原始／用户读数”，双击即可同时切换两个位置；闹钟响铃时优先停止闹钟。两路分别设置有效时间和颜色规则：数据缺失、过期或超出显示范围时，仅对应位置恢复原始读数；颜色可固定，或按缩放前的原始物理值阈值变化。原始传感器采集与告警不受用户读数替换影响。</p>
+<p>在设备设置的“设备屏幕用户读数”中，甲醛区域和 PM2.5 区域可分别选择本机传感器、同一 MQTT 账户和代理下的其他设备（TC1 功率、A1 主风机生效输出、大金 CO₂ 等），或 API / 手动写入。A1 取当前生效输出百分比（0–100%，新风版相同）。其他设备的 MAC 支持 <code>aabbccddeeff</code> 和 <code>aa:bb:cc:dd:ee:ff</code> 两种写法，字母不区分大小写。</p>
+<p>每个区域只有三位数字。<strong>PM2.5 区域只能显示整数</strong>，四舍五入后最多显示 <code>999</code>，正数溢出仍显示 <code>999</code>。<strong>甲醛区域的小数点固定在第一位之后</strong>，支持以下五种方式；这些转换只用于本机 / MQTT 来源的读数：</p>
+<table>
+<thead>
+<tr>
+<th>显示方式</th>
+<th>规则与示例</th>
+<th>显示上限</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>整数</td>
+<td>四舍五入，<code>123.6</code> → <code>124</code></td>
+<td><code>999</code></td>
+</tr>
+<tr>
+<td>千位自动缩放</td>
+<td>小于 1000 显示整数；达到 1000 后除以 1000，<code>1234</code> → <code>1.23</code></td>
+<td>缩放后 <code>9.99</code></td>
+</tr>
+<tr>
+<td>两位小数</td>
+<td>固定 x.xx，<code>1.234</code> → <code>1.23</code></td>
+<td><code>9.99</code></td>
+</tr>
+<tr>
+<td>一位小数，末位补 0</td>
+<td>固定 x.x0，<code>1.26</code> → <code>1.30</code></td>
+<td><code>9.90</code></td>
+</tr>
+<tr>
+<td>固定除以 1000</td>
+<td>除以 1000 后显示 x.xx，<code>1234</code> → <code>1.23</code></td>
+<td><code>9.99</code></td>
+</tr>
+</tbody>
+</table>
+<p>正数超出显示上限时保持上限值。原有“甲醛”/“PM2.5”字样与本区域单位可分别显示或隐藏：甲醛区域固定为 <strong>mg/m³</strong>，PM2.5 区域固定为 <strong>µg/m³</strong>。屏幕无法显示任意文字或 ppm、W、% 等其他单位；显示外部数据时，请按数据含义选择是否保留原字样和单位。</p>
+<p>面板玻璃的 19 组布局如下，<strong>左侧为 PM2.5，右侧为甲醛</strong>。表中的 <code>8</code> 仅为数字位示意，不代表具体读数；温湿度数字位的布局也不代表传感器采样精度。</p>
+<table>
+<thead>
+<tr>
+<th>编号</th>
+<th>位置</th>
+<th>数字位或图案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>顶部左侧</td>
+<td>日期 <code>8888-88-88</code>，含连字符</td>
+</tr>
+<tr>
+<td>2</td>
+<td>顶部中间偏右</td>
+<td>时间 <code>88:88</code>，含冒号</td>
+</tr>
+<tr>
+<td>3</td>
+<td>顶部最右侧</td>
+<td>Wi-Fi 图标与 <code>×</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td>左侧中部上方</td>
+<td>“PM2.5”字样</td>
+</tr>
+<tr>
+<td>5</td>
+<td>左侧中部</td>
+<td>PM2.5 数值 <code>888</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>左侧中部数值右侧</td>
+<td><code>µg/m³</code> 单位</td>
+</tr>
+<tr>
+<td>7</td>
+<td>右侧中部上方</td>
+<td>“甲醛”字样</td>
+</tr>
+<tr>
+<td>8</td>
+<td>右侧中部</td>
+<td>甲醛数值 <code>8.88</code>，含固定小数点</td>
+</tr>
+<tr>
+<td>9</td>
+<td>右侧中部数值右侧</td>
+<td><code>mg/m³</code> 单位</td>
+</tr>
+<tr>
+<td>10</td>
+<td>左下方</td>
+<td>横向圆角色灯条，表示 PM2.5 状态</td>
+</tr>
+<tr>
+<td>11</td>
+<td>右下方</td>
+<td>横向圆角色灯条，表示甲醛状态</td>
+</tr>
+<tr>
+<td>12</td>
+<td>左下角</td>
+<td>温度计图标</td>
+</tr>
+<tr>
+<td>13</td>
+<td>左下方</td>
+<td>“温度”字样</td>
+</tr>
+<tr>
+<td>14</td>
+<td>左下偏右</td>
+<td>温度数值 <code>88.8</code>，含小数点</td>
+</tr>
+<tr>
+<td>15</td>
+<td>温度数值右侧</td>
+<td><code>°C</code> 单位</td>
+</tr>
+<tr>
+<td>16</td>
+<td>右下方</td>
+<td>水滴图标</td>
+</tr>
+<tr>
+<td>17</td>
+<td>右下偏中</td>
+<td>“湿度”字样</td>
+</tr>
+<tr>
+<td>18</td>
+<td>右下偏右</td>
+<td>湿度数值 <code>88.8</code>，含小数点</td>
+</tr>
+<tr>
+<td>19</td>
+<td>右下角</td>
+<td><code>%</code> 单位</td>
+</tr>
+</tbody>
+</table>
+<p>表中第 10、11 项分别对应 PM2.5、甲醛区域的状态灯条。每个区域有左、中、右三个灯位，每个灯位的红、绿、黄段都可独立开关，共 <strong>9 段</strong>；同一灯位允许多色同时开启。颜色也可按转换前的原始物理值设置两个阈值：低于下阈值为绿，达到下阈值为黄，达到上阈值为红。</p>
+<p>选择 API / 手动写入并保存后，直接指定 <code>0–999</code> 的整数、是否点亮小数点、原字样、原单位及全部 9 段灯。甲醛区域写数字 <code>123</code> 并开启小数点即显示 <code>1.23</code>；PM2.5 区域不允许开启小数点。<strong>API 写入不套用上述显示方式或颜色阈值</strong>，小数或超过 <code>999</code> 的数字会被拒绝。写入值仅在有效时间内显示，需持续更新；完整字段与调用方法见<a href="https://phicomm-io.github.io/iotcloud-community-protocols/device-http/#m1-display_profile-api">显示 API 开发文档</a>。</p>
+<p>将“双击操作”设为“整体切换原始／用户读数”，双击即可同时切换两个区域；闹钟响铃时优先停止闹钟。两路分别设置有效时间：数据缺失、过期、离线或无效时，仅对应区域恢复原始读数，另一路不受影响。原始传感器采集与告警不受用户读数替换影响。</p>
 <p>v1 还计划提供甲醛与 PM2.5 独立的超阈值蜂鸣报警开关，默认关闭、按需开启。色灯阈值、闹钟和手动鸣叫分别控制，不受该开关影响。</p></article><div class="guide-pager"><a class="next" href="m1-no-disassembly.html">下一页<b>M1 免拆安装</b></a></div></main></div><footer class="site-footer"><div class="wrap"><div><b>IoTCloud COMMUNITY</b><p>社区维护，与原厂无隶属关系。各组件许可及第三方说明见对应源码仓库。</p></div><div><b>使用指南</b><ul><li><a href="quick-start.html">快速开始</a></li><li><a href="faq.html">故障排查</a></li><li><a href="release-log.html">发布说明</a></li></ul></div><div><b>源码与协议</b><ul><li><a href="https://phicomm-io.github.io/iotcloud-community-protocols/">开发文档</a></li><li><a href="https://github.com/phicomm-io/iotcloud-community-frontend">统一前端</a></li><li><a href="https://github.com/phicomm-io/iotcloud-community-mqtt">IoTCloud 平台</a></li><li><a href="https://github.com/phicomm-io/phicomm_m1_mcu_atsamd20">M1 传感器主控</a></li></ul></div></div></footer><script src="../site.js"></script></body></html>
