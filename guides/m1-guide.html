@@ -3,7 +3,7 @@
 <p><strong>主控兼容性：</strong> 原厂 11.x 推荐使用 GPL-3.0 开源主控；17.1.2.3 / 17.x 差异较大、待分析，暂不建议迁移。联网与主控版本分别查看，无法读取的版本显示为未知。</p>
 <h2 id="先分清两种固件">先分清两种固件</h2>
 <p>M1 内部有 <strong>Wi-Fi MCU（EMW3080 联网模块）</strong>和<strong>传感器主控（ATSAMD20G18A）</strong>。前者负责联网与网页，后者与机内传感器通信，并控制屏幕和蜂鸣器。普通网页“固件更新”只更新 Wi-Fi MCU，不会一起更新传感器主控。</p>
-<p>当前使用基线为 <strong>Wi-Fi v1.0.0-rc + 开源传感器主控 v1.0.0-rc</strong>，两者分别下载、分别升级。双区域用户读数、双击和 PM2.5 稳定处理需要配套版本；只看原有读数可继续使用原厂主控。既有提示音与音乐的最低主控版本为 v0.9.3，颗粒物详情需要 v0.9.4 的完整帧能力。主控没有 WebUI 上传入口，请按<a href="m1-mcu-update.html">电脑脚本通过 API 升级</a>操作；功能对应关系见<a href="m1-mcu-firmware.html">主控固件说明</a>。</p>
+<p>当前使用基线为 <strong>Wi-Fi v1.0.0-rc.1 + 开源传感器主控 v1.0.0-rc</strong>，两者分别下载、分别升级。双区域用户读数、双击和 PM2.5 稳定处理需要配套版本；只看原有读数可继续使用原厂主控。既有提示音与音乐的最低主控版本为 v0.9.3，颗粒物详情需要 v0.9.4 的完整帧能力。主控没有 WebUI 上传入口，请按<a href="m1-mcu-update.html">电脑脚本通过 API 升级</a>操作；功能对应关系见<a href="m1-mcu-firmware.html">主控固件说明</a>。</p>
 <h2 id="首页读数">首页读数</h2>
 <p>首页展示实时空气质量信息：</p>
 <table>
@@ -122,9 +122,10 @@
 <p>IoTCloud 的 M1 详情页支持同样的 CO₂ 卡片，设备列表显示有效 CO₂ 摘要。识别并取得 SCD40 有效读数后，Home Assistant 通过 MQTT 自动发现“二氧化碳”实体（ppm）；超过 20 秒未更新时，该实体变为不可用，不影响 M1 原有传感器实体。</p>
 <h2 id="mqtt">MQTT</h2>
 <p>M1 固定使用 <strong>TMCP（v2）</strong> 主题，不提供 Legacy 模式选择。Home Assistant 接入与平台配置见 <a href="mqtt-link.html">MQTT 与联动</a>。</p>
-<h2 id="v100-rc-用户读数与-pm25-稳定处理">v1.0.0-rc 用户读数与 PM2.5 稳定处理</h2>
-<p>v1.0.0-rc 提供双路屏幕读数与 PM2.5 稳定处理，需配套开源主控、联网固件与前端。这是预发布版本，v1.0.0 稳定版尚未发布。</p>
+<h2 id="v1-候选版用户读数与-pm25-稳定处理">v1 候选版用户读数与 PM2.5 稳定处理</h2>
+<p>v1 候选版提供双路屏幕读数与 PM2.5 稳定处理，需配套开源主控、联网固件与前端。这是预发布版本，v1.0.0 稳定版尚未发布。</p>
 <p>在设备设置的“设备屏幕用户读数”中，甲醛区域和 PM2.5 区域可分别选择本机传感器、同一 MQTT 账户和代理下的其他设备（TC1 功率、A1 主风机生效输出、大金 CO₂ 等），或 API / 手动写入。A1 取当前生效输出百分比（0–100%，新风版相同）。其他设备的 MAC 支持 <code>aabbccddeeff</code> 和 <code>aa:bb:cc:dd:ee:ff</code> 两种写法，字母不区分大小写。</p>
+<p><strong>RC.1 来源配置：</strong> 来源设备通过 schema 2 发布字段描述，M1 显示配置 schema 4 按设备 + 稳定字段 ID 选择匹配 <code>number</code> 类型和单位的读数，不再按机型适配。名称用于展示，不作为保存绑定；TC1 功率、A1 生效输出和传感器读数使用相同接口。无效值为 <code>null</code>，不伪装成零；新快照立即撤销缺失、无效或不支持字段的旧读数，保留已保存来源设置。请同时更新来源设备、M1 联网固件与配套前端。旧联网 RC 已 deprecated，对应 MQTT / HTTP 显示配置接口与 RC.1 不兼容；独立传感器主控 RC 版本不变。自定义接入见<a href="https://phicomm-io.github.io/iotcloud-community-protocols/device-http/#m1-generic-profile4">通用显示配置 API</a>。</p>
 <p>每个区域只有三位数字。<strong>PM2.5 区域只能显示整数</strong>，四舍五入后最多显示 <code>999</code>，正数溢出仍显示 <code>999</code>。<strong>甲醛区域的小数点固定在第一位之后</strong>，支持以下五种方式；这些转换只用于本机 / MQTT 来源的读数：</p>
 <table>
 <thead>
