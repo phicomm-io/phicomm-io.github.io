@@ -75,7 +75,14 @@
 </table>
 <p>Disabling an output drives its GPIO low. An unconfigured MQTT connection is not a fault. The stock controller has no verified general protocol for formaldehyde / PM2.5 color thresholds or manual colors. See the <a href="m1-mcu-firmware.html">open-source controller guide</a> for its extensions.</p>
 <h2 id="buttons-and-recovery">Buttons and recovery</h2>
-<p>M1 uses the original panel's <code>0x18</code> long-press event, acknowledges it with fixed <code>0x16</code>, and clears Wi-Fi and the WebUI password once per boot after deduplication. It does not implement TC1 / A1's precise 5 / 10 second recovery split and has no custom button mappings. Follow <a href="a1-m1-flash.html">A1 / M1 recovery</a>. A full reset is available in the WebUI.</p>
+<p>After updating <strong>both the open-source sensor MCU and Wi-Fi firmware</strong> to versions supporting staged recovery:</p>
+<ul>
+<li>A single click toggles the screen after about 350 ms to distinguish a double click. Double clicks stop a ringing alarm first, then switch both original/user readings according to the configured action.</li>
+<li>Hold for at least 3 seconds and release before 10 seconds to clear Wi-Fi and the WebUI password and start provisioning again. MQTT and other settings are preserved.</li>
+<li>Hold continuously for 10 seconds to restore factory settings, including Wi-Fi, MQTT, the WebUI password and other network-module settings. Custom music stored separately on the sensor MCU is preserved.</li>
+</ul>
+<p>Both recovery actions save settings before restarting the sensor and Wi-Fi MCUs; Wi-Fi connectivity is not required. Recovery gestures are disabled during updates. Stock sensor firmware retains its original long-press provisioning event and does not support these staged gestures. See <a href="a1-m1-flash.html">A1 / M1 recovery</a>; a full reset is also available in the WebUI.</p>
+<p>The current EMW3080 SDK does not provide WPA3 connectivity. Use WPA2-PSK/AES; WPA2/WPA3 transition networks must allow WPA2 clients. See the <a href="https://docs.mxchip.com/attach/zh/DS0122CN_EMW3080_V2.8.pdf">module specifications</a>.</p>
 <h2 id="supplying-readings-to-a1">Supplying readings to A1</h2>
 <p>M1 measures, reports and answers authorized A1 requests. It does not control or poll the purifier. Add this M1's MAC and optional IP on A1. MQTT establishes the session; sensor queries use LAN UDP. The M1 page shows read-only session status for up to four A1 units, with no allowlist or pairing code to maintain. See <a href="mqtt-link.html#a1-sensor-automation">A1 sensor automation</a>.</p>
 <h2 id="iotcloud-and-home-assistant">IoTCloud and Home Assistant</h2>
