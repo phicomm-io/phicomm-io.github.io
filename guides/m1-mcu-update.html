@@ -5,7 +5,7 @@
 <fieldset class="guide-os-picker" hidden><legend>选择电脑系统</legend><div class="guide-os-options"><label><input type="radio" name="guide-os" value="mac"><span>macOS</span></label><label><input type="radio" name="guide-os" value="windows"><span>Windows</span></label><label><input type="radio" name="guide-os" value="linux"><span>Linux</span></label></div><p>只展示所选系统的操作，选择会自动保存。</p></fieldset>
 
 <h2 id="1-确认-wi-fi-固件版本">1. 确认 Wi-Fi 固件版本</h2>
-<p>原厂 11.x 主控需要支持<strong>整包缓冲转发</strong>的社区 Wi-Fi 固件。不要仅凭版本号判断：通过 <code>capabilities.get</code> 或 <code>/api/v1/capabilities</code> 检查 <code>data.mcu_ota_max_bytes</code>，当前实现为 <strong>32768</strong>。本教程使用 <strong>M1 Wi-Fi v1.0.0-rc 候选版本</strong>，仍须核对该能力后再更新传感器主控。旧版 v0.9.26 起提供的逐块桥接，以及 <code>1.0.0-39a5b0</code>，均不包含这个新能力。</p>
+<p>原厂 11.x 主控需要支持<strong>整包缓冲转发</strong>的社区 Wi-Fi 固件。不要仅凭版本号判断：通过 <code>capabilities.get</code> 或 <code>/api/v1/capabilities</code> 检查 <code>data.mcu_ota_max_bytes</code>，当前实现为 <strong>32768</strong>。本教程测试组合使用 <strong>M1 Wi-Fi v1.0.0-rc.3 与传感器主控 v1.0.0-rc</strong>，仍须核对缓冲能力后再更新。<strong>RC 实际属于 Beta 测试版本，后续仍会有较大改动，不建议日常使用；日常联网固件推荐稳定版 v0.9.27。</strong> 旧版 v0.9.26 起提供的逐块桥接，以及 <code>1.0.0-39a5b0</code>，均不包含这个新能力。</p>
 <p>原因是原厂 11.1.2.1 在开始接收后有约 10 秒的复位窗口。逐块 HTTP 往返可能超过这个窗口；新接口先在 Wi-Fi 模块接收完整文件，再在本机快速逐块发送并核对应答。新的电脑工具会自动选用它；原厂主控配旧 Wi-Fi 时，会在发送升级帧前拒绝。已经运行社区主控的设备仍可使用旧逐块桥接。</p>
 <p>如需在网页中使用主控的 RTTTL 音乐、四种提示音和闹钟曲目，配套 Wi-Fi 固件需要 <strong>v0.9.27 或更新版本</strong>，还需另外刷入主控 v0.9.3 或更新版本并通过能力检测；网页颗粒物详情需要主控 v0.9.4 的完整帧能力。只升级 Wi-Fi 不会自动获得这些功能，详见<a href="m1-mcu-firmware.html">主控功能与版本条件</a>。</p>
 <h2 id="2-下载主控文件与脚本">2. 下载主控文件与脚本</h2>
