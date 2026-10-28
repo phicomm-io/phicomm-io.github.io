@@ -1,18 +1,84 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>M1 installation without disassembly · Phicomm community firmware</title><meta name="description" content="LAN upload, per-device DNS migration and first Wi-Fi setup"><link rel="canonical" href="https://phicomm-io.github.io/guides/en/m1-no-disassembly.html"><meta property="og:type" content="website"><meta property="og:site_name" content="PHICOMM COMMUNITY"><meta property="og:title" content="M1 installation without disassembly · Phicomm community firmware"><meta property="og:description" content="LAN upload, per-device DNS migration and first Wi-Fi setup"><meta property="og:url" content="https://phicomm-io.github.io/guides/en/m1-no-disassembly.html"><meta property="og:locale" content="en_US"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="M1 installation without disassembly · Phicomm community firmware"><meta name="twitter:description" content="LAN upload, per-device DNS migration and first Wi-Fi setup"><link rel="alternate" hreflang="zh-CN" href="https://phicomm-io.github.io/guides/m1-no-disassembly.html"><link rel="alternate" hreflang="en" href="https://phicomm-io.github.io/guides/en/m1-no-disassembly.html"><link rel="alternate" hreflang="x-default" href="https://phicomm-io.github.io/guides/m1-no-disassembly.html"><link rel="stylesheet" href="../../style.css"><script src="../../theme.js"></script></head><body><a class="skip" href="#main">Skip to content</a><header class="site-header"><div class="wrap"><a class="brand" href="../../en/"><span class="mark" aria-hidden="true">P</span><span class="word"><b>IoTCloud COMMUNITY</b><span>Community firmware</span></span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../en/#devices">Devices and features</a><a href="../../en/#install">Install and update</a><a href="../../en/#faq">Common questions</a><a href="../../en/#develop">Contribute</a></nav><div class="prefs"><label class="sr" for="themePick">Theme</label><select id="themePick"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></header><div class="guide-layout"><details class="guide-directory" open><summary>Documentation navigation</summary><nav class="guide-nav" aria-label="Documentation navigation"><details class="guide-nav-group guide-section" data-guide-group="m1" open><summary>M1 air quality monitor</summary><div class="device-doc-actions" role="group" aria-label="M1 guides" data-device-actions="m1"><a href="m1-no-disassembly.html" data-guide-action="install" title="M1 installation without disassembly" aria-current="page">Flash</a><a href="firmware-update.html" data-guide-action="update" title="Firmware updates">Update</a><a href="m1-guide.html" data-guide-action="use" title="M1 operation">Use</a><a href="m1-guide.html#buttons-and-recovery" data-guide-action="recover" title="M1 operation">Recovery</a></div><a href="stock-provision.html">Stock Wi-Fi setup without the app</a><a href="a1-m1-flash.html">Flash A1 / M1</a><a href="m1-mcu-firmware.html">M1 open-source controller firmware</a><a href="m1-mcu-update.html">Update the M1 controller over the network</a><a href="v1-features.html">v1 Beta feature preview</a></details><details class="guide-nav-group guide-section" data-guide-group="a1"><summary>A1 air purifier</summary><div class="device-doc-actions" role="group" aria-label="A1 guides" data-device-actions="a1"><a href="a1-m1-flash.html" data-guide-action="install" title="Flash A1 / M1">Flash</a><a href="firmware-update.html" data-guide-action="update" title="Firmware updates">Update</a><a href="a1-guide.html" data-guide-action="use" title="A1 operation">Use</a><a href="a1-guide.html#recovery-gestures" data-guide-action="recover" title="A1 operation">Recovery</a></div><a href="stock-provision.html">Stock Wi-Fi setup without the app</a><a href="a1-no-disassembly.html">A1 no-disassembly compatibility</a><a href="v1-features.html">v1 Beta feature preview</a></details><details class="guide-nav-group guide-section" data-guide-group="tc1"><summary>TC1 power strip</summary><div class="device-doc-actions" role="group" aria-label="TC1 guides" data-device-actions="tc1"><a href="tc1-no-disassembly-ethernet-wifi-ap.html" data-guide-action="install" title="Illustrated OTA installation">Flash</a><a href="firmware-update.html" data-guide-action="update" title="Firmware updates">Update</a><a href="tc1-guide.html" data-guide-action="use" title="TC1 operation">Use</a><a href="tc1-guide.html#recovery-gestures" data-guide-action="recover" title="TC1 operation">Recovery</a></div><a href="tc1-no-disassembly.html" class="guide-child">OTA internals and custom images</a><a href="tc1-flash.html">Flash TC1</a><a href="v1-features.html">v1 Beta feature preview</a></details><details class="guide-nav-group guide-section" data-guide-group="daikin"><summary>DAIKIN air quality monitor</summary><div class="device-doc-actions" role="group" aria-label="DAIKIN guides" data-device-actions="daikin"><a href="daikin-stock-ota.html" data-guide-action="install" title="Daikin stock OTA migration">Flash</a><a href="daikin-guide.html#updates-and-recovery" data-guide-action="update" title="DAIKIN operation and installation">Update</a><a href="daikin-guide.html" data-guide-action="use" title="DAIKIN operation and installation">Use</a><a href="daikin-guide.html#updates-and-recovery" data-guide-action="recover" title="DAIKIN operation and installation">Recovery</a></div><a href="v1-features.html">v1 Beta feature preview</a></details><details class="guide-nav-group guide-section" data-guide-group="common"><summary>Shared setup and troubleshooting</summary><a href="quick-start.html">Quick start</a><a href="flash-prep.html">Before flashing</a><a href="firmware-update.html">Firmware updates</a><a href="iotcloud-connect.html">Connect to IoTCloud</a><a href="mqtt-link.html">MQTT and automation</a><a href="faq.html">Troubleshooting</a></details><details class="guide-nav-group guide-section" data-guide-group="dev"><summary>Development and maintenance</summary><a href="iotcloud-deploy.html">Deploy IoTCloud</a><a href="build-deps.html">Build dependencies</a><a href="sources.html">Asset sources</a><a href="release-log.html">Release Log</a></details></nav></details><main class="guide-main" id="main"><div class="guide-context"><nav class="guide-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="../../en/#docs">Documentation</a></li><li>M1 air quality monitor</li></ol></nav><p class="guide-language" aria-label="Language"><a href="../m1-no-disassembly.html" lang="zh-CN">简体中文</a> · English</p></div><article class="prose"><h1 id="m1-installation-without-disassembly-lan-upload-and-dns-migration">M1 installation without disassembly: LAN upload and DNS migration</h1>
-<p>M1 can join your router through its factory hotspot, then accept community firmware from a computer without the original app. This procedure updates the Wi-Fi module and keeps the original main MCU program.</p>
-<p><strong>The first migration from factory firmware must use 0.9.21 or newer.</strong> Choose the <strong>full M1 native OTA image, <code>phicomm_m1.ota.bin.raw</code></strong>. Older versions can repeatedly restart during first boot; do not install an old version as a stepping stone. This guide pins downloads to 0.9.21.</p>
-<p>This guide covers factory LAN uploads and self-hosted DNS migration for the M1 Wi-Fi module. After installation, confirm the version, web access and sensors in step 5. Use the separate installation guide for an A1 purifier.</p>
-<p>Select your computer system to show the matching commands. Replace example device IPs with the address in your router's client list.</p>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>M1 stock Wi-Fi setup and OTA installation · Phicomm community firmware</title><meta name="description" content="Hotspot / Linux EasyLink setup and LAN / DNS OTA"><link rel="canonical" href="https://phicomm-io.github.io/guides/en/m1-no-disassembly.html"><meta property="og:type" content="website"><meta property="og:site_name" content="PHICOMM COMMUNITY"><meta property="og:title" content="M1 stock Wi-Fi setup and OTA installation · Phicomm community firmware"><meta property="og:description" content="Hotspot / Linux EasyLink setup and LAN / DNS OTA"><meta property="og:url" content="https://phicomm-io.github.io/guides/en/m1-no-disassembly.html"><meta property="og:locale" content="en_US"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="M1 stock Wi-Fi setup and OTA installation · Phicomm community firmware"><meta name="twitter:description" content="Hotspot / Linux EasyLink setup and LAN / DNS OTA"><link rel="alternate" hreflang="zh-CN" href="https://phicomm-io.github.io/guides/m1-no-disassembly.html"><link rel="alternate" hreflang="en" href="https://phicomm-io.github.io/guides/en/m1-no-disassembly.html"><link rel="alternate" hreflang="x-default" href="https://phicomm-io.github.io/guides/m1-no-disassembly.html"><link rel="stylesheet" href="../../style.css"><script src="../../theme.js"></script></head><body><a class="skip" href="#main">Skip to content</a><header class="site-header"><div class="wrap"><a class="brand" href="../../en/"><span class="mark" aria-hidden="true">P</span><span class="word"><b>IoTCloud COMMUNITY</b><span>Community firmware</span></span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../en/#devices">Devices and features</a><a href="../../en/#install">Install and update</a><a href="../../en/#releases">Firmware downloads</a><a href="../../en/#faq">Common questions</a><a href="../../en/#develop">Contribute</a></nav><div class="prefs"><label class="sr" for="themePick">Theme</label><select id="themePick"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></header><div class="guide-layout"><details class="guide-directory" open><summary>Documentation navigation</summary><nav class="guide-nav" aria-label="Documentation navigation"><details class="guide-nav-group guide-section" data-guide-group="m1" open><summary>M1 air quality monitor</summary><div class="device-doc-actions" role="group" aria-label="M1 guides" data-device-actions="m1"><a href="m1-no-disassembly.html" data-guide-action="install" title="M1 stock Wi-Fi setup and OTA installation" aria-current="page">Flash</a><a href="firmware-update.html" data-guide-action="update" title="Firmware updates">Update</a><a href="m1-guide.html" data-guide-action="use" title="M1 operation">Use</a><a href="m1-guide.html#buttons-and-recovery" data-guide-action="recover" title="M1 operation">Recovery</a></div><a href="m1-flash.html">M1 wired installation and recovery</a><a href="m1-mcu-firmware.html">M1 open-source controller firmware</a><a href="m1-mcu-update.html">Update the M1 controller over the network</a></details><details class="guide-nav-group guide-section" data-guide-group="a1"><summary>A1 air purifier</summary><div class="device-doc-actions" role="group" aria-label="A1 guides" data-device-actions="a1"><a href="a1-no-disassembly.html" data-guide-action="install" title="A1 stock Wi-Fi setup and OTA installation">Flash</a><a href="firmware-update.html" data-guide-action="update" title="Firmware updates">Update</a><a href="a1-guide.html" data-guide-action="use" title="A1 operation">Use</a><a href="a1-guide.html#recovery-gestures" data-guide-action="recover" title="A1 operation">Recovery</a></div><a href="a1-flash.html">A1 wired installation and recovery</a></details><details class="guide-nav-group guide-section" data-guide-group="tc1"><summary>TC1 power strip</summary><div class="device-doc-actions" role="group" aria-label="TC1 guides" data-device-actions="tc1"><a href="tc1-no-disassembly-ethernet-wifi-ap.html" data-guide-action="install" title="Illustrated OTA installation">Flash</a><a href="firmware-update.html" data-guide-action="update" title="Firmware updates">Update</a><a href="tc1-guide.html" data-guide-action="use" title="TC1 operation">Use</a><a href="tc1-guide.html#recovery-gestures" data-guide-action="recover" title="TC1 operation">Recovery</a></div><a href="tc1-no-disassembly.html" class="guide-child">OTA internals and custom images</a><a href="tc1-flash.html">Flash TC1</a></details><details class="guide-nav-group guide-section" data-guide-group="daikin"><summary>DAIKIN air quality monitor</summary><div class="device-doc-actions" role="group" aria-label="DAIKIN guides" data-device-actions="daikin"><a href="daikin-stock-ota.html" data-guide-action="install" title="Daikin stock OTA migration">Flash</a><a href="daikin-guide.html#updates-and-recovery" data-guide-action="update" title="DAIKIN operation and installation">Update</a><a href="daikin-guide.html" data-guide-action="use" title="DAIKIN operation and installation">Use</a><a href="daikin-guide.html#updates-and-recovery" data-guide-action="recover" title="DAIKIN operation and installation">Recovery</a></div></details><details class="guide-nav-group guide-section" data-guide-group="common"><summary>Shared setup and troubleshooting</summary><a href="quick-start.html">Quick start</a><a href="flash-prep.html">Before flashing</a><a href="firmware-update.html">Firmware updates</a><a href="iotcloud-connect.html">Connect to IoTCloud</a><a href="mqtt-link.html">MQTT and automation</a><a href="faq.html">Troubleshooting</a></details><details class="guide-nav-group guide-section" data-guide-group="dev"><summary>Development and maintenance</summary><a href="iotcloud-deploy.html">Deploy IoTCloud</a><a href="build-deps.html">Build dependencies</a><a href="sources.html">Asset sources</a><a href="release-log.html">Release Log</a></details></nav></details><main class="guide-main" id="main"><div class="guide-context"><nav class="guide-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="../../en/#docs">Documentation</a></li><li>M1 air quality monitor</li></ol></nav><p class="guide-language" aria-label="Language"><a href="../m1-no-disassembly.html" lang="zh-CN">简体中文</a> · English</p></div><article class="prose"><h1 id="m1-stock-wi-fi-setup-and-installation-without-disassembly">M1: stock Wi-Fi setup and installation without disassembly</h1>
+<p>This guide updates only the M1 Wi-Fi module and retains the sensor controller. It covers two factory provisioning methods and two OTA methods. Prefer the official app for provisioning if available.</p>
+<p>Use the <strong>full native M1 OTA image</strong>, version <strong>0.9.21 or newer</strong>. The commands below use stable <strong>v0.9.27</strong>. Keep power connected throughout.</p>
 <fieldset class="guide-os-picker" hidden><legend>Your computer</legend><div class="guide-os-options"><label><input type="radio" name="guide-os" value="mac"><span>macOS</span></label><label><input type="radio" name="guide-os" value="windows"><span>Windows</span></label><label><input type="radio" name="guide-os" value="linux"><span>Linux</span></label></div><p>Only instructions for your selected system are shown. Your choice is saved.</p></fieldset>
 
-<details class="guide-toc" open><summary>On this page</summary><nav aria-label="On this page"><ul><li><a href="#1-prepare-the-local-network">1. Prepare the local network</a></li><li><a href="#2-connect-the-factory-m1">2. Connect the factory M1</a></li><li><a href="#3-identify-the-lan-target">3. Identify the LAN target</a></li><li><a href="#4-download-0921-verify-and-upload-once">4. Download 0.9.21, verify and upload once</a></li><li><a href="#5-join-the-community-hotspot-and-finish-setup">5. Join the community hotspot and finish setup</a></li><li><a href="#6-dns-migration-let-the-stock-m1-download-the-image">6. DNS migration: let the stock M1 download the image</a></li><li><a href="#7-troubleshooting">7. Troubleshooting</a></li></ul></nav></details><h2 id="1-prepare-the-local-network">1. Prepare the local network</h2>
-<p>Connect the computer to the same router as M1 over Ethernet or Wi-Fi, with client isolation disabled. No public device ports are needed. For stalled uploads, see the self-hosted DNS migration in section 6. There is no public migration DNS address to enter directly.</p>
-<h2 id="2-connect-the-factory-m1">2. Connect the factory M1</h2>
-<p>If the router already lists M1, keep its configuration and record the IP and label MAC. No reset is needed.</p>
-<p>To provision again, <strong>hold the body button for about 3–4 seconds, then release</strong>, and find the open <code>EasyLink_XXXXXX</code> hotspot. Join it and submit your <strong>2.4 GHz</strong> network settings to <code>10.0.0.1:8000/config-write-uap</code>. See <a href="stock-provision.html">stock Wi-Fi setup</a> for the full procedure. No original app is required.</p>
-<p>A short press switches the screen display. <strong>Holding about 9 seconds and then releasing restores factory network and application settings and reboots.</strong> For ordinary provisioning, release after 3–4 seconds.</p>
-<p>The window is about two minutes. Once the hotspot disappears, reconnect your computer to the router and match the new DHCP lease to the label MAC. Blinking Wi-Fi, an X icon or a disappearing hotspot alone does not prove connection. Avoid repeatedly pressing the pairing button.</p>
-<h2 id="3-identify-the-lan-target">3. Identify the LAN target</h2>
+<details class="guide-toc" open><summary>On this page</summary><nav aria-label="On this page"><ul><li><a href="#1-provision-stock-wi-fi">1. Provision stock Wi-Fi</a></li><li><a href="#2-identify-the-lan-target">2. Identify the LAN target</a></li><li><a href="#3-method-a-upload-through-the-factory-lan-ota-interface">3. Method A: upload through the factory LAN OTA interface</a></li><li><a href="#4-method-b-dns-migration-let-the-stock-m1-download-the-image">4. Method B: DNS migration: let the stock M1 download the image</a></li><li><a href="#5-join-the-community-hotspot-and-finish-setup">5. Join the community hotspot and finish setup</a></li><li><a href="#6-troubleshooting">6. Troubleshooting</a></li></ul></nav></details><h2 id="1-provision-stock-wi-fi">1. Provision stock Wi-Fi</h2>
+<p>If M1 is already listed by your router, preserve its settings and record its IP and MAC. Otherwise use one of the following methods. The target network must be 2.4 GHz WPA2/AES with DHCP; disable client isolation.</p>
+<h3 id="method-a-hotspot-http-setup">Method A: hotspot HTTP setup</h3>
+<p><strong>Hold the body button for 3–4 seconds, then release.</strong> Join the open <code>EasyLink_XXXXXX</code> hotspot (last six hexadecimal MAC digits) within about two minutes.</p>
+<p>A short press changes the screen. Holding about <strong>9 seconds and releasing restores factory network and application settings and restarts</strong>. Ordinary provisioning uses the 3–4 second gesture.</p>
+<h3 id="connect-and-inspect">Connect and inspect</h3>
+<p>Join the target <code>EasyLink_XXXXXX</code> network. “No Internet” is expected. The factory configuration uses <code>10.0.0.1/24</code>, HTTP port 8000.</p>
+<div data-guide-os="windows">
+<pre><code class="language-powershell">$DeviceIp = &quot;10.0.0.1&quot;
+curl.exe --http1.0 --noproxy &quot;*&quot; --connect-timeout 3 --max-time 5 &quot;http://${DeviceIp}:8000/config-read&quot;
+</code></pre>
+</div>
+
+<div data-guide-os="mac linux">
+<pre><code class="language-sh">DeviceIp=&quot;10.0.0.1&quot;
+curl --http1.0 --noproxy '*' --connect-timeout 3 --max-time 5 &quot;http://${DeviceIp}:8000/config-read&quot;
+</code></pre>
+</div>
+
+<p>If unreachable, check the active Wi-Fi network and its <code>10.0.0.x</code> address. The hotspot window may have expired. No TC1 TFTP server or secondary Ethernet address is needed.</p>
+<h3 id="submit-wi-fi-settings">Submit Wi-Fi settings</h3>
+<p>Replace the SSID and password and run in the same terminal:</p>
+<div data-guide-os="windows">
+<pre><code class="language-powershell">$Config = [ordered]@{
+    SSID = &quot;RescueWiFi&quot;
+    PASSWORD = &quot;replace-with-your-wifi-password&quot;
+    DHCP = $true
+    IDENTIFIER = 1
+}
+$ConfigFile = Join-Path $PWD.Path &quot;m1-wifi.json&quot;
+$Json = $Config | ConvertTo-Json -Compress
+[System.IO.File]::WriteAllText($ConfigFile, $Json, [System.Text.UTF8Encoding]::new($false))
+
+curl.exe --http1.0 --noproxy &quot;*&quot; --connect-timeout 3 --max-time 10 --header &quot;Content-Type: application/json&quot; --header &quot;Expect:&quot; --data-binary &quot;@$ConfigFile&quot; &quot;http://${DeviceIp}:8000/config-write-uap&quot;
+</code></pre>
+</div>
+
+<div data-guide-os="mac linux">
+<p>Create a UTF-8 JSON file. Escape any <code>"</code> or <code>\</code> in strings according to JSON rules:</p>
+<pre><code class="language-sh">umask 077
+cat &gt; m1-wifi.json &lt;&lt;'JSON'
+{&quot;SSID&quot;:&quot;RescueWiFi&quot;,&quot;PASSWORD&quot;:&quot;replace-with-your-wifi-password&quot;,&quot;DHCP&quot;:true,&quot;IDENTIFIER&quot;:1}
+JSON
+curl --http1.0 --noproxy '*' --connect-timeout 3 --max-time 10 --header 'Content-Type: application/json' --header 'Expect:' --data-binary '@m1-wifi.json' &quot;http://${DeviceIp}:8000/config-write-uap&quot;
+</code></pre>
+</div>
+
+<p>Fields are case-sensitive and top-level. <code>DHCP</code> is a Boolean; <code>IDENTIFIER</code> is an integer used by the provisioning callback, not an account or binding token.</p>
+<p>The factory path responds, waits about one second, closes the hotspot and attempts to join the router. Reconnect the computer to the router and look for M1's new DHCP lease. The file and terminal input records contain the password; use your own computer and delete the file when finished:</p>
+<div data-guide-os="windows">
+<pre><code class="language-powershell">Remove-Item -LiteralPath $ConfigFile
+</code></pre>
+</div>
+
+<div data-guide-os="mac linux">
+<pre><code class="language-sh">rm -- m1-wifi.json
+</code></pre>
+</div>
+
+<h3 id="method-b-linux-easylink-v2">Method B: Linux EasyLink V2</h3>
+<p>App-free EasyLink has succeeded only with <strong>mac80211 frame injection on Linux</strong>. Prefer the official app if available. Ordinary Windows, macOS or Linux UDP senders are not verified provisioning methods.</p>
+<p>Use a spare adapter supporting monitor mode and injection, Linux, <code>iw</code> and a C compiler. Use a 2.4 GHz WPA2/AES network and record its channel. Channel 1 has worked; channel 6 is not mandatory. Another adapter can keep the computer on the target LAN.</p>
+<p>Download the <a href="../assets/tools/easylink-linux/easylink_v2_linux.c">Linux injection sender source</a> and <a href="../assets/tools/easylink-linux/SHA256SUMS">SHA256SUMS</a>. Run these commands on Linux. Replace <code>phy1</code>, channel <code>1</code> and <code>192.168.1.23</code> with the spare radio, target channel and computer's IPv4 on the target LAN:</p>
+<pre><code class="language-sh">sha256sum -c SHA256SUMS
+cc -O2 -Wall -Wextra -o easylink_v2_linux easylink_v2_linux.c
+iw dev
+sudo iw phy phy1 interface add easylink-mon type monitor
+sudo ip link set easylink-mon up
+sudo iw dev easylink-mon set channel 1
+sudo ./easylink_v2_linux easylink-mon 192.168.1.23 60
+</code></pre>
+<p>Enter the target SSID and password when prompted (password is hidden). Once sending starts, hold M1's body button for 3–4 seconds and release. After sending, remove the temporary monitor interface:</p>
+<pre><code class="language-sh">sudo iw dev easylink-mon del
+</code></pre>
+<p>Confirm a DHCP lease matching the device MAC before continuing. Packet counts do not establish successful provisioning.</p>
+<h2 id="2-identify-the-lan-target">2. Identify the LAN target</h2>
 <p>Replace the example IP and keep this terminal open for subsequent commands:</p>
 <div data-guide-os="windows">
 <pre><code class="language-powershell">$DeviceIp = &quot;192.168.1.123&quot;
@@ -27,11 +93,11 @@ curl --noproxy '*' --connect-timeout 3 --max-time 5 &quot;http://${DeviceIp}:800
 </div>
 
 <p>Match the response name and MAC suffix against the device label and router record. Resolve IP changes, failed provisioning or client isolation before uploading.</p>
-<h2 id="4-download-0921-verify-and-upload-once">4. Download 0.9.21, verify and upload once</h2>
-<p>Download these two <strong>0.9.21</strong> files into an empty folder and open a terminal there:</p>
+<h2 id="3-method-a-upload-through-the-factory-lan-ota-interface">3. Method A: upload through the factory LAN OTA interface</h2>
+<p>Download these two <strong>0.9.27</strong> files into an empty folder and open a terminal there:</p>
 <ul>
-<li><a href="https://phicomm-io.github.io/releases/v0.9.21/phicomm_m1.ota.bin.raw">Full M1 native OTA image</a></li>
-<li><a href="https://phicomm-io.github.io/releases/v0.9.21/SHA256SUMS">SHA256SUMS</a></li>
+<li><a href="https://phicomm-io.github.io/releases/v0.9.27/phicomm_m1.ota.bin.raw">Full M1 native OTA image</a></li>
+<li><a href="https://phicomm-io.github.io/releases/v0.9.27/SHA256SUMS">SHA256SUMS</a></li>
 </ul>
 <p><strong>Check that the model is M1 and the version is at least 0.9.21.</strong> Use the full image specified here for first migration, rather than <code>no-frontend-resources</code>. A full Flash backup or <code>.all.bin</code> is for other recovery procedures; <code>.ota.bin.signed</code> is for devices already running community firmware. None is the factory upload body. Renaming a file to <code>.raw</code> does not convert it.</p>
 <p>Compute SHA-256 and compare it character for character with the <strong><code>phicomm_m1.ota.bin.raw</code> line</strong> in the checksum file. Stop on a mismatch.</p>
@@ -65,64 +131,15 @@ awk '$2 == &quot;phicomm_m1.ota.bin.raw&quot; { print }' ./SHA256SUMS
 </div>
 
 <p><strong>The tested factory upload closed the connection after receiving the complete image, producing <code>(52) Empty reply from server</code> and <code>http=000</code>.</strong> This alone proves neither failure nor success. Record the uploaded byte count, leave power connected and allow about 2–3 minutes. Check the community hotspot and version in section 5 before taking further action. Do not immediately resend, reset or disconnect power because of this message.</p>
-<h2 id="5-join-the-community-hotspot-and-finish-setup">5. Join the community hotspot and finish setup</h2>
-<p>First migration may require Wi-Fi setup again. If the old IP is unreachable after upload, scan for the community hotspot.</p>
-<table>
-<thead>
-<tr>
-<th>Stage</th>
-<th>Hotspot</th>
-<th>Access while joined</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Factory setup</td>
-<td>Open <code>EasyLink_XXXXXX</code></td>
-<td><code>http://10.0.0.1:8000/config-read</code></td>
-</tr>
-<tr>
-<td>Community first boot</td>
-<td>Open <code>M1-AP-XXXXXX</code></td>
-<td><code>http://192.168.0.1/</code>, port 80</td>
-</tr>
-<tr>
-<td>Community on the LAN</td>
-<td>Find the new IP in the router</td>
-<td><code>http://device-IP/</code>, port 80</td>
-</tr>
-</tbody>
-</table>
-<ol>
-<li>Join the <code>M1-AP-XXXXXX</code> matching your device's MAC suffix. Stay connected even if your computer reports no Internet.</li>
-<li>Open <code>http://192.168.0.1/</code> and save your 2.4 GHz Wi-Fi settings in the initial setup page. Allow time to connect.</li>
-<li>Rejoin the router and find M1 by its label MAC. The new IP may match the factory IP or change. Open <code>http://device-IP/</code> using port 80, rather than the factory port 8000.</li>
-<li>Confirm model M1, version <strong>0.9.21 or newer</strong>, updating temperature/humidity and PM2.5 readings, and normal display and device communication.</li>
-<li>After installation and connectivity are confirmed, a normal power cycle can check boot, automatic reconnection and retained settings.</li>
-</ol>
-<p>For a read-only status check, update the address in the same terminal:</p>
-<div data-guide-os="windows">
-<pre><code class="language-powershell">$DeviceIp = &quot;192.168.1.123&quot;
-curl.exe --noproxy &quot;*&quot; --connect-timeout 3 --max-time 5 &quot;http://${DeviceIp}/api/v1/status&quot;
-</code></pre>
-</div>
-
-<div data-guide-os="mac linux">
-<pre><code class="language-sh">DeviceIp=&quot;192.168.1.123&quot;
-curl --noproxy '*' --connect-timeout 3 --max-time 5 &quot;http://${DeviceIp}/api/v1/status&quot;
-</code></pre>
-</div>
-
-<p>A community hotspot establishes that the new system offers setup. Confirm the version, web access and updating sensors before calling migration successful. For later community upgrades, use signed packages as described in <a href="firmware-update.html">firmware updates</a>.</p>
-<h2 id="6-dns-migration-let-the-stock-m1-download-the-image">6. DNS migration: let the stock M1 download the image</h2>
-<p>Use this alternative if LAN uploads stall. On 2026-10-26, one M1 with stock Wi-Fi <code>14.2.4.1</code> and controller <code>11.1.2.1</code> successfully migrated to full build <code>1.0.0-39a5b0</code>. Complete download, community hotspot, web access, Wi-Fi setup, automatic reconnection after a software reboot and updating sensor readings were verified. A physical cold boot was not tested. This 1.0.0 build identifier does not imply a formal Release exists or that every stock revision has been validated.</p>
+<h2 id="4-method-b-dns-migration-let-the-stock-m1-download-the-image">4. Method B: DNS migration: let the stock M1 download the image</h2>
+<p>Use this alternative if LAN uploads stall. This path has been verified on M1 with stock Wi-Fi <code>14.2.4.1</code> and controller <code>11.1.2.1</code>.</p>
 <p>Uploads to <code>:8000/OTA</code> from two computers stalled after the first few KB; the device-initiated download completed. The upload fault remains unexplained. HTTP 000 or a slowly blinking Wi-Fi icon does not establish success. Do not repeatedly upload.</p>
 <h3 id="what-you-need">What you need</h3>
 <ul>
-<li>A stock M1 connected and identified using sections 2–3. Reserve its DHCP address on the router so it stays unchanged during migration.</li>
+<li>A stock M1 connected and identified using sections 1–2. Reserve its DHCP address on the router so it stays unchanged during migration.</li>
 <li>An OpenWrt / ImmortalWrt router with SSH access, <code>dnsmasq</code> and <code>nft</code>, on the same LAN as M1 and the computer.</li>
 <li>A Linux computer with Python 3 and <code>openssl</code>, kept running throughout. Run the server and router commands in Linux / router shells. Windows and macOS users can use a Linux host on the same LAN.</li>
-<li>A <strong>full native M1 OTA image</strong> with a verified SHA-256, selected as in section 4. Do not use <code>.all.bin</code>, <code>.signed</code> or a controller image. Native source-build output may be named <code>phicomm_m1.ota.bin</code>, while the published download may end in <code>.ota.bin.raw</code>; validate its contents rather than converting by renaming.</li>
+<li>A <strong>full native M1 OTA image</strong> with a verified SHA-256, selected as in section 3. Do not use <code>.all.bin</code>, <code>.signed</code> or a controller image. Native source-build output may be named <code>phicomm_m1.ota.bin</code>, while the published download may end in <code>.ota.bin.raw</code>; validate its contents rather than converting by renaming.</li>
 <li>Download the <a href="../assets/tools/m1-dns-migration/m1_dns_migration.py">migration server script</a> and <a href="../assets/tools/m1-dns-migration/SHA256SUMS">SHA256SUMS</a>. Run <code>sha256sum -c SHA256SUMS</code> in their directory.</li>
 </ul>
 <p>Examples use router <code>192.168.1.1</code>, computer <code>192.168.1.10</code>, M1 <code>192.168.1.123</code> and M1 MAC <code>00:11:22:33:44:55</code>. <strong>Replace every example with your own values.</strong> Computer ports <code>29080</code>, <code>29443</code>, <code>29000</code> and router port <code>5533</code> must be free. Allow the device and router to reach those computer ports through any firewall.</p>
@@ -198,8 +215,57 @@ cmp /etc/hosts /tmp/m1-dns-migration/hosts.before
 uci export dhcp &gt; /tmp/m1-dns-migration/dhcp.after
 cmp /tmp/m1-dns-migration/dhcp.before /tmp/m1-dns-migration/dhcp.after
 </code></pre>
-<p>No output from the two <code>cmp</code> commands confirms these original configurations did not change. Keep the logs; do not overwrite the entire router configuration with old snapshots. Press <code>Ctrl+C</code> in the computer's server window. You may then remove its temporary certificate directory. Future updates use community signed OTA and do not need this service. The M1 hardware result does not establish A1 compatibility.</p>
-<h2 id="7-troubleshooting">7. Troubleshooting</h2>
+<p>No output from the two <code>cmp</code> commands confirms these original configurations did not change. Keep the logs; do not overwrite the entire router configuration with old snapshots. Press <code>Ctrl+C</code> in the computer's server window. You may then remove its temporary certificate directory. Future updates use community signed OTA and do not need this service.</p>
+<h2 id="5-join-the-community-hotspot-and-finish-setup">5. Join the community hotspot and finish setup</h2>
+<p>First migration may require Wi-Fi setup again. If the old IP is unreachable after upload, scan for the community hotspot.</p>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Hotspot</th>
+<th>Access while joined</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Factory setup</td>
+<td>Open <code>EasyLink_XXXXXX</code></td>
+<td><code>http://10.0.0.1:8000/config-read</code></td>
+</tr>
+<tr>
+<td>Community first boot</td>
+<td>Open <code>M1-AP-XXXXXX</code></td>
+<td><code>http://192.168.0.1/</code>, port 80</td>
+</tr>
+<tr>
+<td>Community on the LAN</td>
+<td>Find the new IP in the router</td>
+<td><code>http://device-IP/</code>, port 80</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>Join the <code>M1-AP-XXXXXX</code> matching your device's MAC suffix. Stay connected even if your computer reports no Internet.</li>
+<li>Open <code>http://192.168.0.1/</code> and save your 2.4 GHz Wi-Fi settings in the initial setup page. Allow time to connect.</li>
+<li>Rejoin the router and find M1 by its label MAC. The new IP may match the factory IP or change. Open <code>http://device-IP/</code> using port 80, rather than the factory port 8000.</li>
+<li>Confirm model M1, version <strong>0.9.21 or newer</strong>, updating temperature/humidity and PM2.5 readings, and normal display and device communication.</li>
+<li>After installation and connectivity are confirmed, a normal power cycle can check boot, automatic reconnection and retained settings.</li>
+</ol>
+<p>For a read-only status check, update the address in the same terminal:</p>
+<div data-guide-os="windows">
+<pre><code class="language-powershell">$DeviceIp = &quot;192.168.1.123&quot;
+curl.exe --noproxy &quot;*&quot; --connect-timeout 3 --max-time 5 &quot;http://${DeviceIp}/api/v1/status&quot;
+</code></pre>
+</div>
+
+<div data-guide-os="mac linux">
+<pre><code class="language-sh">DeviceIp=&quot;192.168.1.123&quot;
+curl --noproxy '*' --connect-timeout 3 --max-time 5 &quot;http://${DeviceIp}/api/v1/status&quot;
+</code></pre>
+</div>
+
+<p>A community hotspot establishes that the new system offers setup. Confirm the version, web access and updating sensors before calling migration successful. For later community upgrades, use signed packages as described in <a href="firmware-update.html">firmware updates</a>.</p>
+<h2 id="6-troubleshooting">6. Troubleshooting</h2>
 <table>
 <thead>
 <tr>
@@ -222,7 +288,7 @@ cmp /tmp/m1-dns-migration/dhcp.before /tmp/m1-dns-migration/dhcp.after
 </tr>
 <tr>
 <td>Upload stalls after a few KB</td>
-<td>Let the request finish; after stock access is restored, use device-initiated downloading in section 6 instead of repeated uploads</td>
+<td>Let the request finish; after stock access is restored, use device-initiated downloading in section 4 instead of repeated uploads</td>
 </tr>
 <tr>
 <td>Blinking icon with a DHCP lease</td>
@@ -230,8 +296,8 @@ cmp /tmp/m1-dns-migration/dhcp.before /tmp/m1-dns-migration/dhcp.after
 </tr>
 <tr>
 <td>No web access, hotspot or client record after waiting</td>
-<td>Keep image hashes and upload output, stop repeated writes and read boot logs using the <a href="a1-m1-flash.html">serial / J-Link recovery guide</a></td>
+<td>Keep image hashes and upload output, stop repeated writes and read boot logs using the <a href="m1-flash.html">serial / J-Link recovery guide</a></td>
 </tr>
 </tbody>
 </table>
-<p>This procedure only updates the Wi-Fi module. The sensor controller uses a <a href="m1-mcu-update.html">separate update procedure</a>.</p></article><div class="guide-pager"><a href="stock-provision.html">Previous<b>Stock Wi-Fi setup without the app</b></a><a class="next" href="a1-m1-flash.html">Next<b>Flash A1 / M1</b></a></div></main></div><footer class="site-footer"><div class="wrap"><div><b>IoTCloud COMMUNITY</b><p>Community maintained and independent of the manufacturers. See each source repository for component and third-party licenses.</p></div><div><b>Guides</b><ul><li><a href="quick-start.html">Quick start</a></li><li><a href="faq.html">Troubleshooting</a></li><li><a href="release-log.html">Release notes</a></li></ul></div><div><b>Source and protocols</b><ul><li><a href="https://phicomm-io.github.io/iotcloud-community-protocols/en/">Developer documentation</a></li><li><a href="https://github.com/phicomm-io/iotcloud-community-frontend">Shared frontend</a></li><li><a href="https://github.com/phicomm-io/iotcloud-community-mqtt">IoTCloud platform</a></li><li><a href="https://github.com/phicomm-io/phicomm_m1_mcu_atsamd20">M1 sensor controller</a></li></ul></div></div></footer><script src="../../site.js"></script></body></html>
+<p>This procedure only updates the Wi-Fi module. The sensor controller uses a <a href="m1-mcu-update.html">separate update procedure</a>.</p></article><div class="guide-pager"><a class="next" href="m1-flash.html">Next<b>M1 wired installation and recovery</b></a></div></main></div><footer class="site-footer"><div class="wrap"><div><b>IoTCloud COMMUNITY</b><p>Community maintained and independent of the manufacturers. See each source repository for component and third-party licenses.</p></div><div><b>Guides</b><ul><li><a href="quick-start.html">Quick start</a></li><li><a href="faq.html">Troubleshooting</a></li><li><a href="release-log.html">Release notes</a></li></ul></div><div><b>Source and protocols</b><ul><li><a href="https://phicomm-io.github.io/iotcloud-community-protocols/en/">Developer documentation</a></li><li><a href="https://github.com/phicomm-io/iotcloud-community-frontend">Shared frontend</a></li><li><a href="https://github.com/phicomm-io/iotcloud-community-mqtt">IoTCloud platform</a></li><li><a href="https://github.com/phicomm-io/phicomm_m1_mcu_atsamd20">M1 sensor controller</a></li></ul></div></div></footer><script src="../../site.js"></script></body></html>

@@ -1,1 +1,392 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="refresh" content="0;url=a1-m1-flash.html"><link rel="canonical" href="https://phicomm-io.github.io/guides/a1-m1-flash.html"><title>刷机教程</title></head><body><a href="a1-m1-flash.html">查看 A1 / M1 刷机教程</a></body></html>
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>斐讯 M1 有线刷机：串口 Bootloader 与 J-Link 恢复 · 斐讯社区固件 · PHICOMM COMMUNITY</title><meta name="description" content="推荐串口 Bootloader，也可使用 J-Link"><link rel="canonical" href="https://phicomm-io.github.io/guides/m1-flash.html"><meta property="og:type" content="website"><meta property="og:site_name" content="PHICOMM COMMUNITY"><meta property="og:title" content="斐讯 M1 有线刷机：串口 Bootloader 与 J-Link 恢复 · 斐讯社区固件 · PHICOMM COMMUNITY"><meta property="og:description" content="推荐串口 Bootloader，也可使用 J-Link"><meta property="og:url" content="https://phicomm-io.github.io/guides/m1-flash.html"><meta property="og:locale" content="zh_CN"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="斐讯 M1 有线刷机：串口 Bootloader 与 J-Link 恢复 · 斐讯社区固件 · PHICOMM COMMUNITY"><meta name="twitter:description" content="推荐串口 Bootloader，也可使用 J-Link"><link rel="alternate" hreflang="zh-CN" href="https://phicomm-io.github.io/guides/m1-flash.html"><link rel="alternate" hreflang="en" href="https://phicomm-io.github.io/guides/en/m1-flash.html"><link rel="alternate" hreflang="x-default" href="https://phicomm-io.github.io/guides/m1-flash.html"><link rel="stylesheet" href="../style.css"><script src="../theme.js"></script></head><body><a class="skip" href="#main">跳到主要内容</a><header class="site-header"><div class="wrap"><a class="brand" href="../"><span class="mark" aria-hidden="true">斐</span><span class="word"><b>IoTCloud COMMUNITY</b><span>社区固件</span></span></a><nav class="site-nav" aria-label="主导航"><a href="../#devices">设备与功能</a><a href="../#install">安装升级</a><a href="../#releases">固件下载</a><a href="../#faq">常见问题</a><a href="../#develop">参与开发</a></nav><div class="prefs"><label class="sr" for="themePick">主题</label><select id="themePick"><option value="system">跟随系统</option><option value="light">浅色</option><option value="dark">深色</option></select></div></div></header><div class="guide-layout"><details class="guide-directory" open><summary>文档导航</summary><nav class="guide-nav" aria-label="文档导航"><details class="guide-nav-group guide-section" data-guide-group="m1" open><summary>M1 空气检测仪</summary><div class="device-doc-actions" role="group" aria-label="M1 文档入口" data-device-actions="m1"><a href="m1-no-disassembly.html" data-guide-action="install" title="M1 原厂配网与免拆安装">刷机</a><a href="firmware-update.html" data-guide-action="update" title="固件更新">升级</a><a href="m1-guide.html" data-guide-action="use" title="M1 功能与操作">使用</a><a href="m1-guide.html#按键与恢复" data-guide-action="recover" title="M1 功能与操作">恢复</a></div><a href="m1-flash.html" aria-current="page">M1 有线安装与恢复</a><a href="m1-mcu-firmware.html">M1 开源传感器主控</a><a href="m1-mcu-update.html">M1 传感器主控升级</a></details><details class="guide-nav-group guide-section" data-guide-group="a1"><summary>A1 空气净化器</summary><div class="device-doc-actions" role="group" aria-label="A1 文档入口" data-device-actions="a1"><a href="a1-no-disassembly.html" data-guide-action="install" title="A1 原厂配网与免拆安装">刷机</a><a href="firmware-update.html" data-guide-action="update" title="固件更新">升级</a><a href="a1-guide.html" data-guide-action="use" title="A1 功能与操作">使用</a><a href="a1-guide.html#恢复手势" data-guide-action="recover" title="A1 功能与操作">恢复</a></div><a href="a1-flash.html">A1 有线安装与恢复</a></details><details class="guide-nav-group guide-section" data-guide-group="tc1"><summary>TC1 智能排插</summary><div class="device-doc-actions" role="group" aria-label="TC1 文档入口" data-device-actions="tc1"><a href="tc1-no-disassembly-ethernet-wifi-ap.html" data-guide-action="install" title="免拆刷机图文教程">刷机</a><a href="firmware-update.html" data-guide-action="update" title="固件更新">升级</a><a href="tc1-guide.html" data-guide-action="use" title="TC1 功能与操作">使用</a><a href="tc1-guide.html#恢复手势" data-guide-action="recover" title="TC1 功能与操作">恢复</a></div><a href="tc1-no-disassembly.html" class="guide-child">免拆原理与自备镜像</a><a href="tc1-flash.html">TC1 有线安装与恢复</a></details><details class="guide-nav-group guide-section" data-guide-group="daikin"><summary>DAIKIN 大金检测仪</summary><div class="device-doc-actions" role="group" aria-label="DAIKIN 文档入口" data-device-actions="daikin"><a href="daikin-stock-ota.html" data-guide-action="install" title="DAIKIN 原厂 OTA 安装">刷机</a><a href="daikin-guide.html#日常更新与恢复" data-guide-action="update" title="DAIKIN 功能、安装与恢复">升级</a><a href="daikin-guide.html" data-guide-action="use" title="DAIKIN 功能、安装与恢复">使用</a><a href="daikin-guide.html#日常更新与恢复" data-guide-action="recover" title="DAIKIN 功能、安装与恢复">恢复</a></div></details><details class="guide-nav-group guide-section" data-guide-group="common"><summary>通用设置与排查</summary><a href="quick-start.html">快速开始</a><a href="flash-prep.html">刷机前准备</a><a href="firmware-update.html">固件更新</a><a href="iotcloud-connect.html">接入 IoTCloud</a><a href="mqtt-link.html">MQTT 与联动</a><a href="faq.html">故障排查</a></details><details class="guide-nav-group guide-section" data-guide-group="dev"><summary>开发与维护</summary><a href="iotcloud-deploy.html">自行部署 IoTCloud</a><a href="build-deps.html">构建依赖</a><a href="sources.html">资源来源</a><a href="release-log.html">更新日志 / Release Log</a></details></nav></details><main class="guide-main" id="main"><div class="guide-context"><nav class="guide-breadcrumb" aria-label="当前位置"><ol><li><a href="../#docs">文档</a></li><li>M1 空气检测仪</li></ol></nav><p class="guide-language" aria-label="Language">简体中文 · <a href="en/m1-flash.html" lang="en">English</a></p></div><article class="prose"><h1 id="m1-有线安装与恢复">M1 有线安装与恢复</h1>
+<p>适用于使用原装 <strong>EMW3080B / MK3080B</strong> 联网模块的 M1。固件只选择 <code>M1</code> 对应文件。需要免拆安装时，见 <a href="m1-no-disassembly.html">M1 原厂 OTA 教程</a>。</p>
+<p>先阅读<a href="flash-prep.html">刷机前准备</a>，断开市电、原电源及负载，烧录期间使用独立稳定的 <strong>3.3V</strong> 电源。刷写前保存本机完整 Flash 备份；完整镜像会覆盖 Bootloader、原固件及部分设置。</p>
+<p><strong>推荐串口 Bootloader。</strong> M1 模块串口焊点方便焊接，USB-TTL 串口模块也较常见；已有 J-Link 时也可使用 SWD。</p>
+<details class="guide-toc" open><summary>本文目录</summary><nav aria-label="本文目录"><ul><li><a href="#选择刷机方式">选择刷机方式</a></li><li><a href="#bootloader-刷机">Bootloader 刷机</a></li><li><a href="#j-link-刷机">J-Link 刷机</a></li><li><a href="#完成与配网">完成与配网</a></li></ul></nav></details><h2 id="选择刷机方式">选择刷机方式</h2>
+<ul>
+<li><a href="#bootloader-刷机">串口 Bootloader（推荐）</a>：焊点便于焊接，使用常见的 3.3V USB-TTL 模块。</li>
+<li><a href="#j-link-刷机">J-Link 刷机</a>：使用调试器通过 SWD 写入。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>方式</th>
+<th>工具与适用情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>串口 Bootloader</td>
+<td>3.3V USB-TTL + YMODEM 软件；要求原 Bootloader 正常。不需要 J-Link</td>
+</tr>
+<tr>
+<td>J-Link</td>
+<td>J-Link + OpenOCD（Windows / Linux）；校验并分段写入完整镜像，适用于首刷和恢复。使用模块 SWD 点位</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>设备</th>
+<th>J-Link 完整镜像</th>
+<th>串口镜像准备的输入文件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M1 空气检测仪</td>
+<td><code>phicomm_m1.all.bin</code></td>
+<td><code>phicomm_m1.ota.bin.raw</code></td>
+</tr>
+</tbody>
+</table>
+<p>从下载页选择产品并下载固件和 <code>SHA256SUMS</code>，校验通过再操作。<code>.ota.bin</code> / <code>.ota.bin.signed</code> 用于网页签名升级，不能直接当作完整镜像或串口用户应用发送。</p>
+<h2 id="bootloader-刷机">Bootloader 刷机</h2>
+<p>不需要 J-Link；准备支持 <strong>3.3V 电平、921600 波特率</strong>的 USB-TTL、独立 3.3V 电源和支持 YMODEM 的串口软件。可直接在模组点位飞线；保留原传感器控制器。</p>
+<h3 id="模块点位与进入下载模式">模块点位与进入下载模式</h3>
+<p><img alt="EMW3080B 串口 Bootloader 点位：9、10、16、17、19" src="assets/images/emw3080-pins.png" /></p>
+<table>
+<thead>
+<tr>
+<th>模块引脚</th>
+<th>连接</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>16：VCC</td>
+<td>独立电源 3.3V</td>
+</tr>
+<tr>
+<td>17：GND</td>
+<td>电源负极和 USB-TTL GND 共地</td>
+</tr>
+<tr>
+<td>9：用户 UART TX</td>
+<td>USB-TTL RX</td>
+</tr>
+<tr>
+<td>10：用户 UART RX</td>
+<td>USB-TTL TX</td>
+</tr>
+<tr>
+<td>19：BOOT</td>
+<td>下载时接 GND，完成后解除</td>
+</tr>
+</tbody>
+</table>
+<p>用户串口 TX/RX 交叉连接，<strong>不是日志串口</strong>。若主板其他控制器仍在驱动模块 RX，应先隔离该端输出，避免两个 TX 争用。</p>
+<p>断电接线并把 BOOT 拉低，串口设 <strong>921600、8N1、无流控</strong>，再上电；看到 <code>MXCHIP&gt;</code> 提示后继续。没有提示先检查供电、共地、TX/RX 和 BOOT，不要盲发擦写命令。</p>
+<p>以下方法保留原 Bootloader，仅适用于菜单和分区与下文一致的设备；不同布局不能照搬。</p>
+<h3 id="1-确认菜单与分区">1. 确认菜单与分区</h3>
+<p>按准备页接线与供电要求进入 Bootloader。选择 USB-TTL 对应的串口，设置 <strong>921600、8N1、无软硬件流控</strong>。</p>
+<p>输入 <code>?</code> 确认菜单：</p>
+<pre><code class="language-text">1:FWUPDATE     Update MiCO
+2:USERUPDATE   Update user APP
+5:MEMORYMAP
+6:BOOT
+</code></pre>
+<p>输入 <code>5</code>，核对以下关键分区。<strong>地址是 Flash 偏移，不是 CPU 映射地址</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>分区</th>
+<th>起始地址</th>
+<th>长度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2</td>
+<td>Bootloader</td>
+<td><code>0x00000000</code></td>
+<td><code>0x00013000</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>MiCO Kernel</td>
+<td><code>0x00013000</code></td>
+<td><code>0x000b5000</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>User Application</td>
+<td><code>0x00088000</code></td>
+<td><code>0x00040000</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td>PARAMETER1</td>
+<td><code>0x000c8000</code></td>
+<td><code>0x00004000</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>参数备份（菜单同样显示 PARAMETER1）</td>
+<td><code>0x000cc000</code></td>
+<td><code>0x00004000</code></td>
+</tr>
+</tbody>
+</table>
+<p>MiCO 区域包含用户应用，应用相对 MiCO 起点的偏移为 <code>0x75000</code>。<strong>若菜单或布局不同，停止本流程。</strong></p>
+<p>本方法不写 Bootloader、参数、ATE、OTA Storage 和 USER Storage；但覆盖内核或应用仍会替换原固件，<strong>不能以保留这些区域代替原厂备份</strong>。</p>
+<h3 id="2-准备串口镜像">2. 准备串口镜像</h3>
+<p>下载对应产品的固件与同一 Release 中的 <code>SHA256SUMS</code>，校验所用文件。下列脚本已固定 <code>model = 'm1'</code>。</p>
+<blockquote>
+<p><strong>不要将 <code>.all.bin</code> 发送给 <code>1</code> 或 <code>2</code>，也不要将未经转换的 OTA 文件发送给 <code>2</code>。</strong> <code>.all.bin</code> 含 Bootloader 等区域，只用于完整地址烧录流程。</p>
+</blockquote>
+<p>M1 的原始 <code>.ota.bin.raw</code> 的结构为：内核及填充 <code>0x75000</code> 字节 + 用户应用 + 末尾 16 字节 MD5。</p>
+<ul>
+<li>串口 <code>FWUPDATE</code> 使用<strong>去掉 MD5 尾部</strong>后的连续内核与应用数据。</li>
+<li><code>USERUPDATE</code> 使用带 8 字节长度/CRC 头的 <code>.usr.bin</code>。</li>
+</ul>
+<p>可从校验通过的 <code>.ota.bin.raw</code> 提取串口文件；不要对带签名封装的网页升级包直接执行提取。下面在固件所在目录运行，检查长度、MD5、应用魔数、ABI 和 CRC 后才生成两个串口文件：</p>
+<pre><code class="language-sh">python3 - &lt;&lt;'PY'
+from pathlib import Path
+import binascii
+import hashlib
+import struct
+
+model = 'm1'
+image = Path(f'phicomm_{model}.ota.bin.raw').read_bytes()
+offset = 0x75000
+assert offset + 144 &lt;= len(image) &lt;= offset + 0x40000 + 16, '镜像长度异常'
+assert hashlib.md5(image[:-16]).digest() == image[-16:], 'OTA MD5 不符'
+length, reserved, crc, magic, stack, abi = struct.unpack_from('&lt;IHHIII', image, offset)
+assert 120 &lt;= length &lt;= 0x40000 - 8, '应用长度异常'
+assert len(image) == offset + 8 + length + 16, '应用边界异常'
+assert magic == 0xc89346 and abi == 3, '应用魔数或 ABI 不符'
+user = image[offset:-16]
+assert reserved == crc == binascii.crc_hqx(user[8:], 0), '应用 CRC 不符'
+product = f'PHICOMM_{model.upper()}_EMW3080'.encode() + b'\0'
+assert product in user, '镜像产品与所选型号不符'
+Path('fw.serial.bin').write_bytes(image[:-16])
+Path('user.serial.bin').write_bytes(user)
+print('内核+应用:', len(image) - 16, 'bytes')
+print('用户应用:', len(user), 'bytes; SHA256:', hashlib.sha256(user).hexdigest())
+PY
+</code></pre>
+<p>生成后<strong>记录脚本输出的文件长度</strong>，发送完成时核对设备显示的 <code>Size</code>。文件长度与校验值随固件变化，请使用所下载文件的实际结果。</p>
+<h3 id="3-发送与回读">3. 发送与回读</h3>
+<ol>
+<li>
+<p>在 <code>MXCHIP&gt;</code> 输入 <code>1</code> 并回车，等待 <code>Waiting for the file to be sent</code> / <code>C</code>，使用 <strong>YMODEM（CRC、1 KiB 数据包）</strong>发送 <code>fw.serial.bin</code>。建议使用支持包间隔的发送工具，<strong>将数据包间隔设为 50 ms</strong>。写入是否正确仍需通过回读校验确认。</p>
+</li>
+<li>
+<p>等待设备打印 <code>Successfully!</code>，核对 <code>Size</code>。</p>
+</li>
+</ol>
+<blockquote>
+<p>该提示只代表 Bootloader 报告接收/写入完成，<strong>不能据此宣布应用可启动</strong>。</p>
+</blockquote>
+<ol>
+<li>输入 <code>2 -r</code>，使用串口工具的 <strong>Receive YMODEM</strong> 接收用户分区，保存为 <code>USER.bin</code>。回读文件应为整个 <code>0x40000</code> 分区，即 <strong>262144 bytes</strong>。</li>
+</ol>
+<p>Linux 脚本需要独占串口时，先用 <strong>Ctrl-A、Q</strong> 退出 minicom，再运行脚本；<strong>不要让两个程序同时读写同一端口。</strong></p>
+<ol>
+<li>将回读文件前 <code>user.serial.bin</code> 长度的内容与期望应用逐字节比较，同时验证应用 CRC：</li>
+</ol>
+<p>```sh
+   python3 - &lt;&lt;'PY'
+   from pathlib import Path
+   import binascii
+   import hashlib
+   import struct</p>
+<p>expected = Path('user.serial.bin').read_bytes()
+   readback = Path('USER.bin').read_bytes()
+   assert len(readback) == 0x40000, '用户分区回读长度不符'
+   actual = readback[:len(expected)]
+   assert actual == expected, '应用回读不一致，不要启动；重新写入并回读'
+   length, reserved, crc = struct.unpack_from('&lt;IHH', actual)
+   assert length + 8 == len(actual), '应用长度不符'
+   assert reserved == crc == binascii.crc_hqx(actual[8:], 0), '应用 CRC 不符'
+   print('应用逐字节一致，CRC 通过，SHA256:', hashlib.sha256(actual).hexdigest())
+   PY
+   ```</p>
+<ol>
+<li>确认回读一致后输入 <code>6</code> 启动。正常断电重启前<strong>解除 BOOT 接地</strong>，按准备页要求恢复原接线。</li>
+</ol>
+<h3 id="4-应用-crc-失败时恢复">4. 应用 CRC 失败时恢复</h3>
+<p><code>user firmware invalid [-3]</code> 表示<strong>用户应用 CRC 校验失败</strong>。按以下步骤恢复：</p>
+<ol>
+<li>进入 Bootloader，核对固件校验和，并重新准备同一固件的应用文件。</li>
+<li>输入 <code>2</code>，通过 YMODEM 发送 <code>user.serial.bin</code>；也可使用已与提取结果核对一致的对应产品 <code>.usr.bin</code>。设置数据包间隔为 <strong>50 ms</strong>。</li>
+<li>等待 <code>Successfully!</code>，再执行 <code>2 -r</code>，按照上文脚本比较回读内容。</li>
+<li>回读不一致时，检查供电、共地、导线、串口占用及 USB-TTL 转换器，排除问题后重新写入。<strong>保持 Bootloader 和参数分区，不要通过整片擦除来试错。</strong></li>
+<li>回读与应用文件完全一致后，输入 <code>6</code> 启动。</li>
+</ol>
+<h3 id="5-判断应用是否运行">5. 判断应用是否运行</h3>
+<p><code>Booting.......</code> 表示 Bootloader 正在启动应用。M1 应用运行后：</p>
+<ul>
+<li>用户串口使用 <strong>115200、8N1、无流控</strong>；<strong>保持 921600 会看到乱码。</strong></li>
+<li>切换至 115200 后，可在串口工具的十六进制显示模式下查看每约 5 秒发送的 12 字节传感器查询帧：</li>
+</ul>
+<pre><code class="language-text">23 01 00 00 00 00 00 00 00 00 00 21
+</code></pre>
+<h2 id="j-link-刷机">J-Link 刷机</h2>
+<h3 id="模块-swd-点位">模块 SWD 点位</h3>
+<p>可在模块对应焊盘焊接导线。下图为模块正向引脚图，按引脚编号确认方向。</p>
+<p><img alt="EMW3080B 模块 SWD 引脚图" src="assets/images/emw3080-swd-pins.png" /></p>
+<table>
+<thead>
+<tr>
+<th>模块引脚</th>
+<th>连接</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 或 3：SWD_CLK</td>
+<td>J-Link SWCLK（标准 20 针接口 9）</td>
+</tr>
+<tr>
+<td>2 或 4：SWD_DIO</td>
+<td>J-Link SWDIO（标准 20 针接口 7）</td>
+</tr>
+<tr>
+<td>16：VCC</td>
+<td>独立电源 3.3V，并接 J-Link VTref（标准接口 1）</td>
+</tr>
+<tr>
+<td>17：GND</td>
+<td>电源负极与 J-Link GND（标准接口 4）共地</td>
+</tr>
+</tbody>
+</table>
+<p><strong>VTref 是电压检测输入，不是电源输出。不要连接 J-Link 的 5V 输出。</strong> 小型下载器按自身的信号标记接线，不要照搬标准接口针号。J-Link 方式不需要把串口 BOOT 引脚拉低。</p>
+<p><img alt="J-Link 标准 SWD 接口" src="assets/images/jlink-swd.png" /></p>
+<h3 id="准备-openocd-工具与脚本">准备 OpenOCD 工具与脚本</h3>
+<p>本节使用 <strong>OpenOCD + J-Link（SWD）</strong>，不需要安装或打开 mlink / mflash。Windows 使用工具包自带的旧版 OpenOCD；Linux 使用 OpenOCD 0.11 / 0.12 和配套的新配置。两者都需要同一份 <code>flash_prog.elf</code>，不能仅安装系统 OpenOCD 后直接运行 <code>program all.bin</code>。</p>
+<p>下载并解压到短路径（例如 Windows 的 <code>C:\phicomm</code>、Linux 的 <code>~/phicomm</code>）：</p>
+<ul>
+<li><a href="assets/tools/emw3080-openocd.zip">EMW3080 脚本包</a>：含 Python 3 校验、切分和烧录脚本，以及新版 OpenOCD 配置。</li>
+<li><a href="https://github.com/a2633063/zA1/raw/f4f67ee88d9287fd1badff55ccd7704bb0f748c4/Jlink烧录文档/3080_JLINK烧录.zip">zA1 的 3080_JLINK 烧录工具包</a>：保留其中的 <code>openocd/</code>、<code>sflash_write.tcl</code>、<code>flash_prog.elf</code>，将外层目录改名为 <code>3080-tool</code>。不要运行包内旧固件或旧批处理。</li>
+<li>下载对应产品的 <code>.all.bin</code> 与<strong>同一版本</strong>的 <code>SHA256SUMS</code>，放到工作目录。不要拿网页签名包或其他产品的文件替代。</li>
+</ul>
+<p>目录应如下（脚本包解压在工作目录，不放进 <code>3080-tool</code>）：</p>
+<pre><code class="language-text">phicomm/
+  emw3080.py
+  mx1290-modern.cfg
+  phicomm_m1.all.bin
+  SHA256SUMS
+  3080-tool/
+    flash_prog.elf
+    sflash_write.tcl
+    openocd/
+      win32/openocd_mico.exe
+      scripts/interface/jlink_swd.cfg
+      scripts/target/MX1290/...
+</code></pre>
+<p><strong>备份先于写入。</strong> 此脚本不提供完整 Flash 备份或原厂恢复；需要保留原厂时，应先通过适用的完整读取工具保存本机备份。旧工具包自带的 <code>sflash_read_file</code> 存在参数和外部命令问题，不能直接当作跨平台备份命令。连接检查只识别调试接口，不写 Flash；烧录命令会覆盖 Bootloader、内核、应用及 ATE。</p>
+<h3 id="windows安装检查与烧录">Windows：安装、检查与烧录</h3>
+<ol>
+<li>安装 <a href="https://www.python.org/downloads/windows/">Python 3</a>（3.9 或更新版本），确认 <code>py -3 --version</code> 可用。</li>
+<li>OpenOCD 通过 libusb 访问 J-Link。若已能识别 J-Link，无需更换驱动；若出现 <code>LIBUSB_ERROR_NOT_SUPPORTED</code>，按 <a href="https://github.com/openocd-org/openocd/blob/master/README.Windows.md">OpenOCD Windows 说明</a>，使用 <a href="https://zadig.akeo.ie/">Zadig</a> <strong>只为 J-Link</strong> 安装 WinUSB 驱动。切换后，SEGGER 软件可能需要恢复原驱动才能使用。</li>
+<li>断电接好 SWD、VTref、共地与独立 3.3V 电源，接通模块电源，关闭占用 J-Link 的其他软件。在 PowerShell 中进入工作目录，先检查连接：</li>
+</ol>
+<pre><code class="language-powershell">cd C:\phicomm
+py -3 .\emw3080.py check --tool-dir .\3080-tool --engine legacy
+</code></pre>
+<p>应看到 <code>Vref</code> 约为 3.3V、SWD ID 和 <code>MX1290.cpu</code>，命令正常退出。连接失败先排查接线、供电和驱动。</p>
+<p>确认是 <strong>M1</strong> 后执行：</p>
+<pre><code class="language-powershell">py -3 .\emw3080.py flash .\phicomm_m1.all.bin --model m1 --checksums .\SHA256SUMS --tool-dir .\3080-tool --engine legacy
+</code></pre>
+<h3 id="linux安装检查与烧录">Linux：安装、检查与烧录</h3>
+<p>Debian / Ubuntu 安装系统工具：</p>
+<pre><code class="language-sh">sudo apt update
+sudo apt install openocd python3
+openocd --version
+cd ~/phicomm
+python3 emw3080.py check --tool-dir ./3080-tool --engine modern
+</code></pre>
+<p>使用 <strong>OpenOCD 0.11 / 0.12</strong>。此模式加载脚本包中的 <code>mx1290-modern.cfg</code>，不要替换成旧包的 <code>MX1290.cfg</code>。若报 USB 权限错误，检查发行版的 OpenOCD udev 规则及其用户组权限；重新登录并拔插 J-Link 后再试。其他 Linux 发行版安装同名软件包及相应 USB 规则。</p>
+<p>M1 烧录：</p>
+<pre><code class="language-sh">python3 emw3080.py flash phicomm_m1.all.bin --model m1 --checksums SHA256SUMS --tool-dir ./3080-tool --engine modern
+</code></pre>
+<p>如 OpenOCD 不在 PATH，可追加 <code>--openocd /绝对路径/openocd</code>。Linux 配置已适配新版 DAP 接口；本教程的 Linux 流程尚未完成实机烧录验证，连接通过并不等于写入和启动已验证。</p>
+<h3 id="切分文件与烧录校验">切分文件与烧录校验</h3>
+<p><code>flash</code> 在访问 J-Link 前校验发布 SHA256、产品、镜像边界、应用 CRC 和内嵌原始 OTA MD5，再自动切分写入。校验失败会退出，不尝试擦除；只接受本项目当前布局的 <code>.all.bin</code>。原工具文件也会校验，防止混用其他板子的 Flash 编程器。</p>
+<p>若只需切分、不连接设备，可执行（Windows 将 <code>python3</code> 换成 <code>py -3</code>）：</p>
+<pre><code class="language-sh">python3 emw3080.py split phicomm_m1.all.bin --model m1 --checksums SHA256SUMS --output firmware
+</code></pre>
+<p>输出目录必须不存在，脚本不会覆盖已有文件。</p>
+<table>
+<thead>
+<tr>
+<th>输出</th>
+<th>完整镜像内的范围（结束地址不包含）</th>
+<th>烧录分区 ID</th>
+<th>分区内偏移</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>boot.bin</code></td>
+<td><code>0x000000</code>～<code>0x012000</code>（72 KiB）</td>
+<td><code>1</code></td>
+<td><code>0x0</code></td>
+</tr>
+<tr>
+<td><code>ota.bin</code></td>
+<td><code>0x013000</code>～<code>0x0C8000</code>（724 KiB，含填充）</td>
+<td><code>2</code></td>
+<td><code>0x0</code></td>
+</tr>
+<tr>
+<td><code>ate.bin</code></td>
+<td><code>0x0D0000</code>～文件末尾（最多 256 KiB）</td>
+<td><code>3</code></td>
+<td><code>0x0</code></td>
+</tr>
+</tbody>
+</table>
+<p>切分后的 <code>ota.bin</code> 仅供此 SWD 流程使用，不能上传到网页升级。<code>0x012000</code>～<code>0x013000</code> 和参数区 <code>0x0C8000</code>～<code>0x0D0000</code> 不在这三段的写入范围内。<strong>分区 ID 与原始 Flash 地址不是一回事</strong>，不要把命令中的三个 <code>0x0</code> 改为 <code>0x13000</code> 或 <code>0xD0000</code>。</p>
+<p>底层依次执行以下命令，使用编程器的按需擦除和写后校验，不做整片擦除：</p>
+<pre><code class="language-text">sflash_write_file firmware/boot.bin 1 0x0 MK3080B 0
+sflash_write_file firmware/ota.bin 2 0x0 MK3080B 0
+sflash_write_file firmware/ate.bin 3 0x0 MK3080B 0
+reset run
+shutdown
+</code></pre>
+<p>实际 <code>flash</code> 使用临时目录，运行结束后自动清理。每段写入必须持续返回 <code>Result: OK</code>，最后正常退出。<code>Verify after write failed</code>、<code>Error during Write</code> 或非零退出都表示失败，应保持供电稳定、修复连接后重新写入。<code>Result: OK</code> 只证明编程器写后校验通过，随后仍要按文末步骤检查正常启动、配网与设备功能。</p>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>处理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>找不到 <code>flash_prog.elf</code> / 工具包校验失败</td>
+<td>确认 <code>--tool-dir</code> 指向原包根目录，保留配套文件，不使用其他板型 ELF</td>
+</tr>
+<tr>
+<td><code>target requires -dap</code></td>
+<td>新版 OpenOCD 使用 <code>--engine modern</code>，保留配套 <code>mx1290-modern.cfg</code></td>
+</tr>
+<tr>
+<td><code>couldn't bind to socket</code></td>
+<td>脚本已使用 <code>23333 / 24444 / 26666</code>；仍报错时检查占用或 Windows 保留端口（<code>netsh interface ipv4 show excludedportrange protocol=tcp</code>）</td>
+</tr>
+<tr>
+<td>旧版报 <code>Named pipes currently not supported</code></td>
+<td>使用数字端口，不要把旧版 <code>gdb_port</code> 改成 <code>disabled</code></td>
+</tr>
+<tr>
+<td>已校验但无配网热点</td>
+<td>断电后拆除下载线并恢复原接线，正常上电；核对产品文件，必要时收集启动日志，不要整片擦除试错</td>
+</tr>
+</tbody>
+</table>
+<h2 id="完成与配网">完成与配网</h2>
+<ol>
+<li>断电，解除 BOOT 接地（串口方式），移除下载线。</li>
+<li>恢复原接线并装回外壳后，再接原电源正常上电。</li>
+<li>连接 <code>M1-AP-&lt;MAC后六位&gt;</code>，访问 <code>http://192.168.0.1/</code> 配网。</li>
+<li>核对设备型号和网络状态。检查传感器读数与屏幕。需要 MQTT 时填写 Broker 并确认连接。</li>
+</ol>
+<p>日常操作见 <a href="m1-guide.html">M1 功能与操作</a>，后续升级见<a href="firmware-update.html">固件更新</a>。</p>
+<p>模块点位与串口流程参考<a href="https://docs.mxchip.com/zh/foiwqd8gbgh23xu2/bwyo0fs5t2rquekz/antua5wkt8m3qx7l/lqdz2h5zpp117imt.html">庆科 EMW3080 系列模组固件烧录方法</a>。</p></article><div class="guide-pager"><a href="m1-no-disassembly.html">上一页<b>M1 原厂配网与免拆安装</b></a><a class="next" href="m1-guide.html">下一页<b>M1 功能与操作</b></a></div></main></div><footer class="site-footer"><div class="wrap"><div><b>IoTCloud COMMUNITY</b><p>社区维护，与原厂无隶属关系。各组件许可及第三方说明见对应源码仓库。</p></div><div><b>使用指南</b><ul><li><a href="quick-start.html">快速开始</a></li><li><a href="faq.html">故障排查</a></li><li><a href="release-log.html">发布说明</a></li></ul></div><div><b>源码与协议</b><ul><li><a href="https://phicomm-io.github.io/iotcloud-community-protocols/">开发文档</a></li><li><a href="https://github.com/phicomm-io/iotcloud-community-frontend">统一前端</a></li><li><a href="https://github.com/phicomm-io/iotcloud-community-mqtt">IoTCloud 平台</a></li><li><a href="https://github.com/phicomm-io/phicomm_m1_mcu_atsamd20">M1 传感器主控</a></li></ul></div></div></footer><script src="../site.js"></script></body></html>
