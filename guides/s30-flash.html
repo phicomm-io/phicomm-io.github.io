@@ -1,6 +1,32 @@
 <!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>免拆与串口刷机 · 斐讯社区固件 · PHICOMM COMMUNITY</title><meta name="description" content="原厂网络 OTA、VTX / VRX、完整备份与应用镜像"><link rel="canonical" href="https://phicomm-io.github.io/guides/s30-flash.html"><meta property="og:type" content="website"><meta property="og:site_name" content="PHICOMM COMMUNITY"><meta property="og:title" content="免拆与串口刷机 · 斐讯社区固件 · PHICOMM COMMUNITY"><meta property="og:description" content="原厂网络 OTA、VTX / VRX、完整备份与应用镜像"><meta property="og:url" content="https://phicomm-io.github.io/guides/s30-flash.html"><meta property="og:locale" content="zh_CN"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="免拆与串口刷机 · 斐讯社区固件 · PHICOMM COMMUNITY"><meta name="twitter:description" content="原厂网络 OTA、VTX / VRX、完整备份与应用镜像"><link rel="alternate" hreflang="zh-CN" href="https://phicomm-io.github.io/guides/s30-flash.html"><link rel="alternate" hreflang="en" href="https://phicomm-io.github.io/guides/en/s30-flash.html"><link rel="alternate" hreflang="x-default" href="https://phicomm-io.github.io/guides/s30-flash.html"><link rel="stylesheet" href="../style.css"><script src="../theme.js"></script></head><body><a class="skip" href="#main">跳到主要内容</a><header class="site-header"><div class="wrap"><a class="brand" href="../"><span class="mark" aria-hidden="true">斐</span><span class="word"><b>IoTCloud COMMUNITY</b><span>社区固件</span></span></a><nav class="site-nav" aria-label="主导航"><a href="../#devices">设备与功能</a><a href="../#install">安装升级</a><a href="../#releases">固件下载</a><a href="../#faq">常见问题</a><a href="../#develop">参与开发</a></nav><div class="prefs"><label class="sr" for="themePick">主题</label><select id="themePick"><option value="system">跟随系统</option><option value="light">浅色</option><option value="dark">深色</option></select></div></div></header><div class="guide-layout"><details class="guide-directory" open><summary>文档导航</summary><nav class="guide-nav" aria-label="文档导航"><details class="guide-nav-group guide-section" data-guide-group="m1"><summary>M1 空气检测仪</summary><div class="device-doc-actions" role="group" aria-label="M1 文档入口" data-device-actions="m1"><a href="m1-no-disassembly.html" data-guide-action="install" title="M1 原厂配网与免拆安装">刷机</a><a href="firmware-update.html" data-guide-action="update" title="固件更新">升级</a><a href="m1-guide.html" data-guide-action="use" title="M1 功能与操作">使用</a><a href="m1-guide.html#按键与恢复" data-guide-action="recover" title="M1 功能与操作">恢复</a></div><a href="m1-flash.html">M1 有线安装与恢复</a><a href="m1-mcu-firmware.html">M1 开源传感器主控</a><a href="m1-mcu-update.html">M1 传感器主控升级</a></details><details class="guide-nav-group guide-section" data-guide-group="a1"><summary>A1 空气净化器</summary><div class="device-doc-actions" role="group" aria-label="A1 文档入口" data-device-actions="a1"><a href="a1-no-disassembly.html" data-guide-action="install" title="A1 原厂配网与免拆安装">刷机</a><a href="firmware-update.html" data-guide-action="update" title="固件更新">升级</a><a href="a1-guide.html" data-guide-action="use" title="A1 功能与操作">使用</a><a href="a1-guide.html#恢复手势" data-guide-action="recover" title="A1 功能与操作">恢复</a></div><a href="a1-flash.html">A1 有线安装与恢复</a></details><details class="guide-nav-group guide-section" data-guide-group="tc1"><summary>TC1 智能排插</summary><div class="device-doc-actions" role="group" aria-label="TC1 文档入口" data-device-actions="tc1"><a href="tc1-no-disassembly-ethernet-wifi-ap.html" data-guide-action="install" title="免拆刷机图文教程">刷机</a><a href="firmware-update.html" data-guide-action="update" title="固件更新">升级</a><a href="tc1-guide.html" data-guide-action="use" title="TC1 功能与操作">使用</a><a href="tc1-guide.html#恢复手势" data-guide-action="recover" title="TC1 功能与操作">恢复</a></div><a href="tc1-no-disassembly.html" class="guide-child">免拆原理与自备镜像</a><a href="tc1-flash.html">TC1 有线安装与恢复</a></details><details class="guide-nav-group guide-section" data-guide-group="daikin"><summary>DAIKIN 大金检测仪</summary><div class="device-doc-actions" role="group" aria-label="DAIKIN 文档入口" data-device-actions="daikin"><a href="daikin-stock-ota.html" data-guide-action="install" title="DAIKIN 原厂 OTA 安装">刷机</a><a href="daikin-guide.html#日常更新与恢复" data-guide-action="update" title="DAIKIN 功能、安装与恢复">升级</a><a href="daikin-guide.html" data-guide-action="use" title="DAIKIN 功能、安装与恢复">使用</a><a href="daikin-guide.html#日常更新与恢复" data-guide-action="recover" title="DAIKIN 功能、安装与恢复">恢复</a></div></details><details class="guide-nav-group guide-section" data-guide-group="common"><summary>通用设置与排查</summary><a href="quick-start.html">快速开始</a><a href="flash-prep.html">刷机前准备</a><a href="firmware-update.html">固件更新</a><a href="iotcloud-connect.html">接入 IoTCloud</a><a href="mqtt-link.html">MQTT 与联动</a><a href="faq.html">故障排查</a></details><details class="guide-nav-group guide-section" data-guide-group="s30" open><summary>S30-V1B 计量插座</summary><a href="s30-flash.html" aria-current="page">免拆与串口刷机</a><a href="s30-guide.html">功能与操作</a></details><details class="guide-nav-group guide-section" data-guide-group="dev"><summary>开发与维护</summary><a href="iotcloud-deploy.html">自行部署 IoTCloud</a><a href="build-deps.html">构建依赖</a><a href="sources.html">资源来源</a><a href="release-log.html">更新日志 / Release Log</a></details></nav></details><main class="guide-main" id="main"><div class="guide-context"><nav class="guide-breadcrumb" aria-label="当前位置"><ol><li><a href="../#docs">文档</a></li><li>S30-V1B 计量插座</li></ol></nav><p class="guide-language" aria-label="Language">简体中文 · <a href="en/s30-flash.html" lang="en">English</a></p></div><article class="prose"><h1 id="s30-v1b-免拆与串口刷机">S30-V1B 免拆与串口刷机</h1>
 <p>适用于 <strong>ORVIBO S30-V1B</strong>：BL2028N 模块、BK7231N 芯片、HLW8032 计量。已在原厂 <strong><code>2M.1220</code></strong> 上实测通过免拆网络 OTA，也保留拆机串口备份、安装与恢复方式。默认固件采用原厂免拆布局，保留本机启动器和工厂 MAC/RF；<strong>首次安装社区固件需重新配网，不保留原厂应用配置</strong>。安装后的操作见 <a href="s30-guide.html">S30-V1B 功能与操作</a>。其他 S30 系列或不同模块的设备不能仅凭外壳相同套用本教程。</p>
-<details class="guide-toc" open><summary>本文目录</summary><nav aria-label="本文目录"><ul><li><a href="#先选择刷机方式">先选择刷机方式</a></li><li><a href="#原厂免拆网络安装">原厂免拆网络安装</a></li><li><a href="#拆机串口方式">拆机串口方式</a></li><li><a href="#供电与准备">供电与准备</a></li><li><a href="#接点位置与接线">接点位置与接线</a></li><li><a href="#先做完整备份">先做完整备份</a></li><li><a href="#选择镜像并写入">选择镜像并写入</a></li><li><a href="#首次启动与恢复">首次启动与恢复</a></li></ul></nav></details><h2 id="先选择刷机方式">先选择刷机方式</h2>
+<details class="guide-toc" open><summary>本文目录</summary><nav aria-label="本文目录"><ul><li><a href="#rc4-文件下载">RC4 文件下载</a></li><li><a href="#先选择刷机方式">先选择刷机方式</a></li><li><a href="#原厂免拆网络安装">原厂免拆网络安装</a></li><li><a href="#拆机串口方式">拆机串口方式</a></li><li><a href="#接点位置与接线">接点位置与接线</a></li><li><a href="#社区固件后续-url-ota">社区固件后续 URL OTA</a></li></ul></nav></details><h2 id="rc4-文件下载">RC4 文件下载</h2>
+<p>当前候选版本为 <strong>v1.0.0-rc.4（Beta）</strong>。只下载与所选方法对应的文件：</p>
+<table>
+<thead>
+<tr>
+<th>用途</th>
+<th>正式文件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>原厂免拆安装、社区网页 URL OTA</td>
+<td><a href="https://github.com/phicomm-io/iotcloud-community-firmware/releases/download/v1.0.0-rc.4/BL2028N_OTA_1.0.0-rc.4.rbl">BL2028N_OTA_1.0.0-rc.4.rbl</a></td>
+</tr>
+<tr>
+<td>保留原厂启动器的串口安装，从 <code>0x11000</code> 写入</td>
+<td><a href="https://github.com/phicomm-io/iotcloud-community-firmware/releases/download/v1.0.0-rc.4/BL2028N_STOCK_UA_1.0.0-rc.4.bin">BL2028N_STOCK_UA_1.0.0-rc.4.bin</a></td>
+</tr>
+<tr>
+<td>校验值</td>
+<td><a href="https://github.com/phicomm-io/iotcloud-community-firmware/releases/download/v1.0.0-rc.4/SHA256SUMS-S30">SHA256SUMS-S30</a></td>
+</tr>
+</tbody>
+</table>
+<p>例如仅下载 RBL 后，在同一目录运行 <code>grep "  BL2028N_OTA_1.0.0-rc.4.rbl$" SHA256SUMS-S30 | sha256sum -c -</code>；macOS 可用 <code>shasum -a 256</code>，与校验文件对应行核对。不要使用其它版本或其它设备的包。</p>
+<p>下载文件名按发布版本固定；设备显示的版本还包含六位 Git 提交后缀。</p>
+<h2 id="先选择刷机方式">先选择刷机方式</h2>
 <table>
 <thead>
 <tr>
@@ -33,23 +59,46 @@
 <p>此入口已在一台 <strong>S30-V1B / BL2028N / BK7231N、原厂 <code>2M.1220</code></strong> 上实际完成安装；其它原厂版本及 S30 变体尚未验证。需要设备已经连接可用 Wi-Fi，电脑与设备互通，并知道本机工厂 MAC。此流程不代替原厂设备首次配网。测试中的串口用于建立原厂基线和观察/回读；执行升级的下载及命令入口均为正常网络接口。</p>
 <p>电脑需要 Python、<code>paho-mqtt</code>、本地 HTTPS 证书，以及一个<strong>专用的临时 TLS MQTT broker</strong>。普通明文 MQTT 在本次原厂版本中不能完成连接，不能用 <code>mqtt://</code> 代替 <code>ssl://</code>。不需要改路由器 DNS。不要复用日常 broker 的设备账号，也不要把测试 broker 暴露到公网。</p>
 <p>本流程会把原厂设备的 CGW/云连接指向测试服务。首次社区启动使用默认配置；原厂账号、Wi-Fi、MQTT、配对及计量配置不迁移。请先记录需要重新设置的内容。</p>
+<h3 id="本地-tls-mqtt-服务示例">本地 TLS MQTT 服务示例</h3>
+<p>可在 Linux/macOS 上使用 Python、OpenSSL 与 Mosquitto。先安装这些软件，再在独立的临时目录中准备服务。下面的 <code>192.168.1.10</code> 应替换为电脑真实局域网地址；不要填设备地址。</p>
+<pre><code class="language-sh">python3 -m venv .venv
+. .venv/bin/activate
+python3 -m pip install paho-mqtt==2.1.0
+OTA_HOST=192.168.1.10
+openssl req -x509 -newkey rsa:2048 -nodes -days 1 \
+  -keyout gateway-key.pem -out gateway-cert.pem \
+  -subj &quot;/CN=$OTA_HOST&quot; -addext &quot;subjectAltName=IP:$OTA_HOST&quot;
+mosquitto_passwd -c broker.passwd s30test
+chmod 600 gateway-key.pem broker.passwd
+</code></pre>
+<p><code>mosquitto_passwd</code> 会提示输入专用测试密码。创建 <code>broker.conf</code>，将下面三个文件路径替换为本目录的绝对路径：</p>
+<pre><code class="language-text">listener 18892
+allow_anonymous false
+password_file /absolute/path/broker.passwd
+certfile /absolute/path/gateway-cert.pem
+keyfile /absolute/path/gateway-key.pem
+persistence false
+</code></pre>
+<p>在单独终端以当前用户运行 <code>mosquitto -c broker.conf -v</code>。对应的 <code>mqtt.private.json</code> 使用该电脑 IP、端口 <code>18892</code>、账号 <code>s30test</code> 和刚设置的密码。安装工具的 <code>--mqtt-ca</code> 和 <code>--cert</code> 都可指向 <code>gateway-cert.pem</code>，<code>--key</code> 指向 <code>gateway-key.pem</code>。设备需要在原 Wi-Fi 上保持联网；电脑防火墙须允许来自该设备的上述端口。</p>
 <h3 id="运行本地安装工具">运行本地安装工具</h3>
-<p>使用与候选固件一起审查的 <a href="https://github.com/phicomm-io/iotcloud-community-firmware/blob/hotfix/rc4-selected-integration/tools/s30_stock_ota.py">s30_stock_ota.py 工具</a>。本机、目标设备与临时 broker 的 IPv4 地址必须相互可达；放行本机 TCP <code>15683</code>（HTTPS CGW）、<code>8080</code>（固件 HTTP）及所选 broker 端口。证书须包含服务 IP，临时 broker 使用其对应证书，电脑用 <code>--mqtt-ca</code> 校验证书。</p>
+<p>使用与候选固件一起审查的 <a href="https://github.com/phicomm-io/iotcloud-community-firmware/blob/v1.0.0-rc.4/tools/s30_stock_ota.py">s30_stock_ota.py 工具</a>。本机、目标设备与临时 broker 的 IPv4 地址必须相互可达；放行本机 TCP <code>15683</code>（HTTPS CGW）、<code>8080</code>（固件 HTTP）及所选 broker 端口。证书须包含服务 IP，临时 broker 使用其对应证书，电脑用 <code>--mqtt-ca</code> 校验证书。</p>
 <p>准备两个权限为 <code>600</code> 的私有 JSON 文件，不要提交到 Git 或公开：</p>
 <pre><code class="language-json">{&quot;ssid&quot;:&quot;你的 2.4 GHz Wi-Fi&quot;,&quot;password&quot;:&quot;Wi-Fi 密码&quot;}
 </code></pre>
 <pre><code class="language-json">{&quot;host&quot;:&quot;临时 broker 的 IPv4&quot;,&quot;port&quot;:18892,&quot;username&quot;:&quot;短测试账号&quot;,&quot;password&quot;:&quot;短测试密码&quot;}
 </code></pre>
 <p>MQTT 用户名、密码各限 1–31 字节。只使用短地址和专用测试账号，本工具不利用原厂已发现的长度溢出。</p>
-<p>取得对应 <code>.rbl</code> 与 <code>SHA256SUMS</code>，先校验，随后运行；替换全部占位符：</p>
-<pre><code class="language-sh">chmod 600 wifi.private.json mqtt.private.json
-sha256sum -c SHA256SUMS
+<p>取得对应 <code>.rbl</code> 与 <code>SHA256SUMS-S30</code>，先校验，随后运行；替换全部占位符：</p>
+<pre><code class="language-sh">mkdir -p tools
+curl --fail --location https://raw.githubusercontent.com/phicomm-io/iotcloud-community-firmware/v1.0.0-rc.4/tools/s30_stock_ota.py -o tools/s30_stock_ota.py
+chmod 600 wifi.private.json mqtt.private.json
+grep &quot;  BL2028N_OTA_1.0.0-rc.4.rbl$&quot; SHA256SUMS-S30 | sha256sum -c -
 python3 tools/s30_stock_ota.py \
   --device &lt;原厂设备IP&gt; --device-id &lt;本机12位工厂MAC&gt; \
   --host &lt;电脑局域网IP&gt; \
   --wifi-file wifi.private.json --mqtt-file mqtt.private.json \
-  --mqtt-ca broker-cert.pem --cert gateway-cert.pem --key gateway-key.pem \
-  --rbl 'BL2028N_OTA_&lt;版本&gt;.rbl' --sha256 &lt;该文件公布的SHA256&gt;
+  --mqtt-ca gateway-cert.pem --cert gateway-cert.pem --key gateway-key.pem \
+  --rbl 'BL2028N_OTA_1.0.0-rc.4.rbl' --sha256 &lt;该文件公布的SHA256&gt;
 </code></pre>
 <p>工具通过 CoAP <code>/qlink/netinfo</code> 配置本地 HTTPS CGW，原厂设备经 HTTPS 获取临时 TLS MQTT 连接，再接收正常 AndLink 文件命令并下载 RBL。它不访问串口、不写工厂参数、不要求刷回原厂，也不提供双系统切换。</p>
 <h3 id="确认安装成功">确认安装成功</h3>
@@ -61,7 +110,7 @@ python3 tools/s30_stock_ota.py \
 </ol>
 <p>本次实测还完成了第二次社区网络 OTA，并回读核对原厂启动区、MAC/RF 保留和安装应用一致。没有把这一结果外推为所有原厂版本、断电恢复或刷回原厂的保证。若一直没有下载或社区热点，不要反复发送不同型号镜像；保留工具错误记录，使用下文串口备份/恢复路径排查。</p>
 <h2 id="拆机串口方式">拆机串口方式</h2>
-<h2 id="供电与准备">供电与准备</h2>
+<h3 id="供电与准备">供电与准备</h3>
 <p>将插座从市电拔下，断开负载和原电源，确认断电后再拆机。<strong>拆机、连接电脑串口和刷写期间均不能接入市电。</strong> 使用 3.3V 逻辑电平的 USB-TTL 串口适配器，以及稳定、独立、隔离的 3.3V 直流电源；不要向模块接入 5V。</p>
 <p>USB 串口适配器的 3.3V 输出可能无法承担 Wi-Fi 启动电流，表现为刷入成功但启动或联网时反复复位。使用独立电源时，断开适配器的 3.3V 供电线，保留 TX、RX、GND，电源负极与串口 GND、设备 GND 共地。</p>
 <p>刷写前准备本设备对应版本的固件与 <code>SHA256SUMS</code>，先校验文件。串口软件如 minicom 必须退出，避免与刷机工具同时占用端口。下面使用 <a href="https://github.com/tuya-cloudcutter/bk7231tools#usage">bk7231tools</a>，示例端口 <code>/dev/ttyUSB0</code> 应替换为实际端口。</p>
@@ -94,7 +143,7 @@ python3 tools/s30_stock_ota.py \
 </tbody>
 </table>
 <p>左右关系仅指上述观察方向。接线前核对 PCB 朝向与接点，不要将翻面后的左右位置直接套用。VTX/VRX 是设备收发方向，因此 TX 与 RX 交叉连接。</p>
-<h2 id="先做完整备份">先做完整备份</h2>
+<h3 id="先做完整备份">先做完整备份</h3>
 <p>在工具开始等待连接后，给模块的 <strong>3.3V 电源断电再上电</strong>，或短暂将已确认的 CEN/RESET 接地后释放。保持 USB 串口适配器连接。按住插座日常开关按钮不能代替芯片复位。</p>
 <p>本次验证设备的 Flash 为 2 MiB，完整读取范围是 <code>0x000000</code> 至 <code>0x1fffff</code>。首次备份读取两次，分别在工具等待时复位，且保留工具默认的校验：</p>
 <pre><code class="language-sh">bk7231tools read_flash -d /dev/ttyUSB0 -b 115200 --timeout 60 -s 0 -l 0x200000 s30-stock-1.bin
@@ -103,7 +152,7 @@ sha256sum s30-stock-1.bin s30-stock-2.bin
 cmp s30-stock-1.bin s30-stock-2.bin
 </code></pre>
 <p>两个文件都应为 2097152 字节，SHA-256 相同，<code>cmp</code> 正常退出且没有输出。保存备份及校验值，再进行任何写入。备份含本机 MAC、射频参数和可能的原厂凭据，应私下保管；其他设备的备份不能替代本机备份。</p>
-<h2 id="选择镜像并写入">选择镜像并写入</h2>
+<h3 id="选择镜像并写入">选择镜像并写入</h3>
 <p>本次验证的 BL2028N 使用<strong>零密钥 bootloader</strong>，串口保留 bootloader 刷写应选：</p>
 <pre><code class="language-text">BL2028N_STOCK_UA_&lt;版本&gt;.bin
 写入起点：0x11000
@@ -114,11 +163,13 @@ cmp s30-stock-1.bin s30-stock-2.bin
 </code></pre>
 <p>使用 UA 应用镜像并从 <code>0x11000</code> 写入，保留本机 bootloader、原厂 RF/TLV 与尾部配置。<strong>不要全片擦除，也不要将 <code>.rbl</code>、<code>.UG.bin</code> 或其他产品的 <code>.ota.bin</code> 当作该串口镜像。</strong> QIO 包含 bootloader，不是本节默认刷法。</p>
 <p>工具校验通过后，建议再次读取完整 Flash，核对写入范围与 UA 文件一致、范围外尤其 bootloader 和原厂参数保持不变。当前样机 RF/TLV 扇区位于 <code>0x1e0000</code>，其中的有效工厂 MAC 必须保留。不能仅凭“传输成功”判断设备已安装完成。</p>
-<h2 id="首次启动与恢复">首次启动与恢复</h2>
+<h3 id="首次启动与恢复">首次启动与恢复</h3>
 <ol>
 <li>刷写完成后，重新给模块的隔离 3.3V 电源上电，先确认出现 <code>S30M_V1B_</code> 加 MAC 后六位大写十六进制的热点。</li>
 <li>连接热点，打开 <strong>http://192.168.0.1</strong>，按<a href="s30-guide.html">使用说明</a>配网并确认设备型号和版本。初始热点密码、网页管理密码均为空。</li>
 <li>完成断电，拆除全部串口和外接供电连线，检查接线处并恢复完整绝缘装配后，才可恢复原供电和连接负载。</li>
 </ol>
 <p>隔离 3.3V 台架供电可以检查启动、网络和网页，不能代替原计量电路正常供电下的负载验证。</p>
-<p>无法握手时先排查端口占用、交叉 TX/RX、共地、接触可靠性、供电及复位时机。写入后无法启动时，保留备份与完整刷机日志，检查镜像、起点和 bootloader 密钥格式。若此前发生 OTA 中断，应按对应版本的恢复流程处理遗留升级数据；不要用反复全片擦除或其他设备的 RF/MAC 数据尝试恢复。</p></article><div class="guide-pager"><a href="faq.html">上一页<b>故障排查</b></a><a class="next" href="s30-guide.html">下一页<b>功能与操作</b></a></div></main></div><footer class="site-footer"><div class="wrap"><div><b>IoTCloud COMMUNITY</b><p>社区维护，与原厂无隶属关系。各组件许可及第三方说明见对应源码仓库。</p></div><div><b>使用指南</b><ul><li><a href="quick-start.html">快速开始</a></li><li><a href="faq.html">故障排查</a></li><li><a href="release-log.html">发布说明</a></li></ul></div><div><b>源码与协议</b><ul><li><a href="https://phicomm-io.github.io/iotcloud-community-protocols/">开发文档</a></li><li><a href="https://github.com/phicomm-io/iotcloud-community-frontend">统一前端</a></li><li><a href="https://github.com/phicomm-io/iotcloud-community-mqtt">IoTCloud 平台</a></li><li><a href="https://github.com/phicomm-io/phicomm_m1_mcu_atsamd20">M1 传感器主控</a></li></ul></div></div></footer><script src="../site.js"></script></body></html>
+<p>无法握手时先排查端口占用、交叉 TX/RX、共地、接触可靠性、供电及复位时机。写入后无法启动时，保留备份与完整刷机日志，检查镜像、起点和 bootloader 密钥格式。若此前发生 OTA 中断，应按对应版本的恢复流程处理遗留升级数据；不要用反复全片擦除或其他设备的 RF/MAC 数据尝试恢复。</p>
+<h2 id="社区固件后续-url-ota">社区固件后续 URL OTA</h2>
+<p>从本页下载并校验 <code>.rbl</code>，在其所在目录临时启动 <code>python3 -m http.server 8080 --bind &lt;电脑局域网IP&gt;</code>，然后在设备“设置 → 固件更新”填写 <code>http://&lt;电脑局域网IP&gt;:8080/BL2028N_OTA_1.0.0-rc.4.rbl</code>。使用设备可访问、固定长度且不跳转的 HTTP 地址；不要把 GitHub 网页链接直接填入。等待自动重启并确认版本后关闭临时 HTTP 服务。这个方式同样无需打开外壳。</p></article><div class="guide-pager"><a href="faq.html">上一页<b>故障排查</b></a><a class="next" href="s30-guide.html">下一页<b>功能与操作</b></a></div></main></div><footer class="site-footer"><div class="wrap"><div><b>IoTCloud COMMUNITY</b><p>社区维护，与原厂无隶属关系。各组件许可及第三方说明见对应源码仓库。</p></div><div><b>使用指南</b><ul><li><a href="quick-start.html">快速开始</a></li><li><a href="faq.html">故障排查</a></li><li><a href="release-log.html">发布说明</a></li></ul></div><div><b>源码与协议</b><ul><li><a href="https://phicomm-io.github.io/iotcloud-community-protocols/">开发文档</a></li><li><a href="https://github.com/phicomm-io/iotcloud-community-frontend">统一前端</a></li><li><a href="https://github.com/phicomm-io/iotcloud-community-mqtt">IoTCloud 平台</a></li><li><a href="https://github.com/phicomm-io/phicomm_m1_mcu_atsamd20">M1 传感器主控</a></li></ul></div></div></footer><script src="../site.js"></script></body></html>

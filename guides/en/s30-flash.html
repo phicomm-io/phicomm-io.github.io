@@ -1,6 +1,32 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>S30-V1B network and serial installation · Phicomm community firmware</title><meta name="description" content="Stock network OTA, UART test points, backups and application images"><link rel="canonical" href="https://phicomm-io.github.io/guides/en/s30-flash.html"><meta property="og:type" content="website"><meta property="og:site_name" content="PHICOMM COMMUNITY"><meta property="og:title" content="S30-V1B network and serial installation · Phicomm community firmware"><meta property="og:description" content="Stock network OTA, UART test points, backups and application images"><meta property="og:url" content="https://phicomm-io.github.io/guides/en/s30-flash.html"><meta property="og:locale" content="en_US"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="S30-V1B network and serial installation · Phicomm community firmware"><meta name="twitter:description" content="Stock network OTA, UART test points, backups and application images"><link rel="alternate" hreflang="zh-CN" href="https://phicomm-io.github.io/guides/s30-flash.html"><link rel="alternate" hreflang="en" href="https://phicomm-io.github.io/guides/en/s30-flash.html"><link rel="alternate" hreflang="x-default" href="https://phicomm-io.github.io/guides/s30-flash.html"><link rel="stylesheet" href="../../style.css"><script src="../../theme.js"></script></head><body><a class="skip" href="#main">Skip to content</a><header class="site-header"><div class="wrap"><a class="brand" href="../../en/"><span class="mark" aria-hidden="true">P</span><span class="word"><b>IoTCloud COMMUNITY</b><span>Community firmware</span></span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../en/#devices">Devices and features</a><a href="../../en/#install">Install and update</a><a href="../../en/#releases">Firmware downloads</a><a href="../../en/#faq">Common questions</a><a href="../../en/#develop">Contribute</a></nav><div class="prefs"><label class="sr" for="themePick">Theme</label><select id="themePick"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></header><div class="guide-layout"><details class="guide-directory" open><summary>Documentation navigation</summary><nav class="guide-nav" aria-label="Documentation navigation"><details class="guide-nav-group guide-section" data-guide-group="m1"><summary>M1 air quality monitor</summary><div class="device-doc-actions" role="group" aria-label="M1 guides" data-device-actions="m1"><a href="m1-no-disassembly.html" data-guide-action="install" title="M1 stock Wi-Fi setup and OTA installation">Flash</a><a href="firmware-update.html" data-guide-action="update" title="Firmware updates">Update</a><a href="m1-guide.html" data-guide-action="use" title="M1 operation">Use</a><a href="m1-guide.html#buttons-and-recovery" data-guide-action="recover" title="M1 operation">Recovery</a></div><a href="m1-flash.html">M1 wired installation and recovery</a><a href="m1-mcu-firmware.html">M1 open-source controller firmware</a><a href="m1-mcu-update.html">Update the M1 controller over the network</a></details><details class="guide-nav-group guide-section" data-guide-group="a1"><summary>A1 air purifier</summary><div class="device-doc-actions" role="group" aria-label="A1 guides" data-device-actions="a1"><a href="a1-no-disassembly.html" data-guide-action="install" title="A1 stock Wi-Fi setup and OTA installation">Flash</a><a href="firmware-update.html" data-guide-action="update" title="Firmware updates">Update</a><a href="a1-guide.html" data-guide-action="use" title="A1 operation">Use</a><a href="a1-guide.html#recovery-gestures" data-guide-action="recover" title="A1 operation">Recovery</a></div><a href="a1-flash.html">A1 wired installation and recovery</a></details><details class="guide-nav-group guide-section" data-guide-group="tc1"><summary>TC1 power strip</summary><div class="device-doc-actions" role="group" aria-label="TC1 guides" data-device-actions="tc1"><a href="tc1-no-disassembly-ethernet-wifi-ap.html" data-guide-action="install" title="Illustrated OTA installation">Flash</a><a href="firmware-update.html" data-guide-action="update" title="Firmware updates">Update</a><a href="tc1-guide.html" data-guide-action="use" title="TC1 operation">Use</a><a href="tc1-guide.html#recovery-gestures" data-guide-action="recover" title="TC1 operation">Recovery</a></div><a href="tc1-no-disassembly.html" class="guide-child">OTA internals and custom images</a><a href="tc1-flash.html">Flash TC1</a></details><details class="guide-nav-group guide-section" data-guide-group="daikin"><summary>DAIKIN air quality monitor</summary><div class="device-doc-actions" role="group" aria-label="DAIKIN guides" data-device-actions="daikin"><a href="daikin-stock-ota.html" data-guide-action="install" title="Daikin stock OTA migration">Flash</a><a href="daikin-guide.html#updates-and-recovery" data-guide-action="update" title="DAIKIN operation and installation">Update</a><a href="daikin-guide.html" data-guide-action="use" title="DAIKIN operation and installation">Use</a><a href="daikin-guide.html#updates-and-recovery" data-guide-action="recover" title="DAIKIN operation and installation">Recovery</a></div></details><details class="guide-nav-group guide-section" data-guide-group="common"><summary>Shared setup and troubleshooting</summary><a href="quick-start.html">Quick start</a><a href="flash-prep.html">Before flashing</a><a href="firmware-update.html">Firmware updates</a><a href="iotcloud-connect.html">Connect to IoTCloud</a><a href="mqtt-link.html">MQTT and automation</a><a href="faq.html">Troubleshooting</a></details><details class="guide-nav-group guide-section" data-guide-group="s30" open><summary>S30-V1B metering socket</summary><a href="s30-flash.html" aria-current="page">S30-V1B network and serial installation</a><a href="s30-guide.html">S30-V1B operation</a></details><details class="guide-nav-group guide-section" data-guide-group="dev"><summary>Development and maintenance</summary><a href="iotcloud-deploy.html">Deploy IoTCloud</a><a href="build-deps.html">Build dependencies</a><a href="sources.html">Asset sources</a><a href="release-log.html">Release Log</a></details></nav></details><main class="guide-main" id="main"><div class="guide-context"><nav class="guide-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="../../en/#docs">Documentation</a></li><li>S30-V1B metering socket</li></ol></nav><p class="guide-language" aria-label="Language"><a href="../s30-flash.html" lang="zh-CN">简体中文</a> · English</p></div><article class="prose"><h1 id="s30-v1b-network-and-serial-installation">S30-V1B network and serial installation</h1>
 <p>This guide covers the <strong>ORVIBO S30-V1B</strong>, with a BL2028N module, BK7231N chip and HLW8032 meter. Network installation has been verified on stock <strong><code>2M.1220</code></strong>. UART remains available for backups, installation and recovery. The default layout retains this unit’s original bootloader and factory MAC/RF; <strong>first installation starts with fresh community settings and requires Wi-Fi setup again</strong>. See <a href="s30-guide.html">S30-V1B operation</a> for use after installation. An identical enclosure does not establish compatibility with other S30 variants or modules.</p>
-<details class="guide-toc" open><summary>On this page</summary><nav aria-label="On this page"><ul><li><a href="#choose-an-installation-method">Choose an installation method</a></li><li><a href="#network-installation-from-stock-firmware">Network installation from stock firmware</a></li><li><a href="#disassembly-and-uart">Disassembly and UART</a></li><li><a href="#power-and-preparation">Power and preparation</a></li><li><a href="#contact-locations-and-wiring">Contact locations and wiring</a></li><li><a href="#make-a-full-backup-first">Make a full backup first</a></li><li><a href="#select-and-write-the-image">Select and write the image</a></li><li><a href="#first-boot-and-recovery">First boot and recovery</a></li></ul></nav></details><h2 id="choose-an-installation-method">Choose an installation method</h2>
+<details class="guide-toc" open><summary>On this page</summary><nav aria-label="On this page"><ul><li><a href="#rc4-downloads">RC4 downloads</a></li><li><a href="#choose-an-installation-method">Choose an installation method</a></li><li><a href="#network-installation-from-stock-firmware">Network installation from stock firmware</a></li><li><a href="#disassembly-and-uart">Disassembly and UART</a></li><li><a href="#subsequent-community-url-ota">Subsequent community URL OTA</a></li></ul></nav></details><h2 id="rc4-downloads">RC4 downloads</h2>
+<p>The current candidate is <strong>v1.0.0-rc.4 (Beta)</strong>. Select the file for your installation method:</p>
+<table>
+<thead>
+<tr>
+<th>Purpose</th>
+<th>Release file</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stock network installation or community URL OTA</td>
+<td><a href="https://github.com/phicomm-io/iotcloud-community-firmware/releases/download/v1.0.0-rc.4/BL2028N_OTA_1.0.0-rc.4.rbl">BL2028N_OTA_1.0.0-rc.4.rbl</a></td>
+</tr>
+<tr>
+<td>UART installation preserving the stock bootloader; write at <code>0x11000</code></td>
+<td><a href="https://github.com/phicomm-io/iotcloud-community-firmware/releases/download/v1.0.0-rc.4/BL2028N_STOCK_UA_1.0.0-rc.4.bin">BL2028N_STOCK_UA_1.0.0-rc.4.bin</a></td>
+</tr>
+<tr>
+<td>Checksums</td>
+<td><a href="https://github.com/phicomm-io/iotcloud-community-firmware/releases/download/v1.0.0-rc.4/SHA256SUMS-S30">SHA256SUMS-S30</a></td>
+</tr>
+</tbody>
+</table>
+<p>Download names are fixed per release; the device reports the release version followed by its six-digit Git suffix.</p>
+<p>For an RBL-only download, run <code>grep "  BL2028N_OTA_1.0.0-rc.4.rbl$" SHA256SUMS-S30 | sha256sum -c -</code> in the same directory. On macOS use <code>shasum -a 256</code> and compare the matching checksum entry.</p>
+<h2 id="choose-an-installation-method">Choose an installation method</h2>
 <table>
 <thead>
 <tr>
@@ -33,23 +59,46 @@
 <p>This method completed a real installation on one <strong>S30-V1B / BL2028N / BK7231N running stock <code>2M.1220</code></strong>. Other stock versions and S30 variants remain unverified. The stock unit must already be connected to Wi-Fi, reachable from the computer, and its factory MAC must be known. This procedure does not replace stock first-time Wi-Fi provisioning. UART was used to establish the test baseline and observe/read back the result; the actual upgrade command and download used normal network interfaces.</p>
 <p>The computer needs Python, <code>paho-mqtt</code>, a local HTTPS certificate and a <strong>dedicated temporary TLS MQTT broker</strong>. Plain MQTT did not complete connection on this stock version; <code>mqtt://</code> is not a substitute for <code>ssl://</code>. Router DNS interception is unnecessary. Use temporary broker credentials and keep that broker off the public Internet.</p>
 <p>The procedure redirects the stock device's CGW/cloud configuration to these test services. Community first boot uses fresh settings: stock accounts, Wi-Fi, MQTT, pairing and meter settings are not migrated. Record any settings that must be entered again.</p>
+<h3 id="example-local-tls-mqtt-service">Example local TLS MQTT service</h3>
+<p>On Linux/macOS, install Python, OpenSSL and Mosquitto. Work in a dedicated temporary directory. Replace <code>192.168.1.10</code> with the computer's reachable LAN address, not the device address.</p>
+<pre><code class="language-sh">python3 -m venv .venv
+. .venv/bin/activate
+python3 -m pip install paho-mqtt==2.1.0
+OTA_HOST=192.168.1.10
+openssl req -x509 -newkey rsa:2048 -nodes -days 1 \
+  -keyout gateway-key.pem -out gateway-cert.pem \
+  -subj &quot;/CN=$OTA_HOST&quot; -addext &quot;subjectAltName=IP:$OTA_HOST&quot;
+mosquitto_passwd -c broker.passwd s30test
+chmod 600 gateway-key.pem broker.passwd
+</code></pre>
+<p>Enter a dedicated test password when prompted. Create <code>broker.conf</code>, replacing each file path below with its absolute path:</p>
+<pre><code class="language-text">listener 18892
+allow_anonymous false
+password_file /absolute/path/broker.passwd
+certfile /absolute/path/gateway-cert.pem
+keyfile /absolute/path/gateway-key.pem
+persistence false
+</code></pre>
+<p>In another terminal run <code>mosquitto -c broker.conf -v</code> as the current user. Set <code>mqtt.private.json</code> to this computer's IP, port <code>18892</code>, user <code>s30test</code> and the password you just created. Both <code>--mqtt-ca</code> and <code>--cert</code> may use <code>gateway-cert.pem</code>; <code>--key</code> uses <code>gateway-key.pem</code>. Keep the stock device connected to its existing Wi-Fi and allow the required device connections through the computer's firewall.</p>
 <h3 id="run-the-local-installation-tool">Run the local installation tool</h3>
-<p>Use <a href="https://github.com/phicomm-io/iotcloud-community-firmware/blob/hotfix/rc4-selected-integration/tools/s30_stock_ota.py">s30_stock_ota.py</a>, reviewed alongside the candidate firmware. The computer, stock device and broker IPv4 addresses must be mutually reachable. Allow TCP <code>15683</code> for HTTPS CGW, <code>8080</code> for the firmware download, and the broker's selected port. Certificates must include their service IP; <code>--mqtt-ca</code> verifies the broker certificate on the computer.</p>
+<p>Use <a href="https://github.com/phicomm-io/iotcloud-community-firmware/blob/v1.0.0-rc.4/tools/s30_stock_ota.py">s30_stock_ota.py</a>, reviewed alongside the candidate firmware. The computer, stock device and broker IPv4 addresses must be mutually reachable. Allow TCP <code>15683</code> for HTTPS CGW, <code>8080</code> for the firmware download, and the broker's selected port. Certificates must include their service IP; <code>--mqtt-ca</code> verifies the broker certificate on the computer.</p>
 <p>Prepare two private JSON files with mode <code>600</code>; do not commit or publish them:</p>
 <pre><code class="language-json">{&quot;ssid&quot;:&quot;Your 2.4 GHz Wi-Fi&quot;,&quot;password&quot;:&quot;Wi-Fi password&quot;}
 </code></pre>
 <pre><code class="language-json">{&quot;host&quot;:&quot;Temporary broker IPv4&quot;,&quot;port&quot;:18892,&quot;username&quot;:&quot;short-test-user&quot;,&quot;password&quot;:&quot;short-test-password&quot;}
 </code></pre>
 <p>MQTT usernames and passwords must each be 1–31 bytes. Keep addresses short and use dedicated test credentials; the tool does not exploit the identified stock length overflow.</p>
-<p>Obtain the matching RBL and <code>SHA256SUMS</code>, verify them, and replace every placeholder:</p>
-<pre><code class="language-sh">chmod 600 wifi.private.json mqtt.private.json
-sha256sum -c SHA256SUMS
+<p>Download the matching RBL and <code>SHA256SUMS-S30</code>, verify them, and replace every placeholder:</p>
+<pre><code class="language-sh">mkdir -p tools
+curl --fail --location https://raw.githubusercontent.com/phicomm-io/iotcloud-community-firmware/v1.0.0-rc.4/tools/s30_stock_ota.py -o tools/s30_stock_ota.py
+chmod 600 wifi.private.json mqtt.private.json
+grep &quot;  BL2028N_OTA_1.0.0-rc.4.rbl$&quot; SHA256SUMS-S30 | sha256sum -c -
 python3 tools/s30_stock_ota.py \
   --device &lt;stock-device-IP&gt; --device-id &lt;this-unit-12-digit-factory-MAC&gt; \
   --host &lt;computer-LAN-IP&gt; \
   --wifi-file wifi.private.json --mqtt-file mqtt.private.json \
-  --mqtt-ca broker-cert.pem --cert gateway-cert.pem --key gateway-key.pem \
-  --rbl 'BL2028N_OTA_&lt;version&gt;.rbl' --sha256 &lt;published-file-SHA256&gt;
+  --mqtt-ca gateway-cert.pem --cert gateway-cert.pem --key gateway-key.pem \
+  --rbl 'BL2028N_OTA_1.0.0-rc.4.rbl' --sha256 &lt;published-file-SHA256&gt;
 </code></pre>
 <p>The tool configures local HTTPS CGW using CoAP <code>/qlink/netinfo</code>. Stock firmware retrieves the temporary TLS MQTT connection over HTTPS, receives a normal AndLink file command, and downloads the RBL. It does not access UART or write factory parameters. Returning to stock firmware and dual boot are not provided.</p>
 <h3 id="confirm-installation">Confirm installation</h3>
@@ -61,11 +110,11 @@ python3 tools/s30_stock_ota.py \
 </ol>
 <p>The physical test also completed a second community network OTA. Full readback confirmed the installed application and preservation of the original boot area and MAC/RF. This does not establish compatibility with every stock version, power-loss recovery or return-to-stock support. If no download or community AP appears, retain the errors and use the UART backup/recovery path below rather than trying unrelated images.</p>
 <h2 id="disassembly-and-uart">Disassembly and UART</h2>
-<h2 id="power-and-preparation">Power and preparation</h2>
+<h3 id="power-and-preparation">Power and preparation</h3>
 <p>Unplug the socket from mains, disconnect the load and original power supply, and confirm power is off before opening it. <strong>Keep mains disconnected whenever the enclosure is open, the computer UART is connected, or flashing is in progress.</strong> Use a USB-to-TTL adapter with 3.3 V logic and a stable, separate, isolated 3.3 V DC supply. Do not apply 5 V to the module.</p>
 <p>The adapter's 3.3 V output may not supply enough current when Wi-Fi starts, causing resets even after a successful flash. With a separate supply, leave the adapter's 3.3 V power wire disconnected. Retain TX, RX and GND, joining supply negative, adapter GND and device GND.</p>
 <p>Obtain firmware and <code>SHA256SUMS</code> for this exact device and version, and verify the file first. Close serial applications such as minicom so that only the flashing tool owns the port. The examples use <a href="https://github.com/tuya-cloudcutter/bk7231tools#usage">bk7231tools</a>; replace <code>/dev/ttyUSB0</code> with the actual port.</p>
-<h2 id="contact-locations-and-wiring">Contact locations and wiring</h2>
+<h3 id="contact-locations-and-wiring">Contact locations and wiring</h3>
 <p><strong>Look directly at the PCB on the plug side.</strong> At the <strong>outer upper-right edge</strong>, two contacts connect the power board to the MCU module: <strong>the left contact is GND and the right contact is 3V3</strong>. Use the board's <strong>VTX / VRX</strong> UART test points; some markings include a suffix, such as VTX1 / VRX1.</p>
 <table>
 <thead>
@@ -94,7 +143,7 @@ python3 tools/s30_stock_ota.py \
 </tbody>
 </table>
 <p>Left and right apply only to that viewing direction. Check orientation and contacts before wiring; turning the PCB over reverses the view. VTX/VRX describe the device's signal direction, so cross TX and RX.</p>
-<h2 id="make-a-full-backup-first">Make a full backup first</h2>
+<h3 id="make-a-full-backup-first">Make a full backup first</h3>
 <p>Start the tool and let it wait for a connection, then <strong>cycle the module's 3.3 V power</strong>, or briefly ground and release a positively identified CEN/RESET point. Keep the USB adapter connected. The socket's normal power button does not replace a chip reset.</p>
 <p>The validated unit has 2 MiB of Flash, covering <code>0x000000</code> through <code>0x1fffff</code>. Read it twice, resetting while each command waits, and keep the tool's default checksum verification enabled:</p>
 <pre><code class="language-sh">bk7231tools read_flash -d /dev/ttyUSB0 -b 115200 --timeout 60 -s 0 -l 0x200000 s30-stock-1.bin
@@ -103,7 +152,7 @@ sha256sum s30-stock-1.bin s30-stock-2.bin
 cmp s30-stock-1.bin s30-stock-2.bin
 </code></pre>
 <p>Both files must contain 2097152 bytes and have identical SHA-256 hashes. <code>cmp</code> must exit successfully with no output. Save both backups and hashes before writing. They contain this unit's MAC, RF parameters and possibly factory credentials; keep them private. Another unit's backup is not a substitute.</p>
-<h2 id="select-and-write-the-image">Select and write the image</h2>
+<h3 id="select-and-write-the-image">Select and write the image</h3>
 <p>The BL2028N unit validated here uses a <strong>zero-key bootloader</strong>. To retain that bootloader, use:</p>
 <pre><code class="language-text">BL2028N_STOCK_UA_&lt;version&gt;.bin
 Write start: 0x11000
@@ -114,11 +163,13 @@ Write start: 0x11000
 </code></pre>
 <p>Writing the UA application image at <code>0x11000</code> retains the unit's bootloader, factory RF/TLV and configuration tail. <strong>Do not erase the whole chip or substitute an <code>.rbl</code>, <code>.UG.bin</code> or another product's <code>.ota.bin</code>.</strong> QIO images include a bootloader and are not the default method in this section.</p>
 <p>After the tool verifies the write, read the full Flash again and compare the written range with the UA file. Check that data outside that range, especially the bootloader and factory parameters, remains unchanged. On the validated unit, the RF/TLV sector is at <code>0x1e0000</code>; preserve its valid factory MAC. A completed transfer alone does not establish a working installation.</p>
-<h2 id="first-boot-and-recovery">First boot and recovery</h2>
+<h3 id="first-boot-and-recovery">First boot and recovery</h3>
 <ol>
 <li>After flashing, cycle the isolated 3.3 V supply and check for an AP named <code>S30M_V1B_</code> followed by the last six MAC digits in uppercase hexadecimal.</li>
 <li>Connect and open <strong>http://192.168.0.1</strong>. Follow the <a href="s30-guide.html">operation guide</a>, configure Wi-Fi, and confirm the model and version. Both the initial AP password and web administration password are empty.</li>
 <li>Power off, remove every UART and external supply wire, inspect the connection area, and restore the complete insulated enclosure before reconnecting the original power supply and load.</li>
 </ol>
 <p>An isolated 3.3 V bench supply can verify boot, networking and the web interface. It does not establish load metering with the original metering circuit powered normally.</p>
-<p>For handshake failures, check port ownership, crossed TX/RX, common ground, contact reliability, supply and reset timing. If the flashed unit will not boot, retain the backup and complete tool log, then check image, offset and bootloader key format. An interrupted previous OTA may require version-specific cleanup of pending upgrade data; do not try repeated whole-chip erases or another unit's RF/MAC data.</p></article><div class="guide-pager"><a href="faq.html">Previous<b>Troubleshooting</b></a><a class="next" href="s30-guide.html">Next<b>S30-V1B operation</b></a></div></main></div><footer class="site-footer"><div class="wrap"><div><b>IoTCloud COMMUNITY</b><p>Community maintained and independent of the manufacturers. See each source repository for component and third-party licenses.</p></div><div><b>Guides</b><ul><li><a href="quick-start.html">Quick start</a></li><li><a href="faq.html">Troubleshooting</a></li><li><a href="release-log.html">Release notes</a></li></ul></div><div><b>Source and protocols</b><ul><li><a href="https://phicomm-io.github.io/iotcloud-community-protocols/en/">Developer documentation</a></li><li><a href="https://github.com/phicomm-io/iotcloud-community-frontend">Shared frontend</a></li><li><a href="https://github.com/phicomm-io/iotcloud-community-mqtt">IoTCloud platform</a></li><li><a href="https://github.com/phicomm-io/phicomm_m1_mcu_atsamd20">M1 sensor controller</a></li></ul></div></div></footer><script src="../../site.js"></script></body></html>
+<p>For handshake failures, check port ownership, crossed TX/RX, common ground, contact reliability, supply and reset timing. If the flashed unit will not boot, retain the backup and complete tool log, then check image, offset and bootloader key format. An interrupted previous OTA may require version-specific cleanup of pending upgrade data; do not try repeated whole-chip erases or another unit's RF/MAC data.</p>
+<h2 id="subsequent-community-url-ota">Subsequent community URL OTA</h2>
+<p>Download and verify the RBL above. In its directory, temporarily run <code>python3 -m http.server 8080 --bind &lt;computer-LAN-IP&gt;</code>. Enter <code>http://&lt;computer-LAN-IP&gt;:8080/BL2028N_OTA_1.0.0-rc.4.rbl</code> in the device's firmware update settings. Use a directly reachable, fixed-length HTTP download without redirects; a GitHub web page is not such a URL. Wait for reboot, verify the version, and stop the temporary HTTP service. This method also keeps the enclosure closed.</p></article><div class="guide-pager"><a href="faq.html">Previous<b>Troubleshooting</b></a><a class="next" href="s30-guide.html">Next<b>S30-V1B operation</b></a></div></main></div><footer class="site-footer"><div class="wrap"><div><b>IoTCloud COMMUNITY</b><p>Community maintained and independent of the manufacturers. See each source repository for component and third-party licenses.</p></div><div><b>Guides</b><ul><li><a href="quick-start.html">Quick start</a></li><li><a href="faq.html">Troubleshooting</a></li><li><a href="release-log.html">Release notes</a></li></ul></div><div><b>Source and protocols</b><ul><li><a href="https://phicomm-io.github.io/iotcloud-community-protocols/en/">Developer documentation</a></li><li><a href="https://github.com/phicomm-io/iotcloud-community-frontend">Shared frontend</a></li><li><a href="https://github.com/phicomm-io/iotcloud-community-mqtt">IoTCloud platform</a></li><li><a href="https://github.com/phicomm-io/phicomm_m1_mcu_atsamd20">M1 sensor controller</a></li></ul></div></div></footer><script src="../../site.js"></script></body></html>
