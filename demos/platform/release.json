@@ -2,5 +2,8 @@
   "repository": "phicomm-io/phicomm-community-mqtt",
   "tag": "v2026.10.17.2",
   "commit": "a93b17649fa1b292887c6bd6013d667f901d6742",
-  "frontend_commit": "fb8c05b6f596bb2c08872d36b42251d614b217c5"
+  "frontend_commit": "5fa481cf429bec22fb9be529472f70777c32e2c6",
+  "frontend_repository": "phicomm-io/iotcloud-community-frontend",
+  "frontend_release": "frontend-5fa481cf429bec22fb9be529472f70777c32e2c6",
+  "frontend_archive_sha256": "8e665fa539b9b253c07bc5cb739fb6af2fa30ca1c75d3aeda86b936793fd96b6"
 }

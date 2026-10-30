@@ -1,6 +1,6 @@
 
-const CACHE='iotcloud-6eea9b64e1386705';
-const FILES=["./","index.html","manifest.webmanifest","icons/iotcloud.svg","icons/icon-192.png","icons/icon-512.png","icons/apple-touch-icon.png","assets/index-DFzWeQo8.css","assets/LoginPage-DHrZPu0F.css","assets/App-Chchv8-a.css","assets/AuthShell-g-oslqq2.css","assets/AdminPage-C4CNsL0U.css","assets/index-CydZmQxB.js","assets/demo-K-PxLyul.js","assets/LoginPage-D6HIIWwO.js","assets/App-DWpqGZ2J.js","assets/RegisterPage-BqffDzZ5.js","assets/AuthShell-B-g2f92R.js","assets/AdminPage-DNPhF3GM.js","assets/deviceProtocol-DNiAofik.js","assets/ThemeToggle-BtYAxjEo.js"];
+const CACHE='iotcloud-d740b400929220fc';
+const FILES=["./","index.html","manifest.webmanifest","icons/iotcloud.svg","icons/icon-192.png","icons/icon-512.png","icons/apple-touch-icon.png","assets/index-dSWPr67D.css","assets/App-BbJuTghz.css","assets/LoginPage-BuGrLOwH.css","assets/LocalConnect-DHhIIlr8.css","assets/AuthShell-DJ4Pg5Xy.css","assets/AdminPage-drW-Mofc.css","assets/index-BH6fyKKG.js","assets/demo-BsdSXLEm.js","assets/App-DcLnMhCW.js","assets/GitHubPage-BTdp-c9K.js","assets/LoginPage-7NH2CV2f.js","assets/LocalConnect-C9cyeqg5.js","assets/githubAuth-DPdIC2V4.js","assets/RegisterPage-BZVhqUu4.js","assets/AuthShell-Clg3hCvY.js","assets/AdminPage-DylQvUAH.js","assets/deviceProtocol-BDTa7B6u.js","assets/ThemeToggle-D0rFI_ua.js"];
 const urls=FILES.map(file=>new URL(file,self.registration.scope).href);
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(urls))));
 self.addEventListener('message',event=>{if(event.data==='ACTIVATE')self.skipWaiting();});
