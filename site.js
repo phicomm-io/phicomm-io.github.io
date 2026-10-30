@@ -8,12 +8,6 @@
   if('ResizeObserver'in window)new ResizeObserver(measure).observe(header);
   else window.addEventListener('resize',measure);
  }
- // Keep the reader at the same main section when changing home-page language.
- const languageLink=document.querySelector('[data-home-language]');
- if(languageLink){
-  const preserveSection=()=>{languageLink.hash=location.hash;};
-  preserveSection();window.addEventListener('hashchange',preserveSection);
- }
  // Keep the article visible on small screens; both directories remain usable without JS.
  const compact=window.matchMedia?.('(max-width:1000px)');
  if(compact){

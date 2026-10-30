@@ -4,52 +4,7 @@
     <loc>https://phicomm-io.github.io/</loc>
   </url>
   <url>
-    <loc>https://phicomm-io.github.io/en/</loc>
-  </url>
-  <url>
     <loc>https://phicomm-io.github.io/guides/en/</loc>
-  </url>
-  <url>
-    <loc>https://phicomm-io.github.io/guides/m1-no-disassembly.html</loc>
-  </url>
-  <url>
-    <loc>https://phicomm-io.github.io/guides/m1-flash.html</loc>
-  </url>
-  <url>
-    <loc>https://phicomm-io.github.io/guides/m1-guide.html</loc>
-  </url>
-  <url>
-    <loc>https://phicomm-io.github.io/guides/m1-mcu-firmware.html</loc>
-  </url>
-  <url>
-    <loc>https://phicomm-io.github.io/guides/m1-mcu-update.html</loc>
-  </url>
-  <url>
-    <loc>https://phicomm-io.github.io/guides/a1-no-disassembly.html</loc>
-  </url>
-  <url>
-    <loc>https://phicomm-io.github.io/guides/a1-flash.html</loc>
-  </url>
-  <url>
-    <loc>https://phicomm-io.github.io/guides/a1-guide.html</loc>
-  </url>
-  <url>
-    <loc>https://phicomm-io.github.io/guides/tc1-no-disassembly-ethernet-wifi-ap.html</loc>
-  </url>
-  <url>
-    <loc>https://phicomm-io.github.io/guides/tc1-no-disassembly.html</loc>
-  </url>
-  <url>
-    <loc>https://phicomm-io.github.io/guides/tc1-flash.html</loc>
-  </url>
-  <url>
-    <loc>https://phicomm-io.github.io/guides/tc1-guide.html</loc>
-  </url>
-  <url>
-    <loc>https://phicomm-io.github.io/guides/daikin-guide.html</loc>
-  </url>
-  <url>
-    <loc>https://phicomm-io.github.io/guides/daikin-stock-ota.html</loc>
   </url>
   <url>
     <loc>https://phicomm-io.github.io/guides/quick-start.html</loc>
@@ -70,6 +25,48 @@
     <loc>https://phicomm-io.github.io/guides/faq.html</loc>
   </url>
   <url>
+    <loc>https://phicomm-io.github.io/guides/tc1-no-disassembly-ethernet-wifi-ap.html</loc>
+  </url>
+  <url>
+    <loc>https://phicomm-io.github.io/guides/tc1-no-disassembly.html</loc>
+  </url>
+  <url>
+    <loc>https://phicomm-io.github.io/guides/tc1-flash.html</loc>
+  </url>
+  <url>
+    <loc>https://phicomm-io.github.io/guides/tc1-guide.html</loc>
+  </url>
+  <url>
+    <loc>https://phicomm-io.github.io/guides/stock-provision.html</loc>
+  </url>
+  <url>
+    <loc>https://phicomm-io.github.io/guides/m1-no-disassembly.html</loc>
+  </url>
+  <url>
+    <loc>https://phicomm-io.github.io/guides/a1-m1-flash.html</loc>
+  </url>
+  <url>
+    <loc>https://phicomm-io.github.io/guides/m1-guide.html</loc>
+  </url>
+  <url>
+    <loc>https://phicomm-io.github.io/guides/m1-mcu-firmware.html</loc>
+  </url>
+  <url>
+    <loc>https://phicomm-io.github.io/guides/m1-mcu-update.html</loc>
+  </url>
+  <url>
+    <loc>https://phicomm-io.github.io/guides/daikin-stock-ota.html</loc>
+  </url>
+  <url>
+    <loc>https://phicomm-io.github.io/guides/daikin-guide.html</loc>
+  </url>
+  <url>
+    <loc>https://phicomm-io.github.io/guides/a1-no-disassembly.html</loc>
+  </url>
+  <url>
+    <loc>https://phicomm-io.github.io/guides/a1-guide.html</loc>
+  </url>
+  <url>
     <loc>https://phicomm-io.github.io/guides/iotcloud-deploy.html</loc>
   </url>
   <url>
@@ -80,48 +77,6 @@
   </url>
   <url>
     <loc>https://phicomm-io.github.io/guides/release-log.html</loc>
-  </url>
-  <url>
-    <loc>https://phicomm-io.github.io/guides/en/m1-no-disassembly.html</loc>
-  </url>
-  <url>
-    <loc>https://phicomm-io.github.io/guides/en/m1-flash.html</loc>
-  </url>
-  <url>
-    <loc>https://phicomm-io.github.io/guides/en/m1-guide.html</loc>
-  </url>
-  <url>
-    <loc>https://phicomm-io.github.io/guides/en/m1-mcu-firmware.html</loc>
-  </url>
-  <url>
-    <loc>https://phicomm-io.github.io/guides/en/m1-mcu-update.html</loc>
-  </url>
-  <url>
-    <loc>https://phicomm-io.github.io/guides/en/a1-no-disassembly.html</loc>
-  </url>
-  <url>
-    <loc>https://phicomm-io.github.io/guides/en/a1-flash.html</loc>
-  </url>
-  <url>
-    <loc>https://phicomm-io.github.io/guides/en/a1-guide.html</loc>
-  </url>
-  <url>
-    <loc>https://phicomm-io.github.io/guides/en/tc1-no-disassembly-ethernet-wifi-ap.html</loc>
-  </url>
-  <url>
-    <loc>https://phicomm-io.github.io/guides/en/tc1-no-disassembly.html</loc>
-  </url>
-  <url>
-    <loc>https://phicomm-io.github.io/guides/en/tc1-flash.html</loc>
-  </url>
-  <url>
-    <loc>https://phicomm-io.github.io/guides/en/tc1-guide.html</loc>
-  </url>
-  <url>
-    <loc>https://phicomm-io.github.io/guides/en/daikin-guide.html</loc>
-  </url>
-  <url>
-    <loc>https://phicomm-io.github.io/guides/en/daikin-stock-ota.html</loc>
   </url>
   <url>
     <loc>https://phicomm-io.github.io/guides/en/quick-start.html</loc>
@@ -140,6 +95,48 @@
   </url>
   <url>
     <loc>https://phicomm-io.github.io/guides/en/faq.html</loc>
+  </url>
+  <url>
+    <loc>https://phicomm-io.github.io/guides/en/tc1-no-disassembly-ethernet-wifi-ap.html</loc>
+  </url>
+  <url>
+    <loc>https://phicomm-io.github.io/guides/en/tc1-no-disassembly.html</loc>
+  </url>
+  <url>
+    <loc>https://phicomm-io.github.io/guides/en/tc1-flash.html</loc>
+  </url>
+  <url>
+    <loc>https://phicomm-io.github.io/guides/en/tc1-guide.html</loc>
+  </url>
+  <url>
+    <loc>https://phicomm-io.github.io/guides/en/stock-provision.html</loc>
+  </url>
+  <url>
+    <loc>https://phicomm-io.github.io/guides/en/m1-no-disassembly.html</loc>
+  </url>
+  <url>
+    <loc>https://phicomm-io.github.io/guides/en/a1-m1-flash.html</loc>
+  </url>
+  <url>
+    <loc>https://phicomm-io.github.io/guides/en/m1-guide.html</loc>
+  </url>
+  <url>
+    <loc>https://phicomm-io.github.io/guides/en/m1-mcu-firmware.html</loc>
+  </url>
+  <url>
+    <loc>https://phicomm-io.github.io/guides/en/m1-mcu-update.html</loc>
+  </url>
+  <url>
+    <loc>https://phicomm-io.github.io/guides/en/daikin-stock-ota.html</loc>
+  </url>
+  <url>
+    <loc>https://phicomm-io.github.io/guides/en/daikin-guide.html</loc>
+  </url>
+  <url>
+    <loc>https://phicomm-io.github.io/guides/en/a1-no-disassembly.html</loc>
+  </url>
+  <url>
+    <loc>https://phicomm-io.github.io/guides/en/a1-guide.html</loc>
   </url>
   <url>
     <loc>https://phicomm-io.github.io/guides/en/iotcloud-deploy.html</loc>

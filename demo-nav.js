@@ -4,10 +4,8 @@
  if (!home) return;
  const label = home.querySelector('[data-demo-home-label]');
  function update() {
-  const english = document.documentElement.lang.startsWith('en');
-  const text = english ? 'Back to website home' : '返回网站首页';
+  const text = document.documentElement.lang.startsWith('en') ? 'Back to website home' : '返回网站首页';
   if (label.textContent !== text) label.textContent = text;
-  home.setAttribute('href', english ? '../../en/' : '../../');
   // Vue can replace the platform header when navigating between app routes.
   const target = document.querySelector('.console-nav, .topbar .prefs, .auth-topbar');
   if (target && home.parentElement !== target) target.prepend(home);

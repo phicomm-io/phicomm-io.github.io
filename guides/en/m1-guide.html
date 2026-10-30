@@ -1,13 +1,11 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>M1 operation · Phicomm community firmware</title><meta name="description" content="Readings, brightness, icons and recovery"><link rel="canonical" href="https://phicomm-io.github.io/guides/en/m1-guide.html"><meta property="og:type" content="website"><meta property="og:site_name" content="PHICOMM COMMUNITY"><meta property="og:title" content="M1 operation · Phicomm community firmware"><meta property="og:description" content="Readings, brightness, icons and recovery"><meta property="og:url" content="https://phicomm-io.github.io/guides/en/m1-guide.html"><meta property="og:locale" content="en_US"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="M1 operation · Phicomm community firmware"><meta name="twitter:description" content="Readings, brightness, icons and recovery"><link rel="alternate" hreflang="zh-CN" href="https://phicomm-io.github.io/guides/m1-guide.html"><link rel="alternate" hreflang="en" href="https://phicomm-io.github.io/guides/en/m1-guide.html"><link rel="alternate" hreflang="x-default" href="https://phicomm-io.github.io/guides/m1-guide.html"><link rel="stylesheet" href="../../style.css"><script src="../../theme.js"></script></head><body><a class="skip" href="#main">Skip to content</a><header class="site-header"><div class="wrap"><a class="brand" href="../../en/"><span class="mark" aria-hidden="true">P</span><span class="word"><b>IoTCloud COMMUNITY</b><span>Community firmware</span></span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../en/#devices">Devices and features</a><a href="../../en/#install">Install and update</a><a href="../../en/#releases">Firmware downloads</a><a href="../../en/#faq">Common questions</a><a href="../../en/#develop">Contribute</a></nav><div class="prefs"><label class="sr" for="themePick">Theme</label><select id="themePick"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></header><div class="guide-layout"><details class="guide-directory" open><summary>Documentation navigation</summary><nav class="guide-nav" aria-label="Documentation navigation"><details class="guide-nav-group guide-section" data-guide-group="m1" open><summary>M1 air quality monitor</summary><div class="device-doc-actions" role="group" aria-label="M1 guides" data-device-actions="m1"><a href="m1-no-disassembly.html" data-guide-action="install" title="M1 stock Wi-Fi setup and OTA installation">Flash</a><a href="firmware-update.html" data-guide-action="update" title="Firmware updates">Update</a><a href="m1-guide.html" data-guide-action="use" title="M1 operation" aria-current="page">Use</a><a href="m1-guide.html#buttons-and-recovery" data-guide-action="recover" title="M1 operation">Recovery</a></div><a href="m1-flash.html">M1 wired installation and recovery</a><a href="m1-mcu-firmware.html">M1 open-source controller firmware</a><a href="m1-mcu-update.html">Update the M1 controller over the network</a></details><details class="guide-nav-group guide-section" data-guide-group="a1"><summary>A1 air purifier</summary><div class="device-doc-actions" role="group" aria-label="A1 guides" data-device-actions="a1"><a href="a1-no-disassembly.html" data-guide-action="install" title="A1 stock Wi-Fi setup and OTA installation">Flash</a><a href="firmware-update.html" data-guide-action="update" title="Firmware updates">Update</a><a href="a1-guide.html" data-guide-action="use" title="A1 operation">Use</a><a href="a1-guide.html#recovery-gestures" data-guide-action="recover" title="A1 operation">Recovery</a></div><a href="a1-flash.html">A1 wired installation and recovery</a></details><details class="guide-nav-group guide-section" data-guide-group="tc1"><summary>TC1 power strip</summary><div class="device-doc-actions" role="group" aria-label="TC1 guides" data-device-actions="tc1"><a href="tc1-no-disassembly-ethernet-wifi-ap.html" data-guide-action="install" title="Illustrated OTA installation">Flash</a><a href="firmware-update.html" data-guide-action="update" title="Firmware updates">Update</a><a href="tc1-guide.html" data-guide-action="use" title="TC1 operation">Use</a><a href="tc1-guide.html#recovery-gestures" data-guide-action="recover" title="TC1 operation">Recovery</a></div><a href="tc1-no-disassembly.html" class="guide-child">OTA internals and custom images</a><a href="tc1-flash.html">Flash TC1</a></details><details class="guide-nav-group guide-section" data-guide-group="daikin"><summary>DAIKIN air quality monitor</summary><div class="device-doc-actions" role="group" aria-label="DAIKIN guides" data-device-actions="daikin"><a href="daikin-stock-ota.html" data-guide-action="install" title="Daikin stock OTA migration">Flash</a><a href="daikin-guide.html#updates-and-recovery" data-guide-action="update" title="DAIKIN operation and installation">Update</a><a href="daikin-guide.html" data-guide-action="use" title="DAIKIN operation and installation">Use</a><a href="daikin-guide.html#updates-and-recovery" data-guide-action="recover" title="DAIKIN operation and installation">Recovery</a></div></details><details class="guide-nav-group guide-section" data-guide-group="common"><summary>Shared setup and troubleshooting</summary><a href="quick-start.html">Quick start</a><a href="flash-prep.html">Before flashing</a><a href="firmware-update.html">Firmware updates</a><a href="iotcloud-connect.html">Connect to IoTCloud</a><a href="mqtt-link.html">MQTT and automation</a><a href="faq.html">Troubleshooting</a></details><details class="guide-nav-group guide-section" data-guide-group="dev"><summary>Development and maintenance</summary><a href="iotcloud-deploy.html">Deploy IoTCloud</a><a href="build-deps.html">Build dependencies</a><a href="sources.html">Asset sources</a><a href="release-log.html">Release Log</a></details></nav></details><main class="guide-main" id="main"><div class="guide-context"><nav class="guide-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="../../en/#docs">Documentation</a></li><li>M1 air quality monitor</li></ol></nav><p class="guide-language" aria-label="Language"><a href="../m1-guide.html" lang="zh-CN">简体中文</a> · English</p></div><article class="prose"><h1 id="m1-operation">M1 operation</h1>
-<p>M1 provides PM2.5, formaldehyde, temperature, humidity and screen brightness controls. It can supply readings for A1 automation. This page covers daily use after installation. For first installation, see <a href="m1-no-disassembly.html">factory LAN migration</a> or <a href="m1-flash.html">wired flashing and recovery</a>.</p>
-<p><strong>Controller compatibility:</strong> the GPL-3.0 open-source controller is recommended for stock 11.x. Stock 17.1.2.3 / 17.x differs substantially and awaits analysis; migration is discouraged. Check Wi-Fi and controller versions separately. Unreadable versions remain unknown.</p>
-<details class="guide-toc" open><summary>On this page</summary><nav aria-label="On this page"><ul><li><a href="#two-separate-firmware-updates">Two separate firmware updates</a></li><li><a href="#readings">Readings</a></li><li><a href="#particle-details">Particle details</a></li><li><a href="#external-scd40-co₂-sensor-experimental">External SCD40 CO₂ sensor (experimental)</a></li><li><a href="#screen-brightness">Screen brightness</a></li><li><a href="#wi-fi-and-error-icons">Wi-Fi and error icons</a></li><li><a href="#buttons-and-recovery">Buttons and recovery</a></li><li><a href="#supplying-readings-to-a1">Supplying readings to A1</a></li><li><a href="#iotcloud-and-home-assistant">IoTCloud and Home Assistant</a></li><li><a href="#mqtt">MQTT</a></li><li><a href="#v1-candidates-user-readings-and-pm25-smoothing">v1 candidates: user readings and PM2.5 smoothing</a></li></ul></nav></details><h2 id="two-separate-firmware-updates">Two separate firmware updates</h2>
-<p>M1 has a <strong>Wi-Fi MCU (EMW3080)</strong> for networking and the web interface, and a <strong>sensor controller (ATSAMD20G18A)</strong> for built-in sensors, the screen and buzzer. An ordinary web update installs Wi-Fi firmware only. <strong>Use stable v0.9.27 for everyday operation. The current v1.0.0-rc.3 candidate is a beta build. Major changes are still expected, and daily use is not recommended.</strong> v1 Beta features require matching Wi-Fi firmware, frontend and sensor controller; see the <a href="release-log.html?channel=candidate">latest release notes</a> for available versions. Wi-Fi firmware and the controller are downloaded and updated separately. Dual-region user readings, double-click actions and PM2.5 smoothing need matching versions. Basic readings remain usable with the stock controller. Older tones/music require controller v0.9.3 or newer; particle details require v0.9.4 complete-frame capabilities.</p>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>M1 operation · Phicomm community firmware</title><meta name="description" content="Readings, brightness, icons and recovery"><link rel="canonical" href="https://phicomm-io.github.io/guides/en/m1-guide.html"><meta property="og:type" content="website"><meta property="og:site_name" content="PHICOMM COMMUNITY"><meta property="og:title" content="M1 operation · Phicomm community firmware"><meta property="og:description" content="Readings, brightness, icons and recovery"><meta property="og:url" content="https://phicomm-io.github.io/guides/en/m1-guide.html"><meta property="og:locale" content="en_US"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="M1 operation · Phicomm community firmware"><meta name="twitter:description" content="Readings, brightness, icons and recovery"><link rel="alternate" hreflang="zh-CN" href="https://phicomm-io.github.io/guides/m1-guide.html"><link rel="alternate" hreflang="en" href="https://phicomm-io.github.io/guides/en/m1-guide.html"><link rel="alternate" hreflang="x-default" href="https://phicomm-io.github.io/guides/m1-guide.html"><link rel="stylesheet" href="../../style.css"><script src="../../theme.js"></script></head><body><a class="skip" href="#main">Skip to content</a><header class="site-header"><div class="wrap"><a class="brand" href="../../"><span class="mark">P</span><span class="word"><b>PHICOMM COMMUNITY</b><span>Community firmware</span></span></a><nav class="site-nav" aria-label="Main navigation"><a href="../../#devices">Devices</a><a href="../../#features">Features</a><a href="../../#iotcloud">IotCloud</a><a href="../../#demos">Demos</a><a href="../../#docs">Documentation</a><a href="../../#releases">Downloads</a></nav><div class="prefs"><label class="sr" for="themePick">Theme</label><select id="themePick"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></header><div class="guide-layout"><details class="guide-directory" open><summary>Documentation navigation</summary><nav class="guide-nav" aria-label="Documentation navigation"><details class="guide-section"><summary>Getting started</summary><a href="quick-start.html">Quick start</a><a href="flash-prep.html">Before flashing</a><a href="firmware-update.html">Firmware updates</a><a href="iotcloud-connect.html">Connect to IotCloud</a><a href="mqtt-link.html">MQTT and automation</a><a href="faq.html">Troubleshooting</a></details><details class="guide-section"><summary>TC1 power strip</summary><a href="tc1-no-disassembly-ethernet-wifi-ap.html">TC1 illustrated OTA guide</a><a href="tc1-no-disassembly.html" class="guide-child">TC1 OTA internals and custom images</a><a href="tc1-flash.html">TC1 wired flashing and recovery</a><a href="tc1-guide.html">TC1 operation</a></details><details class="guide-section" open><summary>M1 air quality monitor</summary><a href="stock-provision.html">Stock Wi-Fi setup without the app</a><a href="m1-no-disassembly.html">M1 no-disassembly migration</a><a href="a1-m1-flash.html">Flash A1 / M1</a><a href="m1-guide.html" aria-current="page">M1 operation</a><a href="m1-mcu-firmware.html">M1 open-source controller firmware</a><a href="m1-mcu-update.html">Update the M1 controller over the network</a></details><details class="guide-section"><summary>DAIKIN air quality monitor</summary><a href="daikin-stock-ota.html">Daikin stock OTA migration</a><a href="daikin-guide.html">DAIKIN operation and installation</a></details><details class="guide-section"><summary>A1 air purifier</summary><a href="stock-provision.html">Stock Wi-Fi setup without the app</a><a href="a1-no-disassembly.html">A1 no-disassembly migration</a><a href="a1-m1-flash.html">Flash A1 / M1</a><a href="a1-guide.html">A1 operation</a></details><details class="guide-section"><summary>Development and maintenance</summary><a href="iotcloud-deploy.html">Deploy IotCloud</a><a href="build-deps.html">Build dependencies</a><a href="sources.html">Asset sources</a><a href="release-log.html">Release Log</a></details></nav></details><main class="guide-main" id="main"><div class="guide-context"><nav class="guide-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="../../#docs">Documentation</a></li><li>M1 air quality monitor</li></ol></nav><p class="guide-language" aria-label="Language"><a href="../m1-guide.html" lang="zh-CN">简体中文</a> · English</p></div><article class="prose"><h1 id="m1-operation">M1 operation</h1>
+<p>M1 provides PM2.5, formaldehyde, temperature, humidity and screen brightness controls. It can supply readings for A1 automation. This page covers daily use after installation. For first installation, see <a href="m1-no-disassembly.html">factory LAN migration</a> or <a href="a1-m1-flash.html">wired flashing and recovery</a>.</p>
+<details class="guide-toc" open><summary>On this page</summary><nav aria-label="On this page"><ul><li><a href="#two-separate-firmware-updates">Two separate firmware updates</a></li><li><a href="#readings">Readings</a></li><li><a href="#particle-details-wi-fi-v0927">Particle details (Wi-Fi v0.9.27)</a></li><li><a href="#external-scd40-co₂-sensor-experimental">External SCD40 CO₂ sensor (experimental)</a></li><li><a href="#screen-brightness">Screen brightness</a></li><li><a href="#wi-fi-and-error-icons">Wi-Fi and error icons</a></li><li><a href="#buttons-and-recovery">Buttons and recovery</a></li><li><a href="#supplying-readings-to-a1">Supplying readings to A1</a></li><li><a href="#iotcloud-and-home-assistant">IotCloud and Home Assistant</a></li><li><a href="#mqtt">MQTT</a></li></ul></nav></details><h2 id="two-separate-firmware-updates">Two separate firmware updates</h2>
+<p>M1 has a <strong>Wi-Fi MCU (EMW3080)</strong> for networking and the web interface, and a <strong>sensor controller (ATSAMD20G18A)</strong> for built-in sensors, the screen and buzzer. An ordinary web update installs Wi-Fi firmware only. Some Wi-Fi v0.9.27 features need the open-source sensor controller too: tones/music require controller v0.9.3 or newer; particle details require v0.9.4 capabilities. Basic readings remain usable with the stock controller.</p>
 <p>To reduce accidental wrong-image flashing, there is no controller upload button in the WebUI. Use the <a href="m1-mcu-update.html">computer script through the API</a> for that separate update. See <a href="m1-mcu-firmware.html">controller features and version requirements</a>.</p>
 <h2 id="readings">Readings</h2>
 <p>The home page shows particle concentration (PM2.5), formaldehyde concentration, ambient temperature and relative humidity. Colors and labels indicate reading quality, such as excellent, good or poor.</p>
-<p><span id="particle-details-wi-fi-v0927"></span></p>
-<h2 id="particle-details">Particle details</h2>
+<h2 id="particle-details-wi-fi-v0927">Particle details (Wi-Fi v0.9.27)</h2>
 <p>With a sensor controller that supports complete frames (published in controller v0.9.4), the local home page provides a <strong>Particle details</strong> card: PM1.0, PM10 and six cumulative particle counts. PM2.5 stays in its main card. Expand details for CF=1 concentrations and raw diagnostics. Counts use particles per 0.1 L, not μg/m³; atmospheric and CF=1 are two reporting conventions from the same sensor.</p>
 <p>Expired, warming-up or unhealthy measurements show “—”. If the card is absent or unsupported, check both firmware versions and controller capabilities. The new readings support MQTT and Home Assistant discovery, but live Home Assistant integration has not yet been verified. See <a href="m1-mcu-firmware.html">complete-frame readings</a>.</p>
 <h2 id="external-scd40-co₂-sensor-experimental">External SCD40 CO₂ sensor (experimental)</h2>
@@ -74,172 +72,12 @@
 </tr>
 </tbody>
 </table>
-<p>Disabling an output drives its GPIO low. An unconfigured MQTT connection is not a fault. The stock controller has no verified general protocol for formaldehyde / PM2.5 color thresholds or manual colors. See the <a href="m1-mcu-firmware.html">open-source controller guide</a> for its extensions.</p>
+<p>Disabling an output drives its GPIO low. An unconfigured MQTT connection is not a fault. The original screen's formaldehyde / PM2.5 color thresholds and manual color controls have no verified protocol and are not supported.</p>
 <h2 id="buttons-and-recovery">Buttons and recovery</h2>
-<p>After updating <strong>both the open-source sensor MCU and Wi-Fi firmware</strong> to versions supporting staged recovery:</p>
-<ul>
-<li>A single click toggles the screen after about 350 ms to distinguish a double click. While an alarm is ringing, a double click only stops it. Otherwise, it switches both original/user readings according to the configured action.</li>
-<li>Hold for at least 3 seconds and release before 10 seconds to clear Wi-Fi and the WebUI password and start provisioning again. MQTT and other settings are preserved.</li>
-<li>Hold continuously for 10 seconds to restore factory settings, including Wi-Fi, MQTT, the WebUI password and other network-module settings. Custom music stored separately on the sensor MCU is preserved.</li>
-</ul>
-<p>Both recovery actions save settings before restarting the sensor and Wi-Fi MCUs; Wi-Fi connectivity is not required. Recovery gestures are disabled during updates. Stock sensor firmware retains its original long-press provisioning event and does not support these staged gestures. See <a href="m1-flash.html">M1 wired recovery</a>; a full reset is also available in the WebUI.</p>
-<p>The current EMW3080 SDK does not provide WPA3 connectivity. Use WPA2-PSK/AES; WPA2/WPA3 transition networks must allow WPA2 clients. See the <a href="https://docs.mxchip.com/attach/zh/DS0122CN_EMW3080_V2.8.pdf">module specifications</a>.</p>
+<p>M1 uses the original panel's <code>0x18</code> long-press event, acknowledges it with fixed <code>0x16</code>, and clears Wi-Fi and the WebUI password once per boot after deduplication. It does not implement TC1 / A1's precise 5 / 10 second recovery split and has no custom button mappings. Follow <a href="a1-m1-flash.html">A1 / M1 recovery</a>. A full reset is available in the WebUI.</p>
 <h2 id="supplying-readings-to-a1">Supplying readings to A1</h2>
 <p>M1 measures, reports and answers authorized A1 requests. It does not control or poll the purifier. Add this M1's MAC and optional IP on A1. MQTT establishes the session; sensor queries use LAN UDP. The M1 page shows read-only session status for up to four A1 units, with no allowlist or pairing code to maintain. See <a href="mqtt-link.html#a1-sensor-automation">A1 sensor automation</a>.</p>
-<h2 id="iotcloud-and-home-assistant">IoTCloud and Home Assistant</h2>
-<p>IoTCloud reuses the M1 CO₂ detail card and shows fresh CO₂ readings in device summaries. Once SCD40 produces a valid reading, Home Assistant discovers a carbon dioxide MQTT sensor in ppm. After 20 seconds without an update, only that sensor becomes unavailable; the original M1 sensors remain independent.</p>
+<h2 id="iotcloud-and-home-assistant">IotCloud and Home Assistant</h2>
+<p>IotCloud reuses the M1 CO₂ detail card and shows fresh CO₂ readings in device summaries. Once SCD40 produces a valid reading, Home Assistant discovers a carbon dioxide MQTT sensor in ppm. After 20 seconds without an update, only that sensor becomes unavailable; the original M1 sensors remain independent.</p>
 <h2 id="mqtt">MQTT</h2>
-<p>M1 uses TMCP (v2) topics only, with no Legacy selector. See <a href="mqtt-link.html">MQTT and automation</a>.</p>
-<h2 id="v1-candidates-user-readings-and-pm25-smoothing">v1 candidates: user readings and PM2.5 smoothing</h2>
-<p>The v1 candidates provide dual-position screen readings and steadier PM2.5. They require matching open-source controller, Wi-Fi firmware and frontend. This is a prerelease; the stable v1.0.0 release is not yet available.</p>
-<p>In Device settings, open <strong>User readings on the device screen</strong>. Configure the formaldehyde and PM2.5 regions separately using this M1's sensors, another device on the same MQTT account and broker (TC1 power, A1 main-fan output, DAIKIN CO₂ or other readings), or an API / manual write. A1 provides its current effective output percentage (0–100%), including fresh-air variants. Other devices' MAC addresses accept both <code>aabbccddeeff</code> and <code>aa:bb:cc:dd:ee:ff</code>, with either letter case.</p>
-<p><strong>RC.1 source configuration:</strong> source devices publish schema 2 field descriptors, and M1 display-profile schema 4 selects a device + stable field ID with matching <code>number</code> type and unit, without model adapters. Names label fields; they are not the saved binding. TC1 power, effective A1 fan output and sensor readings use the same interface. Invalid values are <code>null</code>, never zero; new snapshots immediately remove missing, invalid or unsupported fields, while saved source settings remain. Update source devices, M1 Wi-Fi firmware and the matching frontend together. The old Wi-Fi RC is deprecated and its corresponding MQTT / HTTP profile interfaces are incompatible with RC.1; the independent sensor-controller RC stays unchanged. See the <a href="https://phicomm-io.github.io/iotcloud-community-protocols/en/device-http/#m1-generic-profile4">generic profile API</a> for custom integrations.</p>
-<p>Each region has three digits. <strong>The PM2.5 region supports integers only</strong>, rounded to the nearest integer and capped at <code>999</code>; positive overflow also shows <code>999</code>. <strong>The formaldehyde region has a fixed decimal point after the first digit</strong>, with five display modes. These conversions apply only to local / MQTT readings:</p>
-<table>
-<thead>
-<tr>
-<th>Display mode</th>
-<th>Rule and example</th>
-<th>Display limit</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Integer</td>
-<td>Round to the nearest integer: <code>123.6</code> → <code>124</code></td>
-<td><code>999</code></td>
-</tr>
-<tr>
-<td>Automatic kilo scaling</td>
-<td>Below 1000, show an integer; from 1000, divide by 1000: <code>1234</code> → <code>1.23</code></td>
-<td><code>9.99</code> after scaling</td>
-</tr>
-<tr>
-<td>Two decimal places</td>
-<td>Fixed x.xx: <code>1.234</code> → <code>1.23</code></td>
-<td><code>9.99</code></td>
-</tr>
-<tr>
-<td>One decimal place, trailing zero</td>
-<td>Fixed x.x0: <code>1.26</code> → <code>1.30</code></td>
-<td><code>9.90</code></td>
-</tr>
-<tr>
-<td>Always divide by 1000</td>
-<td>Divide by 1000 and show x.xx: <code>1234</code> → <code>1.23</code></td>
-<td><code>9.99</code></td>
-</tr>
-</tbody>
-</table>
-<p>Positive overflow stays at the display limit. The original “甲醛” / “PM2.5” label and each region's unit can be shown or hidden independently. The formaldehyde region has <strong>mg/m³</strong>; the PM2.5 region has <strong>µg/m³</strong>. The screen cannot display arbitrary text or other units such as ppm, W or %. Choose whether to retain the original label and unit according to the external data's meaning.</p>
-<p>The panel glass has the following 19 groups, with <strong>PM2.5 on the left and formaldehyde on the right</strong>. Each <code>8</code> indicates a digit position, not an actual reading. The temperature and humidity digit layouts do not specify sensor sampling precision.</p>
-<table>
-<thead>
-<tr>
-<th>No.</th>
-<th>Position</th>
-<th>Digits or symbol</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>Top left</td>
-<td>Date <code>8888-88-88</code>, including hyphens</td>
-</tr>
-<tr>
-<td>2</td>
-<td>Top, just right of center</td>
-<td>Time <code>88:88</code>, including the colon</td>
-</tr>
-<tr>
-<td>3</td>
-<td>Far top right</td>
-<td>Wi-Fi icon and <code>×</code></td>
-</tr>
-<tr>
-<td>4</td>
-<td>Above the middle-left digits</td>
-<td>“PM2.5” label</td>
-</tr>
-<tr>
-<td>5</td>
-<td>Middle left</td>
-<td>PM2.5 digits <code>888</code></td>
-</tr>
-<tr>
-<td>6</td>
-<td>To the right of the middle-left digits</td>
-<td><code>µg/m³</code> unit</td>
-</tr>
-<tr>
-<td>7</td>
-<td>Above the middle-right digits</td>
-<td>“甲醛” (formaldehyde) label</td>
-</tr>
-<tr>
-<td>8</td>
-<td>Middle right</td>
-<td>Formaldehyde digits <code>8.88</code>, including the fixed decimal point</td>
-</tr>
-<tr>
-<td>9</td>
-<td>To the right of the middle-right digits</td>
-<td><code>mg/m³</code> unit</td>
-</tr>
-<tr>
-<td>10</td>
-<td>Lower left</td>
-<td>Horizontal color bar with rounded corners for PM2.5 status</td>
-</tr>
-<tr>
-<td>11</td>
-<td>Lower right</td>
-<td>Horizontal color bar with rounded corners for formaldehyde status</td>
-</tr>
-<tr>
-<td>12</td>
-<td>Bottom-left corner</td>
-<td>Thermometer icon</td>
-</tr>
-<tr>
-<td>13</td>
-<td>Lower left</td>
-<td>“温度” (temperature) label</td>
-</tr>
-<tr>
-<td>14</td>
-<td>Lower left, toward the right</td>
-<td>Temperature digits <code>88.8</code>, including the decimal point</td>
-</tr>
-<tr>
-<td>15</td>
-<td>To the right of the temperature digits</td>
-<td><code>°C</code> unit</td>
-</tr>
-<tr>
-<td>16</td>
-<td>Lower right</td>
-<td>Water-drop icon</td>
-</tr>
-<tr>
-<td>17</td>
-<td>Lower right, toward the center</td>
-<td>“湿度” (humidity) label</td>
-</tr>
-<tr>
-<td>18</td>
-<td>Lower right, toward the right edge</td>
-<td>Humidity digits <code>88.8</code>, including the decimal point</td>
-</tr>
-<tr>
-<td>19</td>
-<td>Bottom-right corner</td>
-<td><code>%</code> unit</td>
-</tr>
-</tbody>
-</table>
-<p>Items 10 and 11 are the PM2.5 and formaldehyde status bars respectively. Each region has left, middle and right lamp positions. The red, green and yellow segments at every position switch independently, giving <strong>9 segments per region</strong>; multiple colors can be on at the same position. Alternatively, set two color thresholds using the original physical value before conversion: green below the lower threshold, yellow from the lower threshold, and red from the upper threshold.</p>
-<p>After selecting and saving the API / manual source, write an integer from <code>0–999</code>, the decimal-point flag, original label and unit flags, and all 9 lamp segments directly. In the formaldehyde region, number <code>123</code> with the decimal point enabled shows <code>1.23</code>; the PM2.5 region rejects the decimal-point flag. <strong>API writes do not apply the display modes or color thresholds above.</strong> Fractional numbers and numbers above <code>999</code> are rejected. Written values expire and need periodic updates. See the <a href="https://phicomm-io.github.io/iotcloud-community-protocols/en/device-http/#m1-display_profile-api">display API developer documentation</a> for the complete fields and calls.</p>
-<p>Set <strong>Double-press action</strong> to <strong>Switch both original/user readings</strong> to switch the pair together. A ringing alarm is stopped first. Set each region's maximum reading age independently: missing, expired, offline or invalid data restores only that region's original reading, without affecting the other. User readings do not replace original sensor acquisition or alarms.</p>
-<p>Formaldehyde and PM2.5 have separate over-threshold buzzer switches, both off by default. Light thresholds, alarms and manual tones remain separately controlled.</p></article><div class="guide-pager"><a href="m1-flash.html">Previous<b>M1 wired installation and recovery</b></a><a class="next" href="m1-mcu-firmware.html">Next<b>M1 open-source controller firmware</b></a></div></main></div><footer class="site-footer"><div class="wrap"><div><b>IoTCloud COMMUNITY</b><p>Community maintained and independent of the manufacturers. See each source repository for component and third-party licenses.</p></div><div><b>Guides</b><ul><li><a href="quick-start.html">Quick start</a></li><li><a href="faq.html">Troubleshooting</a></li><li><a href="release-log.html">Release notes</a></li></ul></div><div><b>Source and protocols</b><ul><li><a href="https://phicomm-io.github.io/iotcloud-community-protocols/en/">Developer documentation</a></li><li><a href="https://github.com/phicomm-io/iotcloud-community-frontend">Shared frontend</a></li><li><a href="https://github.com/phicomm-io/iotcloud-community-mqtt">IoTCloud platform</a></li><li><a href="https://github.com/phicomm-io/phicomm_m1_mcu_atsamd20">M1 sensor controller</a></li></ul></div></div></footer><script src="../../site.js"></script></body></html>
+<p>M1 uses TMCP (v2) topics only, with no Legacy selector. See <a href="mqtt-link.html">MQTT and automation</a>.</p></article><div class="guide-pager"><a href="a1-m1-flash.html">Previous<b>Flash A1 / M1</b></a><a class="next" href="m1-mcu-firmware.html">Next<b>M1 open-source controller firmware</b></a></div></main></div><footer class="site-footer"><div class="wrap"><div><b>PHICOMM COMMUNITY</b><p>Community-maintained, not affiliated with the manufacturer. Check the documentation for your release. The firmware repository has no single license covering all code.</p></div><div><b>Documentation</b><ul><li><a href="quick-start.html">Quick start</a></li><li><a href="faq.html">Troubleshooting</a></li><li><a href="release-log.html">Release Log</a></li></ul></div><div><b>Source</b><ul><li><a href="https://github.com/phicomm-io/phicomm-community-firmware">Firmware</a></li><li><a href="https://github.com/phicomm-io/phicomm-community-mqtt">MQTT platform</a></li></ul></div><div><b>Community</b><p>QQ group: 1021750178</p><a href="https://qm.qq.com/q/9L150V85kk?from=tim" target="_blank" rel="noopener noreferrer">Join the QQ group (Chinese)</a></div></div></footer><script src="../../site.js"></script></body></html>
