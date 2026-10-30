@@ -60,6 +60,7 @@ jobs:
           python3 tools/frontend_release.py --lock tools/iotcloud.lock.json --output "$RUNNER_TEMP/iotcloud-release"
           cp -a "$RUNNER_TEMP/iotcloud-release/platform" "$RUNNER_TEMP/public-site/iotcloud"
           printf '%s\n' '{"apiOrigin":"https://mqtt.fjrcn.cn","mqttWS":"wss://mqtt.fjrcn.cn/mqtt"}' > "$RUNNER_TEMP/public-site/iotcloud/config.json"
+          cp -a alpha "$RUNNER_TEMP/public-site/alpha"
       - uses: actions/upload-pages-artifact@v3
         if: github.event_name != 'schedule' || steps.release.outputs.tag != ''
         with:

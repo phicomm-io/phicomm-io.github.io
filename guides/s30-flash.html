@@ -1,0 +1,63 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>拆机串口刷机 · 斐讯社区固件 · PHICOMM COMMUNITY</title><meta name="description" content="VTX / VRX、供电触点、完整备份与应用镜像"><link rel="canonical" href="https://phicomm-io.github.io/guides/s30-flash.html"><meta property="og:type" content="website"><meta property="og:site_name" content="PHICOMM COMMUNITY"><meta property="og:title" content="拆机串口刷机 · 斐讯社区固件 · PHICOMM COMMUNITY"><meta property="og:description" content="VTX / VRX、供电触点、完整备份与应用镜像"><meta property="og:url" content="https://phicomm-io.github.io/guides/s30-flash.html"><meta property="og:locale" content="zh_CN"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="拆机串口刷机 · 斐讯社区固件 · PHICOMM COMMUNITY"><meta name="twitter:description" content="VTX / VRX、供电触点、完整备份与应用镜像"><link rel="alternate" hreflang="zh-CN" href="https://phicomm-io.github.io/guides/s30-flash.html"><link rel="alternate" hreflang="en" href="https://phicomm-io.github.io/guides/en/s30-flash.html"><link rel="alternate" hreflang="x-default" href="https://phicomm-io.github.io/guides/s30-flash.html"><link rel="stylesheet" href="../style.css"><script src="../theme.js"></script></head><body><a class="skip" href="#main">跳到主要内容</a><header class="site-header"><div class="wrap"><a class="brand" href="../"><span class="mark" aria-hidden="true">斐</span><span class="word"><b>IoTCloud COMMUNITY</b><span>社区固件</span></span></a><nav class="site-nav" aria-label="主导航"><a href="../#devices">设备与功能</a><a href="../#install">安装升级</a><a href="../#releases">固件下载</a><a href="../#faq">常见问题</a><a href="../#develop">参与开发</a></nav><div class="prefs"><label class="sr" for="themePick">主题</label><select id="themePick"><option value="system">跟随系统</option><option value="light">浅色</option><option value="dark">深色</option></select></div></div></header><div class="guide-layout"><details class="guide-directory" open><summary>文档导航</summary><nav class="guide-nav" aria-label="文档导航"><details class="guide-nav-group guide-section" data-guide-group="m1"><summary>M1 空气检测仪</summary><div class="device-doc-actions" role="group" aria-label="M1 文档入口" data-device-actions="m1"><a href="m1-no-disassembly.html" data-guide-action="install" title="M1 原厂配网与免拆安装">刷机</a><a href="firmware-update.html" data-guide-action="update" title="固件更新">升级</a><a href="m1-guide.html" data-guide-action="use" title="M1 功能与操作">使用</a><a href="m1-guide.html#按键与恢复" data-guide-action="recover" title="M1 功能与操作">恢复</a></div><a href="m1-flash.html">M1 有线安装与恢复</a><a href="m1-mcu-firmware.html">M1 开源传感器主控</a><a href="m1-mcu-update.html">M1 传感器主控升级</a></details><details class="guide-nav-group guide-section" data-guide-group="a1"><summary>A1 空气净化器</summary><div class="device-doc-actions" role="group" aria-label="A1 文档入口" data-device-actions="a1"><a href="a1-no-disassembly.html" data-guide-action="install" title="A1 原厂配网与免拆安装">刷机</a><a href="firmware-update.html" data-guide-action="update" title="固件更新">升级</a><a href="a1-guide.html" data-guide-action="use" title="A1 功能与操作">使用</a><a href="a1-guide.html#恢复手势" data-guide-action="recover" title="A1 功能与操作">恢复</a></div><a href="a1-flash.html">A1 有线安装与恢复</a></details><details class="guide-nav-group guide-section" data-guide-group="tc1"><summary>TC1 智能排插</summary><div class="device-doc-actions" role="group" aria-label="TC1 文档入口" data-device-actions="tc1"><a href="tc1-no-disassembly-ethernet-wifi-ap.html" data-guide-action="install" title="免拆刷机图文教程">刷机</a><a href="firmware-update.html" data-guide-action="update" title="固件更新">升级</a><a href="tc1-guide.html" data-guide-action="use" title="TC1 功能与操作">使用</a><a href="tc1-guide.html#恢复手势" data-guide-action="recover" title="TC1 功能与操作">恢复</a></div><a href="tc1-no-disassembly.html" class="guide-child">免拆原理与自备镜像</a><a href="tc1-flash.html">TC1 有线安装与恢复</a></details><details class="guide-nav-group guide-section" data-guide-group="daikin"><summary>DAIKIN 大金检测仪</summary><div class="device-doc-actions" role="group" aria-label="DAIKIN 文档入口" data-device-actions="daikin"><a href="daikin-stock-ota.html" data-guide-action="install" title="DAIKIN 原厂 OTA 安装">刷机</a><a href="daikin-guide.html#日常更新与恢复" data-guide-action="update" title="DAIKIN 功能、安装与恢复">升级</a><a href="daikin-guide.html" data-guide-action="use" title="DAIKIN 功能、安装与恢复">使用</a><a href="daikin-guide.html#日常更新与恢复" data-guide-action="recover" title="DAIKIN 功能、安装与恢复">恢复</a></div></details><details class="guide-nav-group guide-section" data-guide-group="common"><summary>通用设置与排查</summary><a href="quick-start.html">快速开始</a><a href="flash-prep.html">刷机前准备</a><a href="firmware-update.html">固件更新</a><a href="iotcloud-connect.html">接入 IoTCloud</a><a href="mqtt-link.html">MQTT 与联动</a><a href="faq.html">故障排查</a></details><details class="guide-nav-group guide-section" data-guide-group="s30" open><summary>S30-V1B 计量插座</summary><a href="s30-flash.html" aria-current="page">拆机串口刷机</a><a href="s30-guide.html">功能与操作</a></details><details class="guide-nav-group guide-section" data-guide-group="dev"><summary>开发与维护</summary><a href="iotcloud-deploy.html">自行部署 IoTCloud</a><a href="build-deps.html">构建依赖</a><a href="sources.html">资源来源</a><a href="release-log.html">更新日志 / Release Log</a></details></nav></details><main class="guide-main" id="main"><div class="guide-context"><nav class="guide-breadcrumb" aria-label="当前位置"><ol><li><a href="../#docs">文档</a></li><li>S30-V1B 计量插座</li></ol></nav><p class="guide-language" aria-label="Language">简体中文 · <a href="en/s30-flash.html" lang="en">English</a></p></div><article class="prose"><h1 id="s30-v1b-拆机刷机">S30-V1B 拆机刷机</h1>
+<p>适用于 <strong>ORVIBO S30-V1B</strong>：BL2028N 模块、BK7231N 芯片、HLW8032 计量。本设备首次安装暂时只提供<strong>拆机串口刷机</strong>；安装后的操作见 <a href="s30-guide.html">S30-V1B 功能与操作</a>。其他 S30 系列或不同模块的设备不能仅凭外壳相同套用本教程。</p>
+<details class="guide-toc" open><summary>本文目录</summary><nav aria-label="本文目录"><ul><li><a href="#供电与准备">供电与准备</a></li><li><a href="#接点位置与接线">接点位置与接线</a></li><li><a href="#先做完整备份">先做完整备份</a></li><li><a href="#选择镜像并写入">选择镜像并写入</a></li><li><a href="#首次启动与恢复">首次启动与恢复</a></li></ul></nav></details><h2 id="供电与准备">供电与准备</h2>
+<p>将插座从市电拔下，断开负载和原电源，确认断电后再拆机。<strong>拆机、连接电脑串口和刷写期间均不能接入市电。</strong> 使用 3.3V 逻辑电平的 USB-TTL 串口适配器，以及稳定、独立、隔离的 3.3V 直流电源；不要向模块接入 5V。</p>
+<p>USB 串口适配器的 3.3V 输出可能无法承担 Wi-Fi 启动电流，表现为刷入成功但启动或联网时反复复位。使用独立电源时，断开适配器的 3.3V 供电线，保留 TX、RX、GND，电源负极与串口 GND、设备 GND 共地。</p>
+<p>刷写前准备本设备对应版本的固件与 <code>SHA256SUMS</code>，先校验文件。串口软件如 minicom 必须退出，避免与刷机工具同时占用端口。下面使用 <a href="https://github.com/tuya-cloudcutter/bk7231tools#usage">bk7231tools</a>，示例端口 <code>/dev/ttyUSB0</code> 应替换为实际端口。</p>
+<h2 id="接点位置与接线">接点位置与接线</h2>
+<p><strong>以插头面 PCB 朝向自己为准</strong>：PCB <strong>右上方外侧</strong>有两个电源板与 MCU 模块的连接触点，<strong>左侧为 GND，右侧为 3V3</strong>。串口使用板上的 <strong>VTX / VRX</strong> 测试点；部分丝印带数字后缀，如 VTX1 / VRX1。</p>
+<table>
+<thead>
+<tr>
+<th>设备接点</th>
+<th>连接到</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>VTX 测试点</td>
+<td>USB-TTL 的 RXD</td>
+</tr>
+<tr>
+<td>VRX 测试点</td>
+<td>USB-TTL 的 TXD</td>
+</tr>
+<tr>
+<td>插头面 PCB 右上方外侧：左触点 GND</td>
+<td>电源负极和 USB-TTL GND</td>
+</tr>
+<tr>
+<td>同一对触点：右触点 3V3</td>
+<td>独立隔离电源的 3.3V 正极</td>
+</tr>
+</tbody>
+</table>
+<p>左右关系仅指上述观察方向。接线前核对 PCB 朝向与接点，不要将翻面后的左右位置直接套用。VTX/VRX 是设备收发方向，因此 TX 与 RX 交叉连接。</p>
+<h2 id="先做完整备份">先做完整备份</h2>
+<p>在工具开始等待连接后，给模块的 <strong>3.3V 电源断电再上电</strong>，或短暂将已确认的 CEN/RESET 接地后释放。保持 USB 串口适配器连接。按住插座日常开关按钮不能代替芯片复位。</p>
+<p>本次验证设备的 Flash 为 2 MiB，完整读取范围是 <code>0x000000</code> 至 <code>0x1fffff</code>。首次备份读取两次，分别在工具等待时复位，且保留工具默认的校验：</p>
+<pre><code class="language-sh">bk7231tools read_flash -d /dev/ttyUSB0 -b 115200 --timeout 60 -s 0 -l 0x200000 s30-stock-1.bin
+bk7231tools read_flash -d /dev/ttyUSB0 -b 115200 --timeout 60 -s 0 -l 0x200000 s30-stock-2.bin
+sha256sum s30-stock-1.bin s30-stock-2.bin
+cmp s30-stock-1.bin s30-stock-2.bin
+</code></pre>
+<p>两个文件都应为 2097152 字节，SHA-256 相同，<code>cmp</code> 正常退出且没有输出。保存备份及校验值，再进行任何写入。备份含本机 MAC、射频参数和可能的原厂凭据，应私下保管；其他设备的备份不能替代本机备份。</p>
+<h2 id="选择镜像并写入">选择镜像并写入</h2>
+<p>本次验证的 BL2028N 使用<strong>零密钥 bootloader</strong>，串口保留 bootloader 刷写应选：</p>
+<pre><code class="language-text">BL2028N_BK7231M_UA_&lt;版本&gt;.bin
+写入起点：0x11000
+</code></pre>
+<p>文件名中的 <code>BK7231M</code> 表示此处采用的零密钥打包格式，<strong>设备芯片仍为 BK7231N</strong>。不能仅凭芯片名选常规 N 密钥镜像。不同批次应先确认本机 bootloader/加密格式；本教程不把本次样机结论外推到所有 BL2028N。</p>
+<p>校验固件后执行，替换下方版本占位符；等待连接时再复位模块：</p>
+<pre><code class="language-sh">bk7231tools write_flash -d /dev/ttyUSB0 -b 115200 --timeout 60 -s 0x11000 -S 0 'BL2028N_BK7231M_UA_&lt;版本&gt;.bin'
+</code></pre>
+<p>使用 UA 应用镜像并从 <code>0x11000</code> 写入，保留本机 bootloader、原厂 RF/TLV 与尾部配置。<strong>不要全片擦除，也不要将 <code>.rbl</code>、<code>.UG.bin</code> 或其他产品的 <code>.ota.bin</code> 当作该串口镜像。</strong> QIO 包含 bootloader，不是本节默认刷法。</p>
+<p>工具校验通过后，建议再次读取完整 Flash，核对写入范围与 UA 文件一致、范围外尤其 bootloader 和原厂参数保持不变。当前样机 RF/TLV 扇区位于 <code>0x1e0000</code>，其中的有效工厂 MAC 必须保留。不能仅凭“传输成功”判断设备已安装完成。</p>
+<h2 id="首次启动与恢复">首次启动与恢复</h2>
+<ol>
+<li>刷写完成后，重新给模块的隔离 3.3V 电源上电，先确认出现 <code>S30M_V1B_</code> 加 MAC 后六位大写十六进制的热点。</li>
+<li>连接热点，打开 <strong>http://192.168.0.1</strong>，按<a href="s30-guide.html">使用说明</a>配网并确认设备型号和版本。初始热点密码、网页管理密码均为空。</li>
+<li>完成断电，拆除全部串口和外接供电连线，检查接线处并恢复完整绝缘装配后，才可恢复原供电和连接负载。</li>
+</ol>
+<p>隔离 3.3V 台架供电可以检查启动、网络和网页，不能代替原计量电路正常供电下的负载验证。</p>
+<p>无法握手时先排查端口占用、交叉 TX/RX、共地、接触可靠性、供电及复位时机。写入后无法启动时，保留备份与完整刷机日志，检查镜像、起点和 bootloader 密钥格式。若此前发生 OTA 中断，应按对应版本的恢复流程处理遗留升级数据；不要用反复全片擦除或其他设备的 RF/MAC 数据尝试恢复。</p></article><div class="guide-pager"><a href="faq.html">上一页<b>故障排查</b></a><a class="next" href="s30-guide.html">下一页<b>功能与操作</b></a></div></main></div><footer class="site-footer"><div class="wrap"><div><b>IoTCloud COMMUNITY</b><p>社区维护，与原厂无隶属关系。各组件许可及第三方说明见对应源码仓库。</p></div><div><b>使用指南</b><ul><li><a href="quick-start.html">快速开始</a></li><li><a href="faq.html">故障排查</a></li><li><a href="release-log.html">发布说明</a></li></ul></div><div><b>源码与协议</b><ul><li><a href="https://phicomm-io.github.io/iotcloud-community-protocols/">开发文档</a></li><li><a href="https://github.com/phicomm-io/iotcloud-community-frontend">统一前端</a></li><li><a href="https://github.com/phicomm-io/iotcloud-community-mqtt">IoTCloud 平台</a></li><li><a href="https://github.com/phicomm-io/phicomm_m1_mcu_atsamd20">M1 传感器主控</a></li></ul></div></div></footer><script src="../site.js"></script></body></html>

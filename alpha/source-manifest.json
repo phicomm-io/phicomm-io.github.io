@@ -1,0 +1,31 @@
+{
+  "source_commit": "b83072e763847306ffc9d8205b3512cf6e43cf22",
+  "archive_sha256": "1450d97b0f8772aab945ddd2b154e6719fb4623313c3fbd23f8b0ed0c9d9851c",
+  "files": {
+    "iotcloud/assets/AdminPage-BiAtF7U0.js": "4619d7ddab4c460c822bd059e91be1e56dcf33473f342ecefdbe644a6c31c8f5",
+    "iotcloud/assets/AdminPage-drW-Mofc.css": "5973d1da5a2b290ece6bbd5a0ae7966e20755eef45a5d002424244a82e3fdf6c",
+    "iotcloud/assets/App-BYWQ2fF8.js": "d38368c319b2deb1f586d472beb98b9ef3b801c6c80fac4a8828f9e8e89800af",
+    "iotcloud/assets/App-Bv-P-RMd.css": "9f350c190dd6cc010806957cf69ea34dd893aaa7dbdf49e4698a74a87db891f1",
+    "iotcloud/assets/AuthShell-ChEAv0V3.js": "818d19b1dd1e0a4264c3356ead29c55fc2591c71caf07dba47bc77c05c1b0449",
+    "iotcloud/assets/AuthShell-DJ4Pg5Xy.css": "3358e6bdb3a7e24544c30a212cc85bfff65f9dfb5f7837eb824ec48aed5da330",
+    "iotcloud/assets/GitHubPage-D_YyoSIc.js": "4b4d70a3a3ae30f86d714cbfd8e323d115c7f5ceb5bc28ea54a26c519c938e78",
+    "iotcloud/assets/LocalConnect-BFeQmepe.js": "04b6a73c6d5f8afff9bfcf63845e3789945dd6f8c7b2e71dee6deda3879771c6",
+    "iotcloud/assets/LocalConnect-DHhIIlr8.css": "2a3f2e191374fa3b358866c56f779657a2c864fa8a5f7cc6463b1ef795ec6dc1",
+    "iotcloud/assets/LoginPage-BuGrLOwH.css": "4967e687aa4c8b2e9603544f26a8262f946ba348449eca7c136202e020d92c05",
+    "iotcloud/assets/LoginPage-CrrGZAfW.js": "6404b5094f21c60874de7a34c10b9d5ebc7acbc1c250f8bdce0268f185718be9",
+    "iotcloud/assets/RegisterPage-Cnk0H2FV.js": "67e5ca3daba35bb132a6bd0ed89497c430287885bdcdeb118746451ea22512e4",
+    "iotcloud/assets/ThemeToggle-B8f8GLll.js": "ab9e9cb99f5a741efc125f5db3080a589706852c88bc70a0b6b726e4d14f775e",
+    "iotcloud/assets/deviceProtocol-CTemZGwz.js": "89d25af73873d4923c038efc04d890f4d4def2b0ab56b04e851ef7d111cf639c",
+    "iotcloud/assets/githubAuth-BcsWqIqa.js": "f1bf66f5fd9d589b39209b748b814dcb5b3fe70144d401a91cf002f4225a8edb",
+    "iotcloud/assets/index-C2bU_0Tp.js": "ce5f75b1c68f40f5f41003abfc44e23e1fcaa60b9dd919158053d1ff72b19f6e",
+    "iotcloud/assets/index-DNGBb-vk.css": "80076cc37e271931a06b8ba2e6b64b480007f6ed48e3f5c129f9dfa25df8ec75",
+    "iotcloud/config.json": "f408359049f0e83eb62e750c559bc07d9c5ecdee2a7aff4dc02cfefcc1057057",
+    "iotcloud/icons/apple-touch-icon.png": "a676d9726bf1795676929a534cdcfa67c3ca87388241daabb5ee76725c226107",
+    "iotcloud/icons/icon-192.png": "0603b398a59d6bc5ee4fa8157c19b0b13f7aa4517c587a0f264072bde0b10478",
+    "iotcloud/icons/icon-512.png": "d022493f4a825ac41ea04cb811ccbc9f276040b30506f976689670bf6364ff51",
+    "iotcloud/icons/iotcloud.svg": "2deab4b46b11e585567c289e5b4dd0a13f471bcc09803e39aca193da3e0c9bfb",
+    "iotcloud/index.html": "04f765ae964012209c08c26196a5231b8b5ce5546bd31829e1a594f253e6d990",
+    "iotcloud/manifest.webmanifest": "6b234bed32247eb8fcde605bdab954618fa5c0c2bbf08290f5ee89aff902154c",
+    "iotcloud/sw.js": "5a4ce277f5634a57564aa8a058d35446853b57ea94bff6857ad1af3367265917"
+  }
+}
