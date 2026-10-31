@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "source_hashes": "PASS",
+  "firmware_sha256": "PASS",
+  "qio_ua_layout_and_crc": "NOT_EMITTED: preserves the device stock bootloader",
+  "n_and_zero_key_cipher_roundtrip": "NOT_EMITTED: preserves the device stock bootloader",
+  "deterministic_application_padding": "NOT_EMITTED: preserves the device stock bootloader",
+  "rbl_crc_fnv_aes_gzip_roundtrip": "PASS",
+  "ug_header": "PASS",
+  "ota_preserves_default_littlefs": "PASS",
+  "required_symbols": "PASS",
+  "typed_lan_v4_mdns_sha256_symbols": "PASS",
+  "no_legacy_json_or_other_framework_symbols": "PASS",
+  "sizes": {
+    "BL2028N_OTA_1.0.0-rc.5-c09a06.rbl": 496432,
+    "BL2028N_STOCK_UA_1.0.0-rc.5-c09a06.bin": 1183744,
+    "BL2028N_UG_1.0.0-rc.5-c09a06.bin": 496464,
+    "BL2028N_app_1.0.0-rc.5-c09a06.bin": 693296
+  },
+  "hardware_verified": false,
+  "stock_layout": {
+    "name": "s30-v1b-stock-v1",
+    "app_start": 69632,
+    "app_end": 1253376,
+    "ota_start": 1253376,
+    "ota_size": 712704,
+    "factory_start": 1966080,
+    "cfg_start": 1974272,
+    "lfs_start": 2031616,
+    "lfs_end": 2064384,
+    "bootloader_included": false,
+    "legacy_community_config_migration": false
+  },
+  "stock_uart_application_crc_and_footer": "PASS",
+  "stock_uart_write_start": "0x11000"
+}
