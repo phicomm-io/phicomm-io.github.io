@@ -1,16 +1,16 @@
 {
-  "version": "1.0.0-rc.5-c09a06",
+  "version": "1.0.0-rc.5-8634a1",
   "version_metadata": {
-    "version": "1.0.0-rc.5-c09a06",
+    "version": "1.0.0-rc.5-8634a1",
     "base_version": "1.0.0-rc.5",
-    "git_commit": "c09a067afe577c721d49c113e0c8ce88afb1f951",
+    "git_commit": "8634a1c6f3cff1a71e57321500ee8afd72e161ff",
     "git_tag": "v1.0.0-rc.5",
     "dirty": false
   },
   "framework": "OpenBeken",
   "openbeken_sha": "7b754d6fc80b72115ece31fcf4527f011f90deef",
   "sdk_sha": "07fd9e0e2da0aabaddab00be2a897589be235158",
-  "project_head": "c09a067afe577c721d49c113e0c8ce88afb1f951",
+  "project_head": "8634a1c6f3cff1a71e57321500ee8afd72e161ff",
   "branch": "",
   "dirty": false,
   "compiler": "GCC 5.4.1",
@@ -18,8 +18,9 @@
   "source_sha256": {
     "README.md": "f8e7ee5c6aa8bf3303ec3649c294f21805ad4794bfe2000887cdaaca84a73185",
     "WORK_STATUS.md": "bef6e21630704747c517f39c42ea9642db890389b5a729a53d47621cc381eb5f",
-    "build.py": "d00b3ea477994222f47961190fafc96fc7335a25f1ad1ea8c086d730e43133b2",
+    "build.py": "dc0969c2e6eff42ca1cd2b029abd5016e23322eba16558073ccb10369862810a",
     "build.sh": "2b96de9b12f7daf43db713332d8de5c43754813b79926cfe135e5f2484e827fe",
+    "check_stack.py": "07c3bac5edeb815d3ed94cd51a2ac3a0fc3b6371a265998532cc6190bbc2d262",
     "common/lan_auth.inc": "66de8aecb67c3e91d27e21d1bffbffd966153d9742ca4923a2cd5beb7003dfde",
     "common/lan_policy.h": "c01bc04e3172556a201b6a192273aa62cad8e425719654c0fd9e8aa41f8d13b6",
     "common/lan_wire_v4.h": "1f8ee3bd9076e1fdfec28015848ed0ec0368ae79ad6bc172569f4c19d6f7c88e",
@@ -109,7 +110,7 @@
     "src/factory_mac.h": "b30d243e053ad3835dac9aff3d9743d63c3f15079b38c505ec8490d7ea384606",
     "src/ha_number.h": "0e19c4d302d9e286f7d1b43371d6105cc263b028a151361c3b14c4efeed4b163",
     "src/indicator.h": "39eed51140ee77142051e9fcc10214f718e5a41df352235c579df14b3c97e850",
-    "src/memory_policy.h": "60b78345e117897158c441e9551a43c06d9fa5a5fde6dea1574963cf8b023821",
+    "src/memory_policy.h": "c5bd3bbdf9c75293050dde93212c0a9ceba4b8ef69cb0479c4f31c5eda8d720f",
     "src/meter.h": "f17d1c7de9c4368f507ed9597299abd5c5d20db7295fedcac525743e42ea71c6",
     "src/mqtt_network.h": "2572b04fcd5e37731b4c9d4f9b8e95a9c1462f9b9ee06317beae151bc5d7c671",
     "src/os.h": "fc0afa378bb8a26fb48b95e214392e2cd11903e141e886322165c57bba575e98",
@@ -124,14 +125,14 @@
     "src/ph_mdns.h": "571f659138957a85d3bf8f1757885ed5fc84851f5e0fcc2a95bc3f920be73519",
     "src/ph_meter.c": "2eceb24d4f625a9257c9fcf8cd862642ef7a0191fc085bc1427a04f994e56e39",
     "src/ph_mqtt_network.c": "73984ab1d21c8e559e751adf41eaf73a91f2813deb4a3efa44a4497163970b99",
-    "src/ph_mqtt_port.c": "716c9bbd7f313ea5fc21ffb528efdef32ff900386ff917b64bda195e573bc1fd",
-    "src/ph_port.c": "beb304272c8799595ca69853a9344e85551a523028ad8f978cbabe86118bdacb",
+    "src/ph_mqtt_port.c": "08bf4a164c6df6e33eddf494c5247b6cf1d3826cef08ea25062dfcbdbea563bf",
+    "src/ph_port.c": "954c11401d8ce5bd4dbc360727989e5d2458afa30ee66fa5113ac8c2aa603ac6",
     "src/ph_sha256.c": "0a6a820e45e4c3b79972a6f262644531565ad6b002c9e56bc77b356f6a91a6a4",
     "src/ph_sha256.h": "4083b3cf1e43145d630643bef8e960bdcc15a386a9dc1ea14077839a01f064a7",
     "src/ph_udp.c": "a2088f3e058dea63237903627108529fb746f441ee00830b04b9dd0646d16f5d",
     "src/ph_wire.c": "e48a8c3d61edbd3d84e673a80dab0e3885673ebd29f9f333c390639ddceb9f5c",
     "src/port.h": "87397b5231bd1d8b0633606a8c3b3b9a5c165668b7581c8a20a1563beb207a7e",
-    "src/port_internal.h": "baf8a769dff64a23424d59bab6dc994c832f437d39dd1e56f2b0fbf67688d8cd",
+    "src/port_internal.h": "611dd3a2c2a7e671674a1905229965a38e3037ebf31925381915a3b8cf2ac3ab",
     "src/sensor.h": "5164696ec1ad73f7283db7493cf156fc2314f5319fe1543a0faee34d4be767b8",
     "src/storage_legacy.h": "86f114e90bb8cefa984071fa707deb919e1c961ebe4fc257cd54d3724353011d",
     "src/udp.h": "3bc7c963b217aaa3943ab4ad1e15bf285a11142aed990c7e34a920976723ac01",
@@ -142,19 +143,19 @@
     "tests/fixtures/s30-legacy-records.json": "2b80507a6ab23e0f46c31cf3bf228df8580bd9d4a92ac352326d91fd1aa48a7c",
     "tests/host.c": "88f86674fe19718615cf75f4646b0930d178805f8ffc26d93ee5bc3947b7c67c",
     "tests/http_auth.c": "931e5872bc2560a8c7e712a3f68ba51fd3a79580082a8dad3bb38f73722ccd81",
-    "tests/http_auth_port.c": "61fbfa0263f326e0039c18306d5bac94ea54765aafc0ce0512ef2571d14fc8a2",
+    "tests/http_auth_port.c": "294a3c08a016a511e48e458772c3ea14502d1713a047e0cda17e5b2ff04d6761",
     "tests/lan_v4_host.c": "b4bb1d495aaf29af7cb4c355451daa919d35f49130e97311305c54263560d685",
     "tests/mdns.c": "1d129d28ebcebe9eb17cbf85d8227d811a5b83a101420d6b6112c783f360a6f6",
     "tests/mdns_sdk_stub.h": "e6a3eaff31e65ad5ab1274d94f75d89cf5cb55dff2e2d9987955094e22955785",
-    "tests/meter_uart.c": "fe2d148b08803976192725c74cf36d0444bd67fdc28747c754a5623817476dc0",
-    "tests/migration.c": "f533bfed4c7855917d1be5edd20edc250275c6372847082bd1952164c5aee360",
-    "tests/mqtt_heap.c": "c78de24a8a6bd3935f174c94dee19f3a79246795a52b7ea6b6dc18c3f350bb1d",
+    "tests/meter_uart.c": "acfaed0f4a96e1b1954c48979c1934d690fba952c09133818beb5763aace5370",
+    "tests/migration.c": "b8461f9a94f593ee03cd0ea850b1bbb260be78e541d61cee41651464cd5a0bd2",
+    "tests/mqtt_heap.c": "1a2d144629411e85ce6c4dc5b24007f48bd7e720383468a04ea25abd9e9abd79",
     "tests/mqtt_suback.c": "9dd2385ae2800302f2c9338ced5548eba723df6267ec0c9c39e550ec087eb486",
     "tests/network.c": "e9c57a112d99fec8856dcc3d2777bfa9225d3c91331800ce093cddb7912a5087",
     "tests/os_host.h": "87855312c1dd615a50d5e644a8536f74adde08e70d7f1c76547566db9c0a7f7b",
-    "tests/platform_host.c": "6f109dcde790ee048263402af935b319ea8dc34231735574ff5227f22473f5e5",
-    "tests/platform_host.h": "8ae717a767e140f5310a6393f6e98de5f8a58a115a164625741cfd914be2f59c",
-    "tests/run.py": "ebccea95cfdbd8d9c2f438a65915af13c974fe2585ee31f4050841047082325e",
+    "tests/platform_host.c": "7311622716f8a2a4b01650d70b8ae27fa42d72ddd3654b1eaed1786db33ab0f0",
+    "tests/platform_host.h": "87dfb44b9bb655cdcb0a85dd908615aafae7e315594222e82e2b4211b2a1217c",
+    "tests/run.py": "fad26e062f57c76b8dfa61373cb65811098d3fb9a1ac95449163af1a1e7d8000",
     "tests/sensor.c": "73b4f0823fc91ebdf039407d258de6ae63b43e7e907609376ff117cf974f335f",
     "tests/sha256.c": "94a57c87a377446860afdaeaecbdd0d5d97ac0d272594bbb1b3db43ac15ad0b0",
     "tests/test_browser.py": "2a42e307b1b5f708009b8d3ea6f9e5093adf31edcc007b0ecf62659c870ca266",
@@ -177,7 +178,7 @@
     "tests/test_startup.py": "d0668d1ffed998f50061b5c8e98a704fac590a1b54af52cb75e40e433aa52728",
     "tests/test_wifi_native.py": "5fff4b7e013dc5d241a3f72d2a51715625d670b170344c4843f1e1e1b27754fc",
     "tests/web.cjs": "cfcf16d78aa6dc98c71190d9cb8daec5b6c2016c93f560341d7290241a23b043",
-    "tests/wifi.c": "698cd1b2c40f0004fb13752bca30c7add22081ac7e52ca5a3467780175ba9772",
+    "tests/wifi.c": "1d21561337d5059932c20702779310321b07e3ff710f79bfb7d30ba4b86f68cb",
     "verify_firmware.py": "614d526bf95c98f819f13351b4d73ee9d7e17b4f53f3d836fd23a26004f78f79",
     "web/frontend-openbeken.patch": "27221b192fd2033461c10d1a0e79106edead3ef7adc0289f94b57b6838922fdf",
     "web/index.html": "d70c1418caa1cc5cb6277832418e770fbc3cd2acb051fcc924a62e9fe6609b15",
@@ -208,20 +209,20 @@
   },
   "release_files": {
     "BL2028N_OTA_1.0.0-rc.5.rbl": {
-      "sha256": "ccded2a61a371e7ea28e4745fec2f24d5fceea082ca0428add066e6cdb1f79bd",
-      "size": 496432
+      "sha256": "b324f366b71382fa7ce2b0e5516fced7e9733f956d3b320b9c1fbb5ea69e9558",
+      "size": 496592
     },
     "BL2028N_STOCK_UA_1.0.0-rc.5.bin": {
-      "sha256": "1b2b2ea18c2384b65a00e31cd42434fde2b8d4b8ff0597edd4fc8939e18bd24e",
+      "sha256": "9a9d0311bbc682fadc69970082cbe837ecaadb2fc8e94782f5014b84131fec44",
       "size": 1183744
     },
     "BL2028N_app_1.0.0-rc.5.bin": {
-      "sha256": "d8a96b8edf6fd7b57e744adbeaaec4dac840737a4c7185ff1e23930f4943291e",
-      "size": 693296
+      "sha256": "dbc00de2de646a914c761f27e50b6c811173f2e5c54d62efa02444d1f1e9f505",
+      "size": 693592
     },
     "BL2028N_UG_1.0.0-rc.5.bin": {
-      "sha256": "898973cd92aaf6a0465dffca190ed20ef3769533758a831abd7195e169c045b3",
-      "size": 496464
+      "sha256": "3deff0d43d189577ffb91e0e0902c3fc775d99615857ce369bbc37c25c5f79ef",
+      "size": 496624
     }
   }
 }
