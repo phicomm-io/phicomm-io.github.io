@@ -73,4 +73,6 @@ jobs:
           path: ${{ runner.temp }}/public-site
       - uses: actions/deploy-pages@v4
         if: github.event_name != 'schedule' || steps.release.outputs.tag != ''
+        with:
+          timeout: 1800000
         id: deployment
