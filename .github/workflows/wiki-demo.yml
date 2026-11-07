@@ -57,6 +57,7 @@ jobs:
         run: |
           mkdir "$RUNNER_TEMP/public-site"
           cp -a index.html en robots.txt sitemap.xml style.css site.js theme.js releases.js demo-nav.css demo-nav.js .nojekyll demos guides releases ota local "$RUNNER_TEMP/public-site/"
+          if [ -d illustrations ]; then cp -a illustrations "$RUNNER_TEMP/public-site/"; fi
           if [ -d dakin_lvgl ]; then cp -a dakin_lvgl "$RUNNER_TEMP/public-site/"; fi
           if [ -d tools/screen-wallpaper ]; then
             mkdir -p "$RUNNER_TEMP/public-site/tools"
