@@ -3,19 +3,19 @@
   "releases": [
     {
       "tag": "v1.0.0-rc.6",
-      "source_commit": "0b31fe385b7c1ae5784842069797be94cc8406fc",
+      "source_commit": "be3250fe08617f4a3e0d4b201b95a657815f0eb4",
       "models": {
         "s30": {
           "checksums": "https://github.com/phicomm-io/iotcloud-community-firmware/releases/download/v1.0.0-rc.6/SHA256SUMS-S30",
           "downloads": {
             "rbl": {
               "path": "https://github.com/phicomm-io/iotcloud-community-firmware/releases/download/v1.0.0-rc.6/BL2028N_OTA_1.0.0-rc.6.rbl",
-              "sha256": "914ed87bd85347c3dc3f134bb96a2c62335330b7daa81ce6553cfd30147586b2",
+              "sha256": "4bea93abe0c4c49b4a1accd1be81ebaac7bb800b2781248a11add9472dd02d80",
               "size": 499200
             },
             "stock_ua": {
               "path": "https://github.com/phicomm-io/iotcloud-community-firmware/releases/download/v1.0.0-rc.6/BL2028N_STOCK_UA_1.0.0-rc.6.bin",
-              "sha256": "198b3cb8e68f7d924664dfe85a650d96eac1d877491c5219d6090bea38f97aae",
+              "sha256": "583f44214d4b6a1ffb1be3d1ece5586ce0b83e1b3adb777c4a20f7576c081360",
               "size": 1183744
             }
           }
