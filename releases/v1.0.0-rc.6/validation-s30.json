@@ -12,10 +12,10 @@
   "typed_lan_v4_mdns_sha256_symbols": "PASS",
   "no_legacy_json_or_other_framework_symbols": "PASS",
   "sizes": {
-    "BL2028N_OTA_1.0.0-rc.6-b24771.rbl": 499200,
-    "BL2028N_STOCK_UA_1.0.0-rc.6-b24771.bin": 1183744,
-    "BL2028N_UG_1.0.0-rc.6-b24771.bin": 499232,
-    "BL2028N_app_1.0.0-rc.6-b24771.bin": 697888
+    "BL2028N_OTA_1.0.0-rc.6-0b31fe.rbl": 499200,
+    "BL2028N_STOCK_UA_1.0.0-rc.6-0b31fe.bin": 1183744,
+    "BL2028N_UG_1.0.0-rc.6-0b31fe.bin": 499232,
+    "BL2028N_app_1.0.0-rc.6-0b31fe.bin": 697888
   },
   "hardware_verified": false,
   "stock_layout": {
