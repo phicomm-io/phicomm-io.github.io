@@ -63,7 +63,7 @@
 </tr>
 </tbody>
 </table>
-<p>G1 为 BRY88AA151K，G2 为 BRY88AB151K，G3 为带屏幕的 BRY88BBA15G。当前未找到经核验的 G1 原厂镜像，G2 文件不能代用。G1 与 G2 的现有社区适配限制见<a href="daikin-guide.html">一、二代指南</a>。</p>
+<p>G1 为 BRY88AA151K，G2 为 BRY88AB151K，G3 为带屏幕的 BRY88BBA15G。当前未找到经核验的 G1 原厂镜像，G2 文件不能代用。<code>BRY88AX151K</code> 为 AA/AB 统配名称；社区固件见<a href="daikin-guide.html">一、二代指南</a>。</p>
 <h2 id="下载与校验">下载与校验</h2>
 <p>在下载区展开文件下的 SHA-256，或取同目录的 <a href="assets/firmware/stock/SHA256SUMS">SHA256SUMS</a>。这个清单覆盖 <code>stock/</code> 下的文件；M1 传感器主控复用<a href="m1-mcu-firmware.html#原厂主控备份">原有文件与校验说明</a>。</p>
 <p>Linux 可在下载目录执行 <code>sha256sum -c SHA256SUMS --ignore-missing</code>；macOS 用 <code>shasum -a 256 文件名</code>；Windows PowerShell 用 <code>Get-FileHash 文件名 -Algorithm SHA256</code>。<code>.gz</code> 先校验下载文件，再用解压工具得到 <code>.bin</code>；解压结果的校验值见机器可读目录。</p>

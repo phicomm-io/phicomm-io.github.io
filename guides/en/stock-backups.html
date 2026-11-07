@@ -63,7 +63,7 @@
 </tr>
 </tbody>
 </table>
-<p>G1 is BRY88AA151K, G2 is BRY88AB151K and G3 is the screen-equipped BRY88BBA15G. No verified stock G1 image is available locally; G2 files cannot substitute for it. See the <a href="daikin-guide.html">G1/G2 guide</a> for current community compatibility limits.</p>
+<p>G1 is BRY88AA151K, G2 is BRY88AB151K and G3 is the screen-equipped BRY88BBA15G. No verified stock G1 image is available locally; G2 files cannot substitute for it. <code>BRY88AX151K</code> is the wildcard name for AA/AB; see the <a href="daikin-guide.html">G1/G2 guide</a> for community firmware.</p>
 <h2 id="download-and-verify">Download and verify</h2>
 <p>Expand SHA-256 below a download or use <a href="../assets/firmware/stock/SHA256SUMS">SHA256SUMS</a>. This list covers files in <code>stock/</code>; the M1 controller reuses its <a href="m1-mcu-firmware.html#stock-controller-backup">existing file and checksum documentation</a>.</p>
 <p>On Linux, run <code>sha256sum -c SHA256SUMS --ignore-missing</code> in the download directory. On macOS use <code>shasum -a 256 filename</code>; in Windows PowerShell use <code>Get-FileHash filename -Algorithm SHA256</code>. Verify <code>.gz</code> files before decompressing them to <code>.bin</code>; the catalog includes checksums for the resulting images.</p>
