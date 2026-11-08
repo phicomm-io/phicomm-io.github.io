@@ -52,15 +52,15 @@
 <h2 id="下载与更新">下载与更新</h2>
 <p><a href="https://phicomm-io.github.io/#releases">固件与资源下载</a>提供 G3 最新兼容版本，包括 ESP32 签名升级包、原厂迁移用 raw 应用、屏幕 MCU 应用、可选字库和免拆迁移工具。G1/G2 镜像不能用于 G3。</p>
 <h3 id="从原厂免拆迁移">从原厂免拆迁移</h3>
-<p>下载并解压 <code>daikin_G3_migration.tar.gz</code>，按包内<a href="https://github.com/phicomm-io/iotcloud-community-firmware/tree/main/tools/daikin_g3_migrate#readme">中英文教程</a>操作。需要一台有蓝牙的 Mac、同网段运行 Docker 的电脑，以及仅对本设备生效的 DNS 配置权限。</p>
+<p>下载并解压 <code>daikin_G3_migration.tar.gz</code>，按<a href="https://github.com/phicomm-io/iotcloud-community-firmware/tree/main/tools/daikin_g3_migrate#readme">最新中英文教程</a>操作。需要有蓝牙的 Linux 或 Mac、设备能访问的 Docker 服务主机，以及仅对本设备生效的 DNS 配置权限。重新发布的 RC6 包含两种配网工具；旧包的 Linux 用户可另取教程目录中的 <code>provision_linux.py</code> 和 <code>wifi.example.json</code>。Linux 使用 BlueZ 与系统 Python 的 <code>python3-dbus</code>，也可通过 SSH 在附近主机运行。</p>
 <ol>
-<li>用设备 MAC 和电脑的局域网 IP 创建临时服务；默认不提供更新。</li>
-<li>短按背面网络键进入配网，用工具发送 Wi-Fi 和虚拟网关标识。不要长按复位。</li>
-<li>只对该设备重定向教程列出的三个域名，确认日志中的关联与版本查询。</li>
+<li>用实际 Wi-Fi STA MAC 和服务主机 IP 创建临时服务，配置仅本机的三个域名；默认不提供更新。蓝牙地址和虚拟网关 MAC 不能代替设备 STA MAC。</li>
+<li>短按背面网络键进入配网，用工具发送 2.4 GHz Wi-Fi 和虚拟网关标识。不要长按复位。配网成功后蓝牙会关闭，需要重发时再次短按。</li>
+<li>启动一个带 <code>--empty-gateway --weather-code 1</code> 的网关应答器，等待快照、天气、网关登录、滤网及错误查询均得到应答。原厂 <code>SV.04.00.01.00</code> 收到空天气会持续重试；天气码是临时占位，温湿度与 PM2.5 保留缺测标记。</li>
 <li>校验 RC6 的 <code>daikin_BRY88BBA15G.ota.bin.raw</code>，显式启用升级后发送一次仅 ESP32 的升级命令。</li>
 <li>重新打开设备网页，核对版本、联网和传感器读数，撤销临时 DNS 并停止服务。</li>
 </ol>
-<p>第一阶段保留原厂屏幕 MCU 和引导区。网络迁移依赖原厂下载流程仍可运行；不需要访问大金服务器。</p>
+<p>第一阶段保留原厂屏幕 MCU 和引导区。网络迁移依赖原厂下载流程仍可运行；不需要访问大金服务器。保留原厂 MCU 时也可配置<a href="daikin-g3-services.html">当前天气</a>，再按下节升级社区屏幕。</p>
 <h3 id="社区版在线更新">社区版在线更新</h3>
 <p>ESP32：打开“设置 → 固件更新”，选择更新源并检查版本，阅读升级内容后安装。RC 版本检查独立候选通道；下载时校验型号、签名、长度和 SHA-256。上传自己的 raw 应用可使用明确标出的未签名救援入口。</p>
 <p>屏幕 MCU 与字库：在局域网直接打开设备网页，进入“屏幕 → 资源与升级 → 在线更新”。检查版本后分别下载并安装屏幕应用或字库；网页核对文件大小，ESP32 再校验哈希并暂存，完成后才请求 MCU 安装。当前远程云端通道支持控制和 ESP32 更新，屏幕大文件上传需要本地直连。</p>
@@ -75,5 +75,5 @@ python3 screen/flash_screen.py --url http://DEVICE_IP --image daikin_G3_screen.b
 <p>本次重新发布的 RC6 已包含新脚本、ESP32 和 MCU 应用。之前安装的旧 MCU 仍执行内部引导检查，迁移到新版前需满足该版本条件。所有屏幕 OTA 保留原厂引导区。原厂引导的复制范围需与目标硬件一致；应用包不能当作整片镜像，安装时保持稳定供电。</p>
 <p>屏幕启动时先开放最小恢复服务，ESP32 默认在 5 秒后自动继续启动。在“资源与升级”关闭“启动 5 秒后自动继续”，可保留完整的 30 秒窗口，设置断电后仍保留。“保持最小服务”优先于自动启动，也可随时“立即继续启动”；故障维护不会自动退出，仍需安装修复固件。通信和 OTA 先于业务界面启动。更新期间临时降到 10% 亮度，受显示上限约束，不改保存亮度；原厂引导安装重启时会短暂黑屏。当前固件保留原厂引导的开机门控，完全断电后可能需要短触正面按键；来电自动启动未修改引导实现。</p>
 <h2 id="可选高清字库">可选高清字库</h2>
-<p><code>daikin_G3_zh32.iotfnt</code> 包含 6863 个字形，32 px、2 bpp 灰阶，在外部 SPI NOR 中保存并校验后缓存到 SDRAM。字库上传耗时较长，按网页进度等待提交完成。字库不随应用 OTA 重写。启动期间显示 LVGL 加载动画、字库进度和传感器就绪数量，仍可翻页；未连接传感器和失败资源会限时结束等待并降级。三个传感器串口独立使用中断缓冲，字库加载不阻塞收数。每次屏幕启动后会先显示内置精简字体，完整字库后台加载完成后自动刷新；加载期间，自定义地点或标题中的部分汉字可能暂时显示占位符。</p>
-<p>字库使用 SFC 硬件读取，并在分批读取时同步校验。当前真机的 1.64 MB 字库加载耗时约 14 秒；这是后台加载和校验的总耗时。硬件读取比较失败或控制器异常时退回 GPIO，NOR 不可用、数据损坏或读取超时再降级为内置字体和缺字占位；传感器、通信与恢复服务继续运行。屏幕 MCU 应用约占 196 KiB，412 KiB 应用分区余约 216 KiB。</p></article><div class="guide-pager"><a href="daikin-automation.html">上一页<b>DAIKIN 自动化、联动与远程显示</b></a><a class="next" href="daikin-g3-layout.html">下一页<b>G3 屏幕编排与外观</b></a></div></main></div><footer class="site-footer"><div class="wrap"><div><b>IoTCloud COMMUNITY</b><p>社区维护，与原厂无隶属关系。各组件许可及第三方说明见对应源码仓库。</p></div><div><b>使用指南</b><ul><li><a href="quick-start.html">快速开始</a></li><li><a href="faq.html">故障排查</a></li><li><a href="release-log.html">发布说明</a></li></ul></div><div><b>源码与协议</b><ul><li><a href="https://phicomm-io.github.io/iotcloud-community-protocols/">开发文档</a></li><li><a href="https://github.com/phicomm-io/iotcloud-community-frontend">统一前端</a></li><li><a href="https://github.com/phicomm-io/iotcloud-community-mqtt">IoTCloud 平台</a></li><li><a href="https://github.com/phicomm-io/phicomm_m1_mcu_atsamd20">M1 传感器主控</a></li></ul></div></div></footer><script src="../site.js"></script></body></html>
+<p><code>daikin_G3_zh32.iotfnt</code> 包含 6863 个字形，32 px、2 bpp 灰阶，在外部 SPI NOR 中保存并校验后缓存到 SDRAM。字库上传耗时较长，按网页进度等待提交完成。字库不随应用 OTA 重写。启动期间显示 LVGL 加载动画、字库进度和传感器就绪数量，仍可翻页；未连接传感器和失败资源会限时结束等待并降级。启动时先完成字库加载和校验，再开启传感器，降低初始化的同时负载；三个传感器串口继续使用独立中断缓冲。每次屏幕启动后会先显示内置精简字体，完整字库后台加载完成后自动刷新；加载期间，自定义地点或标题中的部分汉字可能暂时显示占位符。</p>
+<p>NOR 默认使用四线硬件 SFC，字库分批读取时同步校验。当前真机的 1.64 MB 字库加载耗时约 1.3 秒，包含后台调度和校验。只有 ESP32 在诊断启动窗口显式选择后，才使用单线 SFC 或 GPIO；硬件异常不会自动切换总线。NOR 不可用、数据损坏或读取超时时降级为内置字体和缺字占位；传感器、通信与恢复服务继续运行。屏幕 MCU 应用约占 198 KiB，412 KiB 应用分区余约 214 KiB。</p></article><div class="guide-pager"><a href="daikin-automation.html">上一页<b>DAIKIN 自动化、联动与远程显示</b></a><a class="next" href="daikin-g3-layout.html">下一页<b>G3 屏幕编排与外观</b></a></div></main></div><footer class="site-footer"><div class="wrap"><div><b>IoTCloud COMMUNITY</b><p>社区维护，与原厂无隶属关系。各组件许可及第三方说明见对应源码仓库。</p></div><div><b>使用指南</b><ul><li><a href="quick-start.html">快速开始</a></li><li><a href="faq.html">故障排查</a></li><li><a href="release-log.html">发布说明</a></li></ul></div><div><b>源码与协议</b><ul><li><a href="https://phicomm-io.github.io/iotcloud-community-protocols/">开发文档</a></li><li><a href="https://github.com/phicomm-io/iotcloud-community-frontend">统一前端</a></li><li><a href="https://github.com/phicomm-io/iotcloud-community-mqtt">IoTCloud 平台</a></li><li><a href="https://github.com/phicomm-io/phicomm_m1_mcu_atsamd20">M1 传感器主控</a></li></ul></div></div></footer><script src="../site.js"></script></body></html>
