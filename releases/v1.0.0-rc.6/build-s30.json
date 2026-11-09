@@ -1,16 +1,16 @@
 {
-  "version": "1.0.0-rc.6-51d92e",
+  "version": "1.0.0-rc.6-ee42d8",
   "version_metadata": {
-    "version": "1.0.0-rc.6-51d92e",
+    "version": "1.0.0-rc.6-ee42d8",
     "base_version": "1.0.0-rc.6",
-    "git_commit": "51d92ec457ee371eabebd134c27ea9f452469994",
+    "git_commit": "ee42d8ec513c4ffb4c33e00c84a06442799383b5",
     "git_tag": "v1.0.0-rc.6",
     "dirty": false
   },
   "framework": "OpenBeken",
   "openbeken_sha": "7b754d6fc80b72115ece31fcf4527f011f90deef",
   "sdk_sha": "07fd9e0e2da0aabaddab00be2a897589be235158",
-  "project_head": "51d92ec457ee371eabebd134c27ea9f452469994",
+  "project_head": "ee42d8ec513c4ffb4c33e00c84a06442799383b5",
   "branch": "",
   "dirty": false,
   "compiler": "GCC 5.4.1",
@@ -214,19 +214,19 @@
   },
   "release_files": {
     "BL2028N_OTA_1.0.0-rc.6.rbl": {
-      "sha256": "7df49a86a677b23362487f628e0f5b775cbdfcc27b9c69c4dd8a70915fac6cd3",
+      "sha256": "81b8accc2cc7a216f6e5d1d946e72a9405f8445b17ae1806bc89628422619b65",
       "size": 499200
     },
     "BL2028N_STOCK_UA_1.0.0-rc.6.bin": {
-      "sha256": "12fb1239c7a5f9c278659e4360ab41b0eee408ec66a3b9ba0575dcfb886f7665",
+      "sha256": "1c5797a72cc284c7e3c1144b86fda33a0a7e6db4a46aa016d2bb8932056da653",
       "size": 1183744
     },
     "BL2028N_app_1.0.0-rc.6.bin": {
-      "sha256": "237035efa5caaa7a84db0e7232ca0664d5de26828d53de73c91e716d8c5d969e",
+      "sha256": "0391e5aab6cf3c225130edfbddf93bbe56df4ae1079243bf366d29265356f996",
       "size": 697888
     },
     "BL2028N_UG_1.0.0-rc.6.bin": {
-      "sha256": "4e0c4746a0a398b32a737b07e9662023e2fd175fa9d7a880d5ba0600db65809b",
+      "sha256": "033e9c0c4a51c3bc75f37927b13480658eb2b29a6da543036e94a5a43df62880",
       "size": 499232
     }
   }
