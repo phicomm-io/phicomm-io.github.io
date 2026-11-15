@@ -101,7 +101,7 @@ awk '$2 == &quot;phicomm_a1.ota.bin.raw&quot; { print }' ./SHA256SUMS
 </tr>
 </tbody>
 </table>
-<p>更新清单直接使用顶层 <code>url</code>、<code>md5</code>、<code>ver</code>、<code>enforce</code>。原厂 v1.47 要求版本数值更高（例如 <code>v1.48</code>）且 <code>enforce: true</code>；此值仅用于满足原厂版本比较，安装后的社区版本为 0.9.27。原厂这条 TLS 路径不校验证书，但服务端需要兼容旧客户端。</p>
+<p>更新清单直接使用顶层 <code>url</code>、<code>md5</code>、<code>ver</code>、<code>enforce</code>。原厂 v1.47 要求版本数值更高（例如 <code>v1.48</code>）且 <code>enforce: true</code>；此值仅用于满足原厂版本比较，不改变所下载镜像的社区版本。原厂这条 TLS 路径不校验证书，但服务端需要兼容旧客户端。</p>
 <h3 id="在-linux-电脑启动临时服务">在 Linux 电脑启动临时服务</h3>
 <p>下载 <a href="assets/tools/a1-dns-migration/a1_dns_migration.py">a1_dns_migration.py</a> 和 <a href="assets/tools/a1-dns-migration/SHA256SUMS">SHA256SUMS</a>，安装 Python 3、<code>openssl</code>，与已校验的 A1 原生 OTA 放在同一目录。替换以下全部示例 IP、MAC 和 SHA-256：</p>
 <pre><code class="language-sh">sha256sum -c SHA256SUMS
@@ -190,7 +190,7 @@ cmp /tmp/a1-dns-migration/dhcp.before /tmp/a1-dns-migration/dhcp.after
 <li>找到 MAC 后缀对应的 <code>A1-AP-XXXXXX</code>，连接后保持使用该网络，即使电脑提示没有 Internet。</li>
 <li>浏览器打开 <code>http://192.168.0.1/</code>，在首次设置页面填写 2.4 GHz Wi-Fi，保存并等待连接。</li>
 <li>电脑连回路由器，按机身 MAC 查新 IP。新 IP 可能与原厂时相同，也可能变化；打开 <code>http://设备IP/</code>，不再使用原厂的 8000 端口。</li>
-<li>确认型号为 A1、版本为 <strong>0.9.27</strong>，风机、灯环和触摸控制正常。</li>
+<li>确认型号为 A1、实际版本与所选下载版本一致，风机、灯环和触摸控制正常。</li>
 <li>确认安装与联网完成后，可正常断电再通电，检查能否重新启动、自动联网并保留配置。</li>
 </ol>
 <p>也可以在同一终端中更新 IP 后，只读核对社区状态：</p>

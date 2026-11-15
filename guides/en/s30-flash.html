@@ -89,17 +89,17 @@ persistence false
 <pre><code class="language-sh">python3 -m venv .venv
 .venv/bin/python -m pip install paho-mqtt==2.1.0
 </code></pre>
-<p>Download the matching RBL and <code>SHA256SUMS-S30</code>, verify them, and replace every placeholder:</p>
+<p>Download the matching RBL and <code>SHA256SUMS-S30</code>, verify them, replace <code>&lt;VERSION&gt;</code> with the version in the downloaded RBL filename, and replace the remaining placeholders:</p>
 <pre><code class="language-sh">mkdir -p tools
 curl --fail --location https://raw.githubusercontent.com/phicomm-io/iotcloud-community-firmware/main/tools/s30_stock_ota.py -o tools/s30_stock_ota.py
 chmod 600 wifi.private.json mqtt.private.json
-grep &quot;  BL2028N_OTA_1.0.0-rc.6.rbl$&quot; SHA256SUMS-S30 | sha256sum -c -
+grep &quot;  BL2028N_OTA_&lt;VERSION&gt;.rbl$&quot; SHA256SUMS-S30 | sha256sum -c -
 sudo .venv/bin/python tools/s30_stock_ota.py \
   --device &lt;stock-device-IP&gt; --device-id &lt;this-unit-12-digit-factory-MAC&gt; \
   --host &lt;computer-LAN-IP&gt; \
   --wifi-file wifi.private.json --mqtt-file mqtt.private.json \
   --mqtt-ca gateway-cert.pem --cert gateway-cert.pem --key gateway-key.pem \
-  --rbl 'BL2028N_OTA_1.0.0-rc.6.rbl' --sha256 &lt;published-file-SHA256&gt;
+  --rbl 'BL2028N_OTA_&lt;VERSION&gt;.rbl' --sha256 &lt;published-file-SHA256&gt;
 </code></pre>
 <p>For an unconfigured stock unit, enter its <code>CMQLINK-590513-XXXX</code> AP. Reserve a target LAN IP for its factory <strong>STA MAC</strong> on the router and use that IP for <code>--device</code>. Connect the computer Wi-Fi to the stock AP while another interface keeps <code>--host</code> reachable on the target LAN; add <code>--provision-address 192.168.188.1</code>. The factory STA MAC differs from the AP BSSID. Set <code>wifi.private.json</code> to the 2.4 GHz network on this LAN.</p>
 <p>The tool configures local HTTPS CGW using CoAP <code>/qlink/netinfo</code>. Stock firmware retrieves the temporary TLS MQTT connection over HTTPS, receives an AndLink file command, and downloads the RBL.</p>
