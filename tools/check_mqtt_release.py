@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Find a completed stable release with an immutable frontend lock asset."""
+"""Find the newest completed release with immutable frontend and image metadata."""
 import json
 import os
 from pathlib import Path
@@ -21,19 +21,24 @@ def api(path):
         return json.load(response)
 
 
-try:
-    release = api('/releases/latest')
-except HTTPError as error:
-    if error.code != 404:
-        raise
-    release = None
-if release and not release['draft'] and not release['prerelease']:
+def version(tag):
+    import re
+    match = re.fullmatch(r'v(\d+)\.(\d+)\.(\d+)(?:-rc(?:\.(\d+))?)?', tag)
+    if not match:
+        return None
+    major, minor, patch, rc = match.groups()
+    return (int(major), int(minor), int(patch), '-rc' not in tag, int(rc or 0))
+
+
+releases = api('/releases?per_page=100')
+releases = [r for r in releases if not r['draft'] and version(r['tag_name']) is not None
+            and {'frontend.lock.json', 'release-manifest.json'} <= {a['name'] for a in r['assets']}]
+release = max(releases, key=lambda r: version(r['tag_name']), default=None)
+if release:
     tag = release['tag_name']
-    assets = {asset['name'] for asset in release['assets']}
-    if tag.startswith('v') and 'frontend.lock.json' in assets:
-        commit = api('/commits/' + quote(tag, safe=''))['sha']
-        marker = Path('demos/platform/release.json')
-        current = json.loads(marker.read_text()) if marker.exists() else {}
-        if current.get('tag') != tag or current.get('commit') != commit:
-            with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
-                output.write(f'repository={REPOSITORY}\ntag={tag}\ncommit={commit}\n')
+    commit = api('/commits/' + quote(tag, safe=''))['sha']
+    marker = Path('demos/platform/release.json')
+    current = json.loads(marker.read_text()) if marker.exists() else {}
+    if current.get('tag') != tag or current.get('commit') != commit:
+        with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+            output.write(f'repository={REPOSITORY}\ntag={tag}\ncommit={commit}\n')
