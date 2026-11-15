@@ -204,7 +204,7 @@ nft -c -f /tmp/m1-dns-migration/rules.nft &amp;&amp; nft -f /tmp/m1-dns-migratio
 <li><code>/m1-native.bin?deviceMAC</code> and <code>download_complete</code>: the complete image was sent. Query strings and Range requests are supported.</li>
 <li><code>wifiSoftware.ifSuccess: true</code> inside <code>cloud_tcp</code>: the stock application reports update success. Then check the community version as described in the next section.</li>
 </ol>
-<p>Manifest version <code>14.2.4.2</code> satisfies the stock <code>14.2.4.1</code> version comparison; the installed community version is 0.9.27. If requests are absent, check connectivity, DNS-rule counters, server ports and the controller, rather than repeatedly rebooting or forcing different files.</p>
+<p>Manifest version <code>14.2.4.2</code> satisfies the stock <code>14.2.4.1</code> version comparison without changing the downloaded image's community version. If requests are absent, check connectivity, DNS-rule counters, server ports and the controller, rather than repeatedly rebooting or forcing different files.</p>
 <h3 id="step-4-verify-community-firmware-and-set-up-wi-fi">Step 4: verify community firmware and set up Wi-Fi</h3>
 <p>Wait a few minutes, scan for <code>M1-AP-XXXXXX</code> and follow section 5 to open <code>192.168.0.1</code> and configure 2.4 GHz Wi-Fi. Find the new DHCP address. Check <code>/api/v1/status</code> for the full <code>device_id</code>, actual <code>version</code>, <code>wifi_connected</code>, <code>sensor_valid</code> and increasing <code>rx_frames</code>. Verify the web page and automatic reconnection with retained settings after a software reboot.</p>
 <h3 id="step-5-restore-routing-and-stop-the-temporary-service">Step 5: restore routing and stop the temporary service</h3>
@@ -248,7 +248,7 @@ cmp /tmp/m1-dns-migration/dhcp.before /tmp/m1-dns-migration/dhcp.after
 <li>Join the <code>M1-AP-XXXXXX</code> matching your device's MAC suffix. Stay connected even if your computer reports no Internet.</li>
 <li>Open <code>http://192.168.0.1/</code> and save your 2.4 GHz Wi-Fi settings in the initial setup page. Allow time to connect.</li>
 <li>Rejoin the router and find M1 by its label MAC. The new IP may match the factory IP or change. Open <code>http://device-IP/</code> using port 80, rather than the factory port 8000.</li>
-<li>Confirm model M1, version <strong>0.9.21 or newer</strong>, updating temperature/humidity and PM2.5 readings, and normal display and device communication.</li>
+<li>Confirm model M1, a running version matching the selected download, updating temperature/humidity and PM2.5 readings, and normal display and device communication.</li>
 <li>After installation and connectivity are confirmed, a normal power cycle can check boot, automatic reconnection and retained settings.</li>
 </ol>
 <p>For a read-only status check, update the address in the same terminal:</p>
