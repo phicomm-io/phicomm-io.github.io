@@ -205,7 +205,7 @@ nft -c -f /tmp/m1-dns-migration/rules.nft &amp;&amp; nft -f /tmp/m1-dns-migratio
 <li><code>/m1-native.bin?设备MAC</code>、<code>download_complete</code>：完整镜像已发送。服务同时支持查询参数和 Range。</li>
 <li><code>cloud_tcp</code> 内 <code>wifiSoftware.ifSuccess: true</code>：原厂上报更新成功。随后按下一节确认社区版本。</li>
 </ol>
-<p>响应中的 <code>14.2.4.2</code> 用于满足原厂 <code>14.2.4.1</code> 的版本比较；安装后的社区版本为 0.9.27。没有这些请求时检查设备联网、DNS 规则计数、服务器端口和主控状态，不要反复重启或换文件强刷。</p>
+<p>响应中的 <code>14.2.4.2</code> 用于满足原厂 <code>14.2.4.1</code> 的版本比较，不改变所下载镜像的社区版本。没有这些请求时检查设备联网、DNS 规则计数、服务器端口和主控状态，不要反复重启或换文件强刷。</p>
 <h3 id="第四步确认社区固件并重新配网">第四步：确认社区固件并重新配网</h3>
 <p>等待数分钟，扫描 <code>M1-AP-XXXXXX</code>，按第 5 节访问 <code>192.168.0.1</code> 并设置 2.4 GHz Wi-Fi。查新 DHCP 地址，用 <code>/api/v1/status</code> 核对完整 <code>device_id</code>、实际 <code>version</code>、<code>wifi_connected</code>、<code>sensor_valid</code> 和持续增加的 <code>rx_frames</code>；网页应正常打开。软件重启后还应自动联网、保留配置。</p>
 <h3 id="第五步恢复路由器并停止临时服务">第五步：恢复路由器并停止临时服务</h3>
@@ -249,7 +249,7 @@ cmp /tmp/m1-dns-migration/dhcp.before /tmp/m1-dns-migration/dhcp.after
 <li>找到 MAC 后缀对应的 <code>M1-AP-XXXXXX</code>，连接后保持使用该网络，即使电脑提示没有 Internet。</li>
 <li>浏览器打开 <code>http://192.168.0.1/</code>，在首次设置页面填写 2.4 GHz Wi-Fi，保存并等待连接。</li>
 <li>电脑连回路由器，按机身 MAC 查新 IP。新 IP 可能与原厂时相同，也可能变化；打开 <code>http://设备IP/</code>，不再使用原厂的 8000 端口。</li>
-<li>确认型号为 M1、版本为 <strong>0.9.21 或更新</strong>，温湿度、PM2.5 等读数持续刷新，屏幕和设备通信正常。</li>
+<li>确认型号为 M1、实际版本与所选下载版本一致，温湿度、PM2.5 等读数持续刷新，屏幕和设备通信正常。</li>
 <li>确认安装与联网完成后，可正常断电再通电，检查能否重新启动、自动联网并保留配置。</li>
 </ol>
 <p>也可以在同一终端中更新 IP 后，只读核对社区状态：</p>

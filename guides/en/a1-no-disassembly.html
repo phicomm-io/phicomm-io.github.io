@@ -45,7 +45,7 @@ curl --noproxy '*' --connect-timeout 3 --max-time 5 &quot;http://${DeviceIp}:800
 <li><code>SHA256SUMS</code></li>
 </ul>
 <p>Use the version currently listed in Downloads; installing the old v0.9.27 example first is unnecessary. RC builds are for beta testing.</p>
-<p><strong>Check that the model is A1 and the version is at least 0.9.27.</strong> Use the full image specified here for first migration, rather than <code>no-frontend-resources</code>. A full Flash backup or <code>.all.bin</code> is for other recovery procedures; <code>.ota.bin.signed</code> is for devices already running community firmware. None is the factory upload body. Renaming a file to <code>.raw</code> does not convert it.</p>
+<p><strong>Check that the model is A1.</strong> Use the full image specified here for first migration, rather than <code>no-frontend-resources</code>. A full Flash backup or <code>.all.bin</code> is for other recovery procedures; <code>.ota.bin.signed</code> is for devices already running community firmware. None is the factory upload body. Renaming a file to <code>.raw</code> does not convert it.</p>
 <p>Compute SHA-256 and compare it character for character with the <strong><code>phicomm_a1.ota.bin.raw</code> line</strong> in the checksum file. Stop on a mismatch.</p>
 <div data-guide-os="windows">
 <pre><code class="language-powershell">Get-FileHash -Algorithm SHA256 .\phicomm_a1.ota.bin.raw
@@ -101,7 +101,7 @@ awk '$2 == &quot;phicomm_a1.ota.bin.raw&quot; { print }' ./SHA256SUMS
 </tr>
 </tbody>
 </table>
-<p>The update response uses top-level <code>url</code>, <code>md5</code>, <code>ver</code> and <code>enforce</code> fields. Stock v1.47 accepts a higher numeric version such as <code>v1.48</code> with <code>enforce: true</code>. This label satisfies the stock version comparison; the installed community version is 0.9.27. The TLS path disables certificate verification but requires a server compatible with the old client.</p>
+<p>The update response uses top-level <code>url</code>, <code>md5</code>, <code>ver</code> and <code>enforce</code> fields. Stock v1.47 accepts a higher numeric version such as <code>v1.48</code> with <code>enforce: true</code>. This label satisfies the stock version comparison without changing the downloaded image's community version. The TLS path disables certificate verification but requires a server compatible with the old client.</p>
 <h3 id="start-the-temporary-linux-service">Start the temporary Linux service</h3>
 <p>Download <a href="../assets/tools/a1-dns-migration/a1_dns_migration.py">a1_dns_migration.py</a> and <a href="../assets/tools/a1-dns-migration/SHA256SUMS">SHA256SUMS</a>. Install Python 3 and <code>openssl</code>. Put them beside the verified A1 raw OTA image, then replace every sample address, MAC and SHA-256:</p>
 <pre><code class="language-sh">sha256sum -c SHA256SUMS
@@ -190,7 +190,7 @@ cmp /tmp/a1-dns-migration/dhcp.before /tmp/a1-dns-migration/dhcp.after
 <li>Join the <code>A1-AP-XXXXXX</code> matching your device's MAC suffix. Stay connected even if your computer reports no Internet.</li>
 <li>Open <code>http://192.168.0.1/</code> and save your 2.4 GHz Wi-Fi settings in the initial setup page. Allow time to connect.</li>
 <li>Rejoin the router and find A1 by its label MAC. The new IP may match the factory IP or change. Open <code>http://device-IP/</code> using port 80, rather than the factory port 8000.</li>
-<li>Confirm model A1, version <strong>0.9.27</strong>, and working fan, light ring and touch controls.</li>
+<li>Confirm model A1, a running version matching the selected download, and working fan, light ring and touch controls.</li>
 <li>After installation and connectivity are confirmed, a normal power cycle can check boot, automatic reconnection and retained settings.</li>
 </ol>
 <p>For a read-only status check, update the address in the same terminal:</p>
