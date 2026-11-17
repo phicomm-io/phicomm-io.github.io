@@ -30,11 +30,12 @@ const state = {
   externalType: 'value', simulateBrightness: true, size: 'large', calibration: 1,
 };
 let clickTimer, dirty = false, lastDisplay;
-const svg = (body, extra = '') => `<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ${extra}>${body}</svg>`;
+const svg = (body, extra = '', viewBox = '0 0 48 48') => `<svg viewBox="${viewBox}" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ${extra}>${body}</svg>`;
 const icons = {
-  wifi: svg('<path d="M6 18c10-9 26-9 36 0M12 25c7-6 17-6 24 0M19 32c3-2 7-2 10 0"/><circle cx="24" cy="39" r="1.8" fill="currentColor" stroke="none"/>'),
-  offline: svg('<path d="M6 18c10-9 26-9 36 0M12 25c7-6 17-6 24 0M7 7l34 34"/><circle cx="24" cy="39" r="1.8" fill="currentColor" stroke="none"/>'),
-  battery: svg('<rect x="4" y="13" width="35" height="22" rx="4"/><path d="M43 20v8"/><rect x="9" y="18" width="24" height="12" rx="1" fill="currentColor" stroke="none"/>', 'class="battery"'),
+  wifi: svg('<path d="M1.86 12.86a20 20 0 0 1 28.28 0M6.1 17.1a14 14 0 0 1 19.8 0M10.34 21.34a8 8 0 0 1 11.32 0"/><circle cx="16" cy="27" r="1.5" fill="currentColor" stroke="none"/>', 'class="network"', '0 0 32 32'),
+  offline: svg('<path d="M1.86 12.86a20 20 0 0 1 28.28 0M6.1 17.1a14 14 0 0 1 19.8 0M10.34 21.34a8 8 0 0 1 11.32 0"/><circle cx="16" cy="27" r="1.5" fill="currentColor" stroke="none"/><path d="m3 4 26 25" stroke-width="2"/>', 'class="network offline"', '0 0 32 32'),
+  battery: svg('<rect y="2" width="72" height="27" rx="5" fill="var(--screen-line)"/><rect x="3" y="5" width="51" height="21" rx="2" fill="var(--chart-a)"/><rect x="73" y="9" width="5" height="13" rx="1" fill="var(--screen-line)"/>', 'class="battery"', '0 0 78 32'),
+  charging: svg('<rect y="2" width="72" height="27" rx="5" fill="var(--screen-line)"/><rect x="3" y="5" width="51" height="21" rx="2" fill="var(--chart-a)"/><rect x="73" y="9" width="5" height="13" rx="1" fill="var(--screen-line)"/><rect x="27" y="5" width="18" height="21" rx="2" fill="var(--screen-line)"/><path d="m38 7-6 9 7-2-6 9" fill="none" stroke="var(--screen-fg)" stroke-width="3"/>', 'class="battery" data-charging="true"', '0 0 78 32'),
   sun: svg('<circle cx="24" cy="24" r="9"/><path d="M24 3v5m0 32v5M3 24h5m32 0h5M9 9l4 4m22 22 4 4M9 39l4-4M35 13l4-4"/>'),
   cloud: svg('<path d="M13 36a9 9 0 1 1 1-18 12 12 0 0 1 23-1 10 10 0 0 1-1 19Z"/>'),
   partly: svg('<circle cx="17" cy="16" r="8"/><path d="M17 2v3M3 16h3M6 5l3 3m17-3-3 3M15 38a7 7 0 0 1-1-14 10 10 0 0 1 19-2 8 8 0 0 1 2 16Z"/>'),
@@ -50,7 +51,7 @@ function values() {
 }
 function statusRow(page) {
   const title = page.widgets.some(widget => widget.type === 'clock' && widget.y === 0) ? '' : page.title;
-  return `<div class="screen-top"><span class="screen-page-title">${esc(title)}</span>${state.dataState === 'stale' ? '<span class="data-note">已过期</span>' : ''}<span class="screen-icons">${lastDisplay?.sleeping ? icons.moon : ''}${state.dataState === 'missing' ? icons.offline : icons.wifi}${icons.battery}</span></div>`;
+  return `<div class="screen-top"><span class="screen-page-title">${esc(title)}</span>${state.dataState === 'stale' ? '<span class="data-note">已过期</span>' : ''}<span class="screen-icons">${lastDisplay?.sleeping ? icons.moon : ''}${state.dataState === 'missing' ? icons.offline : icons.wifi}${state.supply === 'external' ? icons.charging : icons.battery}</span></div>`;
 }
 function pageRail(page) { return `<div class="screen-page-rail" role="img" aria-label="第 ${pages.findIndex(p => p.id === page) + 1} 页，共 ${pages.length} 页">${pages.map(p => `<i data-page-segment="${p.id}"${p.id === page ? ' class="active"' : ''}></i>`).join('')}</div>`; }
 function widgetContents(widget, index) {
@@ -278,8 +279,8 @@ function renderComposer() {
   let specific = widget.type === 'metric' ? select('binding', '数据', Object.entries(BINDINGS).map(([id, binding]) => [id, binding.title]))
     : widget.type === 'text' ? `<label class="field">文字内容<textarea data-widget-edit="text" id="widget-text" maxlength="300">${esc(widget.text)}</textarea></label>`
     : widget.type === 'chart' ? select('chartType', '图表类型', [['line', '折线'], ['multi', '多曲线叠放'], ['dual', '多曲线 · 双单位'], ['bar', '柱状'], ['stacked-bar', '堆叠柱状'], ['stacked-area', '堆叠面积'], ['donut', '环形']]) + select('range', '时间范围', [['1', '1 小时'], ['6', '6 小时'], ['24', '24 小时']]) : '';
-  const presets = widget.type === 'metric' ? [[2, 2], [3, 3], [4, 4], [4, 1], [4, 2]] : widget.type === 'chart' ? [[4, 2], [4, 4], [4, 6]] : [];
-  const sizeNote = widget.type === 'metric' ? '方形等比放大；整行采用左侧标题与单位、右侧读数，最低 1 行。' : widget.type === 'chart' ? '2 行紧凑布局：左 1 列显示标题和读数，右 3 列显示图表。' : `最小 ${def.minW} 列 × ${minH} 行。`;
+  const presets = widget.type === 'metric' ? [[2, 1], [2, 2], [3, 3], [4, 4], [4, 1], [4, 2]] : widget.type === 'chart' ? [[4, 2], [4, 4], [4, 6]] : widget.type === 'clock' ? [[4, 1], [4, 2], [2, 2]] : widget.type === 'weather' ? [[4, 1], [4, 2], [2, 2], [4, 6]] : [];
+  const sizeNote = widget.type === 'metric' ? '方形等比放大；2 列或 4 列可缩至 1 行，左侧标题与单位、右侧读数。' : widget.type === 'chart' ? '2 行紧凑布局：左 1 列显示标题和读数，右 3 列显示图表。' : `最小 ${def.minW} 列 × ${minH} 行。`;
   $('#widget-properties').innerHTML = `<label class="field">${def.title} · 标题<input data-widget-edit="title" id="widget-title" type="text" maxlength="24" value="${esc(widget.title)}"></label>${specific}${presets.length ? `<div class="widget-presets" aria-label="常用尺寸">${presets.map(([w, h]) => `<button data-widget-size="${w},${h}" aria-pressed="${widget.w === w && widget.h === h}">${w} 列 × ${h} 行</button>`).join('')}</div>` : ''}<div class="two-fields">${select('w', '宽度', Array.from({ length: 5 - def.minW }, (_, i) => [i + def.minW, `${i + def.minW} 格`]))}${select('h', '高度', Array.from({ length: 7 - minH }, (_, i) => [i + minH, `${i + minH} 格`]))}</div><div class="two-fields">${select('x', '起始列', Array.from({ length: 5 - widget.w }, (_, i) => [i, `第 ${i + 1} 列`]))}${select('y', '起始行', Array.from({ length: 7 - widget.h }, (_, i) => [i, `第 ${i + 1} 行`]))}</div><p class="widget-size-note">${sizeNote} 不允许重叠或超出页面。</p>`;
   $('#widget-properties').insertAdjacentHTML('beforeend', widgetAppearanceFields(widget));
 }
