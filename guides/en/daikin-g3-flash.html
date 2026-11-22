@@ -37,7 +37,7 @@
 </table>
 <p>Windows runs the wireless process over SSH on a Bluetooth Linux host on the same LAN. Linux and macOS can provision directly. Serial and J-Link installation are available on all three systems.</p>
 <h2 id="download-files">Download files</h2>
-<p>Select the latest compatible stable <strong>Daikin air quality detector (G3)</strong> release in <a href="https://phicomm-io.github.io/en/#releases">Firmware &amp; resources</a>, with tools and firmware from the same release. If this model has no stable release, read the candidate notes before choosing a beta. Do not use Daikin G1/G2 firmware.</p>
+<p>Select one <strong>Daikin air quality detector (G3)</strong> release in <a href="https://phicomm-io.github.io/en/#releases">Firmware &amp; resources</a>; the toolkit, ESP32 image and screen image must come from the same release. The public G3 WebUI screen installer is currently provided by the candidate channel: use <code>v1.0.0-rc.7</code> (or a newer matching release). Stable <code>v0.9.x</code> builds and old examples do not contain this WebUI endpoint. Do not use Daikin G1/G2 firmware.</p>
 <table>
 <thead>
 <tr>
@@ -313,6 +313,14 @@ python -m esptool --chip esp32 --port /dev/cu.usbserial-0001 --baud 115200 --bef
 
 <p>After successful write and verification, power off, release GPIO0 and remove programming wires before restoring the battery and USB. Hold the front key about 2 seconds to start. If Wi-Fi does not reconnect, follow <a href="quick-start.html">Wi-Fi setup</a>, connect to the community hotspot and open <strong>http://192.168.0.1</strong>. Check the G3 model, version and sensor readings.</p>
 <h2 id="screen-mcu-installation-through-webui">Screen MCU installation through WebUI</h2>
+<p>The entry point is provided by the <strong>paired G3 community ESP32 WebUI</strong>. It is not a web page inside <code>daikin_G3_screen.bin</code>, and the GitHub download/tutorial page cannot replace the device page.</p>
+<p>Before starting, confirm each item:</p>
+<ul>
+<li>Open <code>http://DEVICE_IP/</code> directly from the same LAN. The device page must identify the model as <code>BRY88BBA15G</code>; do not upload from the public tutorial page.</li>
+<li>Update the ESP32 to candidate <code>v1.0.0-rc.7</code> (or a newer matching release). If <strong>Settings → Screen → Resources and update</strong> is missing, or the upload URL returns 404, update the ESP32 first and reload the device page.</li>
+<li>Use the ordinary <code>daikin_G3_screen.bin</code> from that same release. Its size must be <strong>421888 bytes</strong>. Do not upload <code>.all.bin</code>, an ESP32 <code>.ota.bin</code>, <code>recovery.bin</code>, an archive, or an image for another generation.</li>
+<li>The screen MCU must be responding and the device must remain on stable USB power. If startup controls are unavailable, refresh the status and check that the screen MCU is online; use J-Link when it remains offline instead of retrying uploads.</li>
+</ul>
 <p>Windows, Linux and macOS share these steps. Install the paired community ESP32 first, keep USB power connected and <strong>open the device IP directly</strong> in a LAN browser. Go to <strong>Settings → Screen → Resources and update</strong>. First installation from stock and later community updates use the same entry.</p>
 <table>
 <thead>
@@ -333,6 +341,16 @@ python -m esptool --chip esp32 --port /dev/cu.usbserial-0001 --baud 115200 --bef
 </tbody>
 </table>
 <p>Wait for <strong>Screen firmware installed and running normally</strong>, then check the MCU version, pages and sensor readings. Installation transfers, verifies and activates the application while preserving the stock boot region. No preliminary <code>recovery.bin</code> installation or boot export is needed. Both first installation and updates use the normal <code>daikin_G3_screen.bin</code>.</p>
+<p>Troubleshooting:</p>
+<table>
+<thead><tr><th>Page symptom</th><th>Action</th></tr></thead>
+<tbody>
+<tr><td>No <strong>Screen → Resources and update</strong> page or upload URL returns 404</td><td>Use the device IP directly and update the paired G3 ESP32; older WebUI builds do not expose the screen upload endpoint.</td></tr>
+<tr><td>“Invalid layout or value” or upload rejected</td><td>Download the screen image from the same release, verify 421888 bytes and <code>SHA256SUMS</code>; do not use an example or another model's file.</td></tr>
+<tr><td>“MCU startup controls unavailable”</td><td>The screen MCU has not sent a fresh response. Stop other update tasks, check USB/battery power and refresh status; use J-Link if it remains offline.</td></tr>
+<tr><td>“Screen installation failed”, timeout or repeating progress</td><td>Do not immediately power off or upload again. Inspect screen update status; if no fresh MCU session and matching digest appear, recover with J-Link.</td></tr>
+</tbody>
+</table>
 <p>Install the optional <code>daikin_G3_zh32.iotfnt</code> online or by upload on the same resource page. Normal MCU updates preserve installed fonts. Later ESP32 updates use <strong>Settings → Firmware</strong> and the corresponding signed package.</p>
 <h2 id="screen-mcu-installation-with-j-link">Screen MCU installation with J-Link</h2>
 <h3 id="1-tools-and-wiring">1. Tools and wiring</h3>
