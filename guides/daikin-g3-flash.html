@@ -153,6 +153,10 @@ cp ../daikin_BRY88BBA15G.ota.bin.raw .
 <pre><code class="language-sh">python3 init.py --address 192.168.1.10 --device AABBCCDDEEFF --output ./lab
 docker compose -f ./lab/compose.json up -d
 </code></pre>
+<h3 id="tls-证书检查">TLS 证书检查</h3>
+<p>启动临时服务后、给设备配网前，检查迁移工具生成的 MQTT 根证书：</p>
+<pre><code class="language-sh">openssl x509 -in ./lab/ca.pem -noout -text | grep -A1 'Basic Constraints'</code></pre>
+<p>输出必须包含 <code>CA:TRUE</code>。如果缺少该字段，说明迁移包或示例中的证书生成器过旧，设备会在 8883 握手时报告 <code>tlsv1 alert unknown ca</code>。不要重新配置 Wi-Fi；请按<a href="https://github.com/phicomm-io/iotcloud-community-firmware/tree/main/tools/daikin_g3_migrate#tls-certificate-check--tls-%E8%AF%81%E4%B9%A6%E6%A3%80%E6%9F%A5">迁移工具证书修复说明</a>重建证书并重启容器。只有日志出现 <code>New client connected ... as SENSOR:&lt;STA_MAC&gt;</code> 后再继续。</p>
 <h3 id="2-配置本设备-dns-与蓝牙配网">2. 配置本设备 DNS 与蓝牙配网</h3>
 <p>仅为这台设备，将下面三个域名解析到 <code>192.168.1.10</code>，并让它的 DHCP DNS 指向该解析器。正常重启设备或更新 DHCP 租约，使设置生效：</p>
 <pre><code class="language-text">newlifemulti.daikin-china.com.cn
