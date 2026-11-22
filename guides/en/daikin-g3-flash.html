@@ -321,7 +321,7 @@ python -m esptool --chip esp32 --port /dev/cu.usbserial-0001 --baud 115200 --bef
 <li>Use the ordinary <code>daikin_G3_screen.bin</code> from that same release. Its size must be <strong>421888 bytes</strong>. Do not upload <code>.all.bin</code>, an ESP32 <code>.ota.bin</code>, <code>recovery.bin</code>, an archive, or an image for another generation.</li>
 <li>The screen MCU must be responding and the device must remain on stable USB power. If startup controls are unavailable, refresh the status and check that the screen MCU is online; use J-Link when it remains offline instead of retrying uploads.</li>
 </ul>
-<p>Windows, Linux and macOS share these steps. Install the paired community ESP32 first, keep USB power connected and <strong>open the device IP directly</strong> in a LAN browser. Go to <strong>Settings → Screen → Resources and update</strong>. First installation from stock and later community updates use the same entry.</p>
+<p>After these checks, keep USB power connected and <strong>open the device IP directly</strong> in a LAN browser. Go to <strong>Settings → Screen → Resources and update</strong>. First installation from stock and later community updates use the same entry.</p>
 <table>
 <thead>
 <tr>
